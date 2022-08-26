@@ -9,8 +9,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.facebook.*
+import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
 import com.wassallni.*
@@ -18,15 +20,15 @@ import com.wassallni.R
 import com.wassallni.databinding.FragmentLoginBinding
 
 
-class LoginFragment(context: Context) : Fragment(R.layout.fragment_login) ,VerificationObserver , SignInCompletionObserver{
+class LoginFragment(context: Context) : Fragment(R.layout.fragment_login){
 
     private lateinit var binding: FragmentLoginBinding
-    lateinit var controller: LoginController
+    private var controller: LoginController? =null
     private lateinit var callbackManager:CallbackManager
-    lateinit var facebookAuth: FacebookAuth
-    var google=GoogleAuth(this)
+    val googleAuth=GoogleAuth.getInstance()
     val auth=FirebaseAuth.getInstance()
     lateinit var handler:Handler
+    lateinit var  phoneNumber:String
     companion object {
         lateinit var token:PhoneAuthProvider.ForceResendingToken
     }
@@ -43,85 +45,74 @@ class LoginFragment(context: Context) : Fragment(R.layout.fragment_login) ,Verif
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //facebookBtn = view.findViewById(R.id.facebook_login_button)
-
-        controller=LoginController.getInstance()
-
-        facebookAuth= context?.let { FacebookAuth(it) }!!
-        facebookAuth.addSubscriber(this)
-
+        controller=LoginController.getInstance(LoginActivity.context)
+        controller?.addSubscriber(this)
+        Log.e("subs.size(LoginFr)",""+ LoginController.subscribers.size)
         binding.facebookLogo.setOnClickListener {
             //LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends"));
-            facebookAuth.signIn(this)
+            controller?.signInWithFacebook(this)
         }
         binding.signIn.setOnClickListener {
             checkDataValidation()
         }
         binding.googleLogo.setOnClickListener{
-            google.signIn()
+            controller?.signInWithGoogle()
         }
 
     }
 
     private fun checkDataValidation() {
-         var phoneNumber = binding.numberEditText.text.toString()
-
-                if(controller.isNumberValid(phoneNumber))
+          phoneNumber = binding.numberEditText.text.toString()
+                if(controller?.isNumberValid(phoneNumber) == true)
                     binding.numberEditText.error = "*Required"
 
             else {
                 phoneNumber="+${binding.ccp.selectedCountryCode}${phoneNumber}"
                 binding.progressIndicator.visibility=View.VISIBLE
-                Log.e(TAG, "phoneNumber: $phoneNumber" )
 
-                phoneAuth.sendVerificationCode(phoneNumber,null)
+                controller?.sendVerificationCode(phoneNumber)
             }
         }
 
-    }
-
-    override fun loginCompleted() {
-    }
-
-    override fun codeSent(code: String,token: PhoneAuthProvider.ForceResendingToken) {
-
+    fun onCodeSent(){
         val number= binding.numberEditText.text.toString().trim()
         val countryCode="+${binding.ccp.selectedCountryCode}"
             val transaction = activity?.supportFragmentManager?.beginTransaction();
-            transaction?.replace(R.id.fr_layout, VerificationFragment(number,countryCode,code,token));
+            transaction?.replace(R.id.fr_layout, VerificationFragment(number,countryCode));
             transaction?.addToBackStack(null)
             transaction?.commit();
-    }
 
-    override fun verificationFailed() {
+    }
+    fun onVerificationFailed() {
         binding.progressIndicator.visibility=View.INVISIBLE
-
     }
 
-    override fun completeSignInWIthGoogle() {
-       ifUserHasPhoneNumber()
-    }
+    private fun onLoginSuccess() {
 
-    override fun completeSignInWIthFacebook() {
-        ifUserHasPhoneNumber()
-    }
-
-    private fun ifUserHasPhoneNumber(){
-        val user=FirebaseAuth.getInstance().currentUser
-        if (user != null) {
-            Log.e(TAG, "completeSignInWIthGoogle: ${user.phoneNumber}" )
-            if(user.phoneNumber!=null) {
-
-                val count=activity?.supportFragmentManager?.backStackEntryCount
-                for (i in 1..count!!){
-                    activity?.supportFragmentManager?.popBackStack()
-                }
-                val transaction = activity?.supportFragmentManager?.beginTransaction();
-                transaction?.replace(R.id.fr_layout,SuccessfulLoginFragment());
-                transaction?.commit();
+            val activity=LoginActivity.context as AppCompatActivity
+            val count=activity.supportFragmentManager.backStackEntryCount
+            for (i in 1..count){
+                activity.supportFragmentManager.popBackStack()
             }
+            val transaction = activity.supportFragmentManager.beginTransaction();
+            transaction.replace(R.id.fr_layout,SuccessfulLoginFragment());
+            transaction.commit();
+    }
+    public fun onSignInWIthGoogleSuccess() {
+        ifUserHasPhoneNumber()
+
+    }
+    public fun onSignInWIthFacebookSuccess() {
+        ifUserHasPhoneNumber()
+
+    }
+
+    private fun ifUserHasPhoneNumber() {
+        val user=FirebaseAuth.getInstance().currentUser
+        if (user?.phoneNumber != null)
+                onLoginSuccess()
             else
                 addPhoneNumberForUser()
-        }
     }
 
     private fun addPhoneNumberForUser() {
@@ -133,12 +124,18 @@ class LoginFragment(context: Context) : Fragment(R.layout.fragment_login) ,Verif
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        FacebookAuth.callbackManager.onActivityResult(requestCode,resultCode,data)
+        controller?.onActivityResult(requestCode,resultCode,data)
+    }
+    fun removeFromControllerSubscriber(){
+        val subscribers=LoginController.subscribers
+        subscribers.removeAt(subscribers.size-1)
+
     }
 
-    override fun onDestroyView() {
-        Log.e("onDestroyView"," onDestroyView " )
-
-        super.onDestroyView()
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e("onDestroyView"," LoginFragment " )
+        removeFromControllerSubscriber()
     }
+
 }

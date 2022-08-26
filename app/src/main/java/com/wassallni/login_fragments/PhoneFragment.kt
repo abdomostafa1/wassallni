@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,9 +14,9 @@ import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthProvider
 import com.wassallni.GoogleAuth
+import com.wassallni.LoginActivity
 import com.wassallni.PhoneAuth
 import com.wassallni.R
-import com.wassallni.VerificationObserver
 import com.wassallni.databinding.FragmentPhoneBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -28,15 +29,18 @@ private const val ARG_PARAM2 = "param2"
  * Use the [PhoneFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PhoneFragment : Fragment() ,VerificationObserver{
+class PhoneFragment : Fragment() {
 
     lateinit var phoneAuth: PhoneAuth
-    lateinit var binding:FragmentPhoneBinding
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    lateinit var binding: FragmentPhoneBinding
+    private var controller: LoginController? =null
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
 
-        binding=FragmentPhoneBinding.inflate(inflater, container, false)
+        binding = FragmentPhoneBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -44,15 +48,14 @@ class PhoneFragment : Fragment() ,VerificationObserver{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        phoneAuth=PhoneAuth()
-        phoneAuth.addSubscriber(this)
-        binding.navigationFab.setOnClickListener{
+        controller=LoginController.getInstance(LoginActivity.context)
+        controller?.addSubscriber(this)
+        binding.navigationFab.setOnClickListener {
             activity?.supportFragmentManager?.popBackStack()
         }
 
-        val auth=FirebaseAuth.getInstance()
-        binding.tvUserName.text="Hi, ${auth.currentUser?.displayName} "
+        val auth = FirebaseAuth.getInstance()
+        binding.tvUserName.text = "Hi, ${auth.currentUser?.displayName} "
 
         binding.signIn.setOnClickListener {
             checkDataValidation()
@@ -65,46 +68,56 @@ class PhoneFragment : Fragment() ,VerificationObserver{
     private fun checkDataValidation() {
         var phoneNumber = binding.numberEditText.text.toString()
 
-                phoneNumber="+${binding.ccp.selectedCountryCode}${phoneNumber}"
-                binding.progressIndicator.visibility=View.VISIBLE
-                phoneAuth.sendVerificationCode(phoneNumber,null)
+        if (controller?.isNumberValid(phoneNumber) == true)
+            binding.numberEditText.error = "*Required"
+        else {
+            phoneNumber = "+${binding.ccp.selectedCountryCode}${phoneNumber}"
+            binding.progressIndicator.visibility = View.VISIBLE
+
+            controller?.sendVerificationCode(phoneNumber)
+        }
+    }
+
+        private val textWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
 
-    private val textWatcher=object : TextWatcher{
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                binding.signIn.isEnabled = s.toString().isNotEmpty()
+            }
         }
 
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
+         fun onCodeSent() {
+            val number = binding.numberEditText.text.toString().trim()
+            val countryCode = "+${binding.ccp.selectedCountryCode}"
+            val transaction = activity?.supportFragmentManager?.beginTransaction();
+            transaction?.replace(
+                R.id.fr_layout,
+                VerificationFragment(number, countryCode)
+            );
+            transaction?.addToBackStack(null)
+            transaction?.commit();
         }
 
-        override fun afterTextChanged(s: Editable?) {
-            binding.signIn.isEnabled = s.toString().isNotEmpty()
+         fun onVerificationFailed() {
+            binding.progressIndicator.visibility = View.INVISIBLE
+        }
+
+    fun removeFromControllerSubscriber(){
+        val subscribers=LoginController.subscribers
+        subscribers.removeAt(subscribers.size-1)
+
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e("onDestroyView"," PhoneFragment " )
+        removeFromControllerSubscriber()
+            LoginManager.getInstance().logOut()
+            GoogleAuth.googleSignInClient.signOut()
+            removeFromControllerSubscriber()
         }
     }
-
-    override fun codeSent(code: String,p1: PhoneAuthProvider.ForceResendingToken) {
-        val number= binding.numberEditText.text.toString().trim()
-        val countryCode="+${binding.ccp.selectedCountryCode}"
-        val transaction = activity?.supportFragmentManager?.beginTransaction();
-        transaction?.replace(R.id.fr_layout, VerificationFragment(number,countryCode,code,p1));
-        transaction?.addToBackStack(null)
-        transaction?.commit();
-    }
-
-    override fun loginCompleted() {
-    }
-
-    override fun verificationFailed() {
-        binding.progressIndicator.visibility=View.INVISIBLE
-
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        LoginManager.getInstance().logOut()
-        GoogleAuth.googleSignInClient.signOut()
-
-    }
-}

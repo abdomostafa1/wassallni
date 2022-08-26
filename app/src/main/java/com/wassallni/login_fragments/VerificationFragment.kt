@@ -34,7 +34,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [VerificationFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class VerificationFragment : Fragment  , VerificationObserver{
+class VerificationFragment : Fragment  {
     // TODO: Rename and change types of parameters
 
     var phoneNumber:String
@@ -44,20 +44,15 @@ class VerificationFragment : Fragment  , VerificationObserver{
     lateinit var phoneAuth: PhoneAuth
     private var viewModel= LoginViewModel()
     private val auth=FirebaseAuth.getInstance()
+    private var controller: LoginController? =null
     lateinit var handler:Handler
     var seconds = 45
     private lateinit var binding:FragmentVerificationBinding
 
-    constructor(phoneNumber: String,countryCode:String, code: String?, p1: PhoneAuthProvider.ForceResendingToken?)  {
+    constructor(phoneNumber: String,countryCode:String)  {
         this.phoneNumber=phoneNumber
         this.countryCode=countryCode
 
-        if (code != null) {
-            verificationCode=code
-        }
-        if (p1 != null) {
-            token=p1
-        }
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,6 +67,11 @@ class VerificationFragment : Fragment  , VerificationObserver{
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        controller=LoginController.getInstance(LoginActivity.context)
+        controller?.addSubscriber(this)
+        Log.e("subs.size(VerificatFr)",""+ LoginController.subscribers.size)
+
         var encryptedNumber=""
 
         for(i in 1..phoneNumber.length-3)
@@ -99,9 +99,8 @@ class VerificationFragment : Fragment  , VerificationObserver{
         binding.phoneFragmentFab.setOnClickListener{
             activity?.supportFragmentManager?.popBackStack()
         }
-        phoneAuth=PhoneAuth()
-        phoneAuth.addSubscriber(this)
         binding.tvResendCode.paintFlags = binding.tvResendCode.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+
 
         setOnClickListener()
 
@@ -127,52 +126,32 @@ class VerificationFragment : Fragment  , VerificationObserver{
         }
         binding.tvResendCode.setOnClickListener {
             binding.progressIndicator.visibility = View.VISIBLE
-            phoneAuth.resendCode(countryCode+phoneNumber, token)
+            controller?.resendCode()
         }
     }
 
-     private fun verifyNumber(){
-         binding.progressIndicator.visibility=View.VISIBLE
-        val user=auth.currentUser
-        val userCode=binding.verifyCodeEditText.text
-        val credential = PhoneAuthProvider.getCredential(verificationCode, userCode)
 
-        if(user==null)
-            signInWithPhoneNumber(credential)
-        else
-            addPhoneNumber(credential)
-
-    }
-
-    private fun signInWithPhoneNumber(credential:PhoneAuthCredential){
-
-        phoneAuth.signIn(credential)
-    }
-
-    private fun addPhoneNumber(credential:PhoneAuthCredential){
-            val user=auth.currentUser
-            user?.linkWithCredential(credential)?.addOnCompleteListener { task->
-
-                if(task.isSuccessful)
-                    loginCompleted()
-                else
-                    Toast.makeText(activity,"error , unable to add phone number ", Toast.LENGTH_LONG).show()
-            }
-
-
-    }
-
-    override fun codeSent(code:String,p1: PhoneAuthProvider.ForceResendingToken) {
-
+     fun onCodeSent() {
         // in case of you resend verification code
-        verificationCode=code
-        token=p1
         viewModel.resetCountDown()
         binding.progressIndicator.visibility=View.INVISIBLE
 
     }
 
-     override fun loginCompleted() {
+    fun onVerificationFailed() {
+        binding.progressIndicator.visibility = View.INVISIBLE
+        binding.verifyCodeEditText.setCodeItemErrorLineDrawable()
+    }
+
+    private fun verifyNumber(){
+        binding.progressIndicator.visibility=View.VISIBLE
+        val code=binding.verifyCodeEditText.text
+        controller?.verifyNumber(code)
+    }
+
+
+
+     fun onLoginCompleted() {
          binding.progressIndicator.visibility=View.INVISIBLE
 
          val count=activity?.supportFragmentManager?.backStackEntryCount
@@ -183,15 +162,9 @@ class VerificationFragment : Fragment  , VerificationObserver{
          transaction?.replace(R.id.fr_layout,SuccessfulLoginFragment());
          transaction?.commit();
 
-         handler = Handler(Looper.getMainLooper())
-         handler.postDelayed(runnable,5000)
 
     }
 
-    override fun verificationFailed() {
-        binding.progressIndicator.visibility = View.INVISIBLE
-        binding.verifyCodeEditText.setCodeItemErrorLineDrawable()
-    }
 
     val runnable=object :Runnable{
         override fun run() {
@@ -201,9 +174,17 @@ class VerificationFragment : Fragment  , VerificationObserver{
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    fun removeFromControllerSubscriber(){
+        val subscribers=LoginController.subscribers
+        subscribers.removeAt(subscribers.size-1)
+
+    }
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.e("onDestroyView"," VerificationFragment " )
+        removeFromControllerSubscriber()
         GoogleAuth.googleSignInClient.signOut()
         LoginManager.getInstance().logOut()
+        removeFromControllerSubscriber()
     }
 }

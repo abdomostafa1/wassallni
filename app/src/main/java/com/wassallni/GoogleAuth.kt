@@ -17,7 +17,6 @@ class GoogleAuth {
     lateinit var subscriber: SignInCompletionObserver
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
-
     private val RC_SIGN_IN = 9001
 
     companion object{
@@ -28,12 +27,22 @@ class GoogleAuth {
               .build()
 
          val googleSignInClient: GoogleSignInClient= GoogleSignIn.getClient(LoginActivity.context, googleSignInOptions)
+
+     var googleAuth: GoogleAuth?=null
+    fun getInstance() : GoogleAuth?{
+        if(googleAuth==null)
+            googleAuth= GoogleAuth()
+        return googleAuth
+     }
+
     }
 
-    constructor(subscriber: SignInCompletionObserver) {
+    private constructor() {
+    }
+
+    fun addSubscriber(subscriber: SignInCompletionObserver){
         this.subscriber=subscriber
     }
-
     fun signIn() {
         val signInIntent = googleSignInClient.signInIntent
         launcher.launch(signInIntent)
@@ -71,7 +80,7 @@ class GoogleAuth {
 
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithCredential:success")
-                        subscriber.completeSignInWIthGoogle()
+                        subscriber.onSignInWIthGoogleSuccess()
                     } else
                         Log.w(TAG, "signInWithCredential:failure", task.exception)
 

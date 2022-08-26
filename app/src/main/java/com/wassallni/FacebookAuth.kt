@@ -21,9 +21,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.events.Subscriber
 
 class FacebookAuth {
-    companion object {
-         var callbackManager: CallbackManager =CallbackManager.Factory.create()
-    }
+
+    var callbackManager: CallbackManager =CallbackManager.Factory.create()
     lateinit var context: Context
     val auth=FirebaseAuth.getInstance()
     var subscribers: ArrayList<SignInCompletionObserver> = ArrayList<SignInCompletionObserver>()
@@ -89,8 +88,11 @@ class FacebookAuth {
 
      private fun notifySubscribers() {
         for (i in subscribers)
-            i.completeSignInWIthFacebook()
+            i.onSignInWIthFacebookSuccess()
     }
 
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
+        callbackManager.onActivityResult(requestCode,resultCode,data)
+    }
 
 }

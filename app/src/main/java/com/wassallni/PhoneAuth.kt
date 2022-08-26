@@ -51,7 +51,7 @@ import java.util.concurrent.TimeUnit
                 Toast.makeText(activity,"Service will be available later", Toast.LENGTH_LONG).show()
             }
             for (i in subscribers)
-                i.verificationFailed()
+                i.onVerificationFailed()
 
         }
 
@@ -59,7 +59,7 @@ import java.util.concurrent.TimeUnit
             super.onCodeSent(verificationId, p1)
             LoginFragment.token=p1
             for (i in subscribers){
-                i.codeSent(verificationId,p1)
+                i.onCodeSent(verificationId,p1)
             }
         }
     }
@@ -86,13 +86,13 @@ import java.util.concurrent.TimeUnit
         auth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                for (i in subscribers)
-                i.loginCompleted()
+                i.onLoginCompleted()
             }
             else {
                 // Sign in failed, display a message and update the UI
                     // The verification code entered was invalid
                     for(i in subscribers)
-                        i.verificationFailed()
+                        i.onVerificationFailed()
                 Log.e(TAG, "erroreeee: ${task.exception}" )
                 Toast.makeText(activity,"${task.exception}",Toast.LENGTH_LONG).show()
             }
