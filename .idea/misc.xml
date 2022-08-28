@@ -25,10 +25,14 @@
         <entry key="..\:/Users/abdo mostafa/Downloads/wassallni/app/src/main/res/layout/fragment_verification.xml" value="0.2" />
         <entry key="..\:/Users/abdo mostafa/Downloads/wassallni/app/src/main/res/layout/loading_dialog.xml" value="0.22" />
         <entry key="..\:/Users/abdo mostafa/Downloads/wassallni/app/src/main/res/layout/successful_login.xml" value="0.1947463768115942" />
+        <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/activity_customer_main.xml" value="0.17481884057971014" />
+        <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/activity_driver_main.xml" value="0.1" />
+        <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/activity_maps.xml" value="0.1" />
+        <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/fragment_maps.xml" value="0.17481884057971014" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -43,6 +43,8 @@ class MainActivity : AppCompatActivity() {
             }
             else -> {
                 binding.btSignOut.visibility = View.VISIBLE
+                val intent = Intent(this, CustomerMainActivity::class.java)
+                startActivity(intent)
             }
         }
 
@@ -61,7 +63,8 @@ class MainActivity : AppCompatActivity() {
             if (result.resultCode == RESULT_CANCELED)
                 finish()
              else {
-                binding.btSignOut.visibility = View.VISIBLE
+                val intent = Intent(this, CustomerMainActivity::class.java)
+                startActivity(intent)
             }
         }
 
