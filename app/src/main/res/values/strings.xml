@@ -17,6 +17,7 @@
 
     <string name="facebook_client_token">e3194b4992ad9e083d57731c9fe11c42</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="title_activity_maps2">MapsActivity2</string>
 
 
 </resources>

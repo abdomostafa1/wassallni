@@ -4,20 +4,13 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 
-class MyBroadcastReceiver: BroadcastReceiver() {
-    var subscribers=ArrayList<MapsFragment>()
+class MyBroadcastReceiver(var mainView:MyBroadcastObserver): BroadcastReceiver() {
     override fun onReceive(p0: Context?, intent: Intent?) {
         if(intent?.action=="android.location.PROVIDERS_CHANGED")
-            notifySubscribers()
+            notifySubscriber()
     }
-    fun addSubscriber(sub:MapsFragment){
-        subscribers.add(sub)
-    }
-    fun removeSubscriber(sub:MapsFragment){
-        subscribers.remove(sub)
-    }
-    fun notifySubscribers(){
-        for(sub in subscribers)
-            sub.getLocation()
+
+    fun notifySubscriber(){
+        mainView.onResponse()
     }
 }

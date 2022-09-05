@@ -19,17 +19,15 @@ import com.facebook.login.widget.LoginButton
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.events.Subscriber
+import com.wassallni.login_fragments.LoginPresenter
 
-class FacebookAuth {
+class FacebookAuth (private val presenter:LoginPresenter,val context: Context){
 
     var callbackManager: CallbackManager =CallbackManager.Factory.create()
-    lateinit var context: Context
     val auth=FirebaseAuth.getInstance()
-    var subscribers: ArrayList<SignInCompletionObserver> = ArrayList<SignInCompletionObserver>()
 
-    constructor(context: Context) {
+    init {
 
-        this.context = context
         LoginManager.getInstance().registerCallback(callbackManager,
             object : FacebookCallback<LoginResult?> {
                 override fun onSuccess(loginResult: LoginResult?) {
@@ -40,11 +38,11 @@ class FacebookAuth {
                 }
 
                 override fun onCancel() {
-                    Toast.makeText(context, "facebook:onCancel.", Toast.LENGTH_SHORT).show()
+                    presenter.onSignInWIthFacebookFailed("Facebook login is Cancelled")
                 }
 
                 override fun onError(exception: FacebookException) {
-                    Toast.makeText(context, "facebook:onError.", Toast.LENGTH_SHORT).show()
+                    exception.message?.let { presenter.onSignInWIthFacebookFailed(it) }
                 }
             })
 
@@ -66,15 +64,15 @@ class FacebookAuth {
             .addOnCompleteListener((context as AppCompatActivity)) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    notifySubscribers()
+                    presenter.onSignInWIthFacebookSuccessed()
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(
                         ControlsProviderService.TAG, " signInWithCredential:failure", task.exception)
                     if (credential.provider == "facebook.com")
-                        Toast.makeText(context, "there is a Google account with the same email address", Toast.LENGTH_LONG).show()
+                        task.exception?.message?.let { presenter.onSignInWIthFacebookFailed(it) }
                     else
-                        Toast.makeText(context, "there is a facebook account with the same email address", Toast.LENGTH_LONG).show()
+                        task.exception?.message?.let { presenter.onSignInWIthGoogleFailed(it) }
 
                     LoginManager.getInstance().logOut()
 
@@ -82,14 +80,7 @@ class FacebookAuth {
             }
     }
 
-    fun addSubscriber(subscriber: SignInCompletionObserver) {
-        subscribers.add(subscriber)
-    }
 
-     private fun notifySubscribers() {
-        for (i in subscribers)
-            i.onSignInWIthFacebookSuccess()
-    }
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
         callbackManager.onActivityResult(requestCode,resultCode,data)

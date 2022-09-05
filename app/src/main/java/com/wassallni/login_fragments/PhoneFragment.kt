@@ -9,13 +9,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.PhoneAuthProvider
+import com.google.firebase.auth.PhoneAuthCredential
 import com.wassallni.GoogleAuth
 import com.wassallni.LoginActivity
-import com.wassallni.PhoneAuth
+import com.wassallni.LoginObserver
 import com.wassallni.R
 import com.wassallni.databinding.FragmentPhoneBinding
 
@@ -29,11 +30,10 @@ private const val ARG_PARAM2 = "param2"
  * Use the [PhoneFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PhoneFragment : Fragment() {
+class PhoneFragment : Fragment() ,LoginObserver{
 
-    lateinit var phoneAuth: PhoneAuth
     lateinit var binding: FragmentPhoneBinding
-    private var controller: LoginController? =null
+    private  var presenter=LoginPresenter.getInstance()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,8 +48,6 @@ class PhoneFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        controller=LoginController.getInstance(LoginActivity.context)
-        controller?.addSubscriber(this)
         binding.navigationFab.setOnClickListener {
             activity?.supportFragmentManager?.popBackStack()
         }
@@ -68,13 +66,13 @@ class PhoneFragment : Fragment() {
     private fun checkDataValidation() {
         var phoneNumber = binding.numberEditText.text.toString()
 
-        if (controller?.isNumberValid(phoneNumber) == true)
+        if (presenter?.isNumberInValid(phoneNumber) == true)
             binding.numberEditText.error = "*Required"
         else {
             phoneNumber = "+${binding.ccp.selectedCountryCode}${phoneNumber}"
             binding.progressIndicator.visibility = View.VISIBLE
 
-            controller?.sendVerificationCode(phoneNumber)
+            presenter?.sendVerificationCode(phoneNumber)
         }
     }
 
@@ -91,7 +89,8 @@ class PhoneFragment : Fragment() {
             }
         }
 
-         fun onCodeSent() {
+    override fun onCodeSent() {
+
             val number = binding.numberEditText.text.toString().trim()
             val countryCode = "+${binding.ccp.selectedCountryCode}"
             val transaction = activity?.supportFragmentManager?.beginTransaction();
@@ -101,23 +100,59 @@ class PhoneFragment : Fragment() {
             );
             transaction?.addToBackStack(null)
             transaction?.commit();
-        }
+    }
 
-         fun onVerificationFailed() {
-            binding.progressIndicator.visibility = View.INVISIBLE
-        }
+    override fun onVerificationFailed(message: String) {
+        binding.progressIndicator.visibility = View.INVISIBLE
+        Toast.makeText(activity,message, Toast.LENGTH_LONG).show()
+    }
+    override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+        onLoginCompleted()
+    }
 
-    fun removeFromControllerSubscriber(){
-        val subscribers=LoginController.subscribers
-        subscribers.removeAt(subscribers.size-1)
+    override fun onSignInWIthGoogleSuccessed() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSignInWIthFacebookSuccessed() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSignInWIthPhoneFailed(message: String) {
+        Toast.makeText(activity,message,Toast.LENGTH_LONG).show()
+    }
+
+    override fun onSignInWIthGoogleFailed(message: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSignInWIthFacebookFailed(message: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLoginCompleted() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLinkPhoneNumberFailed(message: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        presenter?.setActiveFragment(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter?.setActiveFragment(this)
 
     }
+
     override fun onDestroy() {
         super.onDestroy()
         Log.e("onDestroyView"," PhoneFragment " )
-        removeFromControllerSubscriber()
             LoginManager.getInstance().logOut()
-            GoogleAuth.googleSignInClient.signOut()
-            removeFromControllerSubscriber()
+            presenter?.google?.signOut()
         }
     }

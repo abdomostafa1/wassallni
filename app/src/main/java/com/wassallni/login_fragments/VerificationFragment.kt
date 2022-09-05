@@ -5,7 +5,6 @@ import android.graphics.Paint
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,6 @@ import androidx.lifecycle.Observer
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthProvider
 import com.jakode.verifycodeedittext.CodeCompleteListener
 import com.wassallni.*
 import com.wassallni.databinding.FragmentVerificationBinding
@@ -34,17 +32,14 @@ private const val ARG_PARAM2 = "param2"
  * Use the [VerificationFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class VerificationFragment : Fragment  {
+class VerificationFragment : Fragment ,LoginObserver {
     // TODO: Rename and change types of parameters
 
     var phoneNumber:String
     lateinit var countryCode:String
-    lateinit var verificationCode:String
-    lateinit var token: PhoneAuthProvider.ForceResendingToken
-    lateinit var phoneAuth: PhoneAuth
     private var viewModel= LoginViewModel()
     private val auth=FirebaseAuth.getInstance()
-    private var controller: LoginController? =null
+    private var presenter: LoginPresenter? =null
     lateinit var handler:Handler
     var seconds = 45
     private lateinit var binding:FragmentVerificationBinding
@@ -68,10 +63,7 @@ class VerificationFragment : Fragment  {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        controller=LoginController.getInstance(LoginActivity.context)
-        controller?.addSubscriber(this)
-        Log.e("subs.size(VerificatFr)",""+ LoginController.subscribers.size)
-
+        presenter=LoginPresenter.getInstance()
         var encryptedNumber=""
 
         for(i in 1..phoneNumber.length-3)
@@ -126,65 +118,84 @@ class VerificationFragment : Fragment  {
         }
         binding.tvResendCode.setOnClickListener {
             binding.progressIndicator.visibility = View.VISIBLE
-            controller?.resendCode()
+            presenter?.resendCode()
         }
     }
 
 
-     fun onCodeSent() {
-        // in case of you resend verification code
+    override fun onCodeSent() {
         viewModel.resetCountDown()
         binding.progressIndicator.visibility=View.INVISIBLE
+    }
+
+    override fun onVerificationFailed(message: String) {
+        binding.progressIndicator.visibility = View.INVISIBLE
+        binding.verifyCodeEditText.setCodeItemErrorLineDrawable()
+        Toast.makeText(activity,message,Toast.LENGTH_LONG).show()
+    }
+
+    override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+        onLoginCompleted()
+    }
+
+    override fun onLoginCompleted() {
+        binding.progressIndicator.visibility=View.INVISIBLE
+
+        val count=activity?.supportFragmentManager?.backStackEntryCount
+        for (i in 1..count!!){
+            activity?.supportFragmentManager?.popBackStack()
+        }
+        val transaction = activity?.supportFragmentManager?.beginTransaction();
+        transaction?.replace(R.id.fr_layout,SuccessfulLoginFragment());
+        transaction?.commit();
 
     }
 
-    fun onVerificationFailed() {
-        binding.progressIndicator.visibility = View.INVISIBLE
-        binding.verifyCodeEditText.setCodeItemErrorLineDrawable()
+    override fun onSignInWIthGoogleSuccessed() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSignInWIthFacebookSuccessed() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSignInWIthPhoneFailed(message: String) {
+        Toast.makeText(activity,message,Toast.LENGTH_LONG).show()
+    }
+
+    override fun onSignInWIthGoogleFailed(message: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSignInWIthFacebookFailed(message: String) {
+        TODO("Not yet implemented")
     }
 
     private fun verifyNumber(){
         binding.progressIndicator.visibility=View.VISIBLE
         val code=binding.verifyCodeEditText.text
-        controller?.verifyNumber(code)
+        presenter?.verifyNumber(code)
     }
 
 
-
-     fun onLoginCompleted() {
-         binding.progressIndicator.visibility=View.INVISIBLE
-
-         val count=activity?.supportFragmentManager?.backStackEntryCount
-            for (i in 1..count!!){
-                activity?.supportFragmentManager?.popBackStack()
-            }
-         val transaction = activity?.supportFragmentManager?.beginTransaction();
-         transaction?.replace(R.id.fr_layout,SuccessfulLoginFragment());
-         transaction?.commit();
-
-
+    override fun onLinkPhoneNumberFailed(message: String) {
+        Toast.makeText(activity,message,Toast.LENGTH_LONG).show()
     }
 
-
-    val runnable=object :Runnable{
-        override fun run() {
-            activity?.setResult(Activity.RESULT_OK)
-            activity?.finish()
-            Log.e("finish activity"," runnable is called " )
-        }
+    override fun onStart() {
+        super.onStart()
+        presenter?.setActiveFragment(this)
     }
 
-    fun removeFromControllerSubscriber(){
-        val subscribers=LoginController.subscribers
-        subscribers.removeAt(subscribers.size-1)
+    override fun onResume() {
+        super.onResume()
+        presenter?.setActiveFragment(this)
 
     }
     override fun onDestroy() {
         super.onDestroy()
         Log.e("onDestroyView"," VerificationFragment " )
-        removeFromControllerSubscriber()
-        GoogleAuth.googleSignInClient.signOut()
+        presenter?.google?.signOut()
         LoginManager.getInstance().logOut()
-        removeFromControllerSubscriber()
     }
 }

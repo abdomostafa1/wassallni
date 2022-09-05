@@ -4,20 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CustomerMainActivity">
+    tools:context=".CustomerMainActivity"
+    >
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_container"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:name="com.wassallni.MapsFragment"
         app:layout_constraintBottom_toTopOf="@id/guideline1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        >
-    </androidx.fragment.app.FragmentContainerView>
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        app:cardCornerRadius="8dp"
 
+        >
+
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/mapssd"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        />
+    </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_tuktuk"
         android:layout_width="0dp"
@@ -32,7 +46,8 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/tuktuk"
+            android:src="@drawable/ic_tuk_tuk"
+
             />
     </androidx.cardview.widget.CardView>
 
@@ -45,8 +60,6 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         android:layout_margin="8dp"
         >
-
-
 
     </androidx.cardview.widget.CardView>
 
@@ -69,7 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.20"
+        app:layout_constraintGuide_percent="0.30"
         />
      <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"

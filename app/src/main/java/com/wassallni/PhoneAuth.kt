@@ -1,6 +1,7 @@
 package com.wassallni
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -8,16 +9,14 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import com.wassallni.login_fragments.LoginFragment
+import com.wassallni.login_fragments.LoginPresenter
 import java.util.concurrent.TimeUnit
 
-  open  class PhoneAuth {
+  open  class PhoneAuth (private var presenter: LoginPresenter,private var context: Context){
 
 
-    var subscribers:ArrayList<VerificationObserver> = ArrayList()
-      private var RESEND_VERIFICATION_CODE_STATE:Boolean=false
-
+    private var RESEND_VERIFICATION_CODE_STATE:Boolean=false
     private val auth=FirebaseAuth.getInstance()
-    val activity= LoginActivity.context as AppCompatActivity
 
 
       public fun sendVerificationCode(
@@ -27,7 +26,7 @@ import java.util.concurrent.TimeUnit
         val optionsBuilder = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(phoneNumber)       // Phone number to verify
             .setTimeout(45L, TimeUnit.SECONDS) // Timeout and unit
-            .setActivity(activity)                 // Activity (for callback binding)
+            .setActivity((context as AppCompatActivity))                 // Activity (for callback binding)
             .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
         if (token != null) {
             optionsBuilder.setForceResendingToken(token) // callback's ForceResendingToken
@@ -37,30 +36,26 @@ import java.util.concurrent.TimeUnit
 
     private val callbacks= object : PhoneAuthProvider.OnVerificationStateChangedCallbacks(){
         override fun onVerificationCompleted(p0: PhoneAuthCredential) {
-
+            presenter.onVerificationCompleted(p0)
         }
 
         override fun onVerificationFailed(p0: FirebaseException) {
             if (p0 is FirebaseAuthInvalidCredentialsException) {
                 // Invalid request
                 Log.e(TAG, "error message "+p0.message )
+                presenter.onVerificationFailed(p0.message.toString())
 
             }
             else if (p0 is FirebaseTooManyRequestsException) {
                 // The SMS quota for the project has been exceeded
-                Toast.makeText(activity,"Service will be available later", Toast.LENGTH_LONG).show()
+                presenter.onVerificationFailed(p0.message.toString())
             }
-            for (i in subscribers)
-                i.onVerificationFailed()
 
         }
 
         override fun onCodeSent(verificationId: String, p1: PhoneAuthProvider.ForceResendingToken) {
             super.onCodeSent(verificationId, p1)
-            LoginFragment.token=p1
-            for (i in subscribers){
-                i.onCodeSent(verificationId,p1)
-            }
+            presenter.onCodeSent(verificationId,p1)
         }
     }
 
@@ -73,7 +68,7 @@ import java.util.concurrent.TimeUnit
         val optionsBuilder = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(phoneNumber)       // Phone number to verify
             .setTimeout(45L, TimeUnit.SECONDS) // Timeout and unit
-            .setActivity(activity)                 // Activity (for callback binding)
+            .setActivity(context as AppCompatActivity)                 // Activity (for callback binding)
             .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
         if (token != null) {
             optionsBuilder.setForceResendingToken(token) // callback's ForceResendingToken
@@ -85,22 +80,15 @@ import java.util.concurrent.TimeUnit
 
         auth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-               for (i in subscribers)
-                i.onLoginCompleted()
+               presenter.onLoginCompleted()
             }
             else {
                 // Sign in failed, display a message and update the UI
                     // The verification code entered was invalid
-                    for(i in subscribers)
-                        i.onVerificationFailed()
-                Log.e(TAG, "erroreeee: ${task.exception}" )
-                Toast.makeText(activity,"${task.exception}",Toast.LENGTH_LONG).show()
+                presenter.onSignInWIthPhoneFailed(task.exception.toString())
             }
         }
     }
-      public fun addSubscriber(subscriber:VerificationObserver){
 
-          subscribers.add(subscriber)
-      }
 
   }

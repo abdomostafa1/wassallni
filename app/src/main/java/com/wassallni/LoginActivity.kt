@@ -7,6 +7,7 @@ import android.widget.FrameLayout
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
 import com.wassallni.login_fragments.LoginFragment
+import com.wassallni.login_fragments.LoginPresenter
 
 
 class LoginActivity : AppCompatActivity() {
@@ -25,8 +26,7 @@ class LoginActivity : AppCompatActivity() {
         transaction.commit();
         auth.addAuthStateListener {
             if(auth.currentUser==null){
-                GoogleAuth.googleSignInClient.signOut()
-                LoginManager.getInstance().logOut()
+                val presenter=LoginPresenter.getInstance()
             }
         }
 
