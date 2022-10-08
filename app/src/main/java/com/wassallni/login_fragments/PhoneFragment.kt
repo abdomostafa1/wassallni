@@ -111,11 +111,10 @@ class PhoneFragment : Fragment() ,LoginObserver{
     }
 
     override fun onSignInWIthGoogleSuccessed() {
-        TODO("Not yet implemented")
+
     }
 
     override fun onSignInWIthFacebookSuccessed() {
-        TODO("Not yet implemented")
     }
 
     override fun onSignInWIthPhoneFailed(message: String) {
@@ -123,19 +122,19 @@ class PhoneFragment : Fragment() ,LoginObserver{
     }
 
     override fun onSignInWIthGoogleFailed(message: String) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onSignInWIthFacebookFailed(message: String) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onLoginCompleted() {
-        TODO("Not yet implemented")
+
     }
 
     override fun onLinkPhoneNumberFailed(message: String) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onStart() {

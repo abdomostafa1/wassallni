@@ -18,7 +18,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Wassallni">
-
+        <activity
+            android:name=".DriverRequest"
+            android:exported="false"
+            android:label="@string/title_activity_driver_request"
+            android:theme="@style/Theme.Wassallni.NoActionBar" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -36,14 +40,13 @@
 
         <activity
             android:name=".CustomerMainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".LocationSelectionActivity"
             android:exported="true"
-            android:theme="@style/Material3"
-            >
+            android:theme="@style/Theme.Wassallni.NoActionBar"
+            android:windowSoftInputMode="adjustNothing">
+
         </activity>
 
         <meta-data
@@ -72,13 +75,14 @@
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.Wassallni.NoActionBar"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
 
         </activity>
     </application>

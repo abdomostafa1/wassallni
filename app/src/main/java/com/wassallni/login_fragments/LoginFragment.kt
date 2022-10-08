@@ -121,7 +121,6 @@ class LoginFragment(context: Context) : Fragment(R.layout.fragment_login),LoginO
     }
 
     override fun onLinkPhoneNumberFailed(message: String) {
-        TODO("Not yet implemented")
     }
 
     public fun onSignInWIthGoogleSuccess() {

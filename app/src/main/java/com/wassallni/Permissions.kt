@@ -30,18 +30,23 @@ class Permissions (context:Context){
         return preciseLocationPermission== PackageManager.PERMISSION_GRANTED||approximateLocationPermission==PackageManager.PERMISSION_GRANTED
     }
     fun isGpsOpen():Boolean{
-        val locationManager: LocationManager =(context as AppCompatActivity).getSystemService(LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        Log.e("checkGps 000: ", " Show me" )
 
-        Log.e("checkGps: ", "${locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)}" )
+        val locationManager: LocationManager =(context as AppCompatActivity).getSystemService(LOCATION_SERVICE) as LocationManager
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+            return true;
+        }
+        // otherwise return false
+        return false;
+
     }
-    fun openGps(){
-        showDialog()
+    fun openGps(cancelable:Boolean){
+        showDialog(cancelable)
     }
-    private fun showDialog(){
+    private fun showDialog(cancelable:Boolean){
         val builder = AlertDialog.Builder(context)
 
-        builder.setMessage("we need to access your location to provide you the nearest driver ")
+        builder.setMessage("we need to access your location to use App ")
             .setTitle("Enable GPS")
 
         builder.setPositiveButton("enable", DialogInterface.OnClickListener(){ dialog, which ->
@@ -50,6 +55,7 @@ class Permissions (context:Context){
             gpsSettingActivity.launch(intent)
 
         })
+            .setCancelable(cancelable)
 
         builder.show()
     }
@@ -71,12 +77,12 @@ class Permissions (context:Context){
         when {
             permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
                 if(!isGpsOpen())
-                    openGps()
+                    openGps(true)
                 // Precise location access granted.
             }
             permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
                 if(!isGpsOpen())
-                    openGps()
+                    openGps(true)
                 // Only approximate location access granted.
             } else -> {
             Toast.makeText(context,"You must let us access GPS",Toast.LENGTH_SHORT).show()

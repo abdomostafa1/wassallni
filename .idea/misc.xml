@@ -30,14 +30,22 @@
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/drawable/count_down_background.xml" value="0.1205" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/drawable/ic__location_on.xml" value="0.1205" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/drawable/ic_drag_handle.xml" value="0.1205" />
+        <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/drawable/ic_marker.xml" value="0.1205" />
+        <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/drawable/ic_my_location.xml" value="0.1325" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/drawable/ic_tuk_tuk.xml" value="0.1205" />
+        <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/drawable/ic_unavailable.xml" value="0.1325" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/activity_customer_main.xml" value="0.17481884057971014" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/activity_driver_main.xml" value="0.15" />
+        <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/activity_driver_request.xml" value="0.22" />
+        <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/activity_location_selection.xml" value="0.15" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/activity_main.xml" value="0.17481884057971014" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/activity_maps.xml" value="0.1" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/activity_maps2.xml" value="0.17481884057971014" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/fragment_maps.xml" value="0.17481884057971014" />
+        <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/fragment_phone.xml" value="0.1" />
+        <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/fragment_successful_login.xml" value="0.2779187817258883" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/places_bottom_dialog.xml" value="0.22" />
+        <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/unavailable_dialog.xml" value="0.16" />
       </map>
     </option>
   </component>

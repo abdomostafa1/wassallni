@@ -42,9 +42,9 @@ class MainActivity : AppCompatActivity() {
                 login()
             }
             else -> {
-                binding.btSignOut.visibility = View.VISIBLE
-//                val intent = Intent(this, CustomerMainActivity::class.java)
-//                startActivity(intent)
+                //binding.btSignOut.visibility = View.VISIBLE
+                val intent = Intent(this, CustomerMainActivity::class.java)
+                startActivity(intent)
             }
         }
 
@@ -63,10 +63,15 @@ class MainActivity : AppCompatActivity() {
             if (result.resultCode == RESULT_CANCELED)
                 finish()
              else {
-//                val intent = Intent(this, CustomerMainActivity::class.java)
-//                startActivity(intent)
-                 binding.btSignOut.visibility=View.VISIBLE
+                val intent = Intent(this, CustomerMainActivity::class.java)
+                startActivity(intent)
+//                 binding.btSignOut.visibility=View.VISIBLE
             }
         }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if(auth.currentUser?.phoneNumber==null)
+            auth.signOut()
+    }
 }

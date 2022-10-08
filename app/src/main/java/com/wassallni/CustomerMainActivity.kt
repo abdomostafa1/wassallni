@@ -20,15 +20,18 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.Polyline
+import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.OnTokenCanceledListener
 import com.wassallni.databinding.ActivityCustomerMainBinding
+import org.json.JSONObject
 
-class CustomerMainActivity : AppCompatActivity(),OnMapReadyCallback ,MyBroadcastObserver{
+class CustomerMainActivity : AppCompatActivity(),OnMapReadyCallback ,BroadcastObserver{
     private lateinit var binding:ActivityCustomerMainBinding
     lateinit var fusedLocationProviderClient:FusedLocationProviderClient
-    lateinit var broadcastReceiver:MyBroadcastReceiver
+    lateinit var broadcastReceiver:BroadcastReceiver
     private lateinit var intentFilter:IntentFilter
     val permissions=Permissions(this)
     private lateinit var mMap: GoogleMap
@@ -43,7 +46,7 @@ class CustomerMainActivity : AppCompatActivity(),OnMapReadyCallback ,MyBroadcast
             .findFragmentById(R.id.mapssd) as SupportMapFragment
 
         mapFragment.getMapAsync(this)
-        broadcastReceiver=MyBroadcastReceiver(this)
+        broadcastReceiver=BroadcastReceiver(this)
         fusedLocationProviderClient= FusedLocationProviderClient(this)
         intentFilter= IntentFilter("android.location.PROVIDERS_CHANGED")
         binding.cvTuktuk.setOnClickListener {
@@ -53,7 +56,7 @@ class CustomerMainActivity : AppCompatActivity(),OnMapReadyCallback ,MyBroadcast
                     startActivity(intent)
                 }
                 else
-                    permissions.openGps()
+                    permissions.openGps(true)
             }
             else
                 permissions.requestLocationPermission()
@@ -86,8 +89,9 @@ class CustomerMainActivity : AppCompatActivity(),OnMapReadyCallback ,MyBroadcast
                         Toast.makeText(this, "open your fuckin Gps now", Toast.LENGTH_SHORT).show()
                     else {
                         val lat = location.latitude
-                        val lon = location.longitude
-                        val latLng=LatLng(lat,lon)
+                        val lng = location.longitude
+
+                        val latLng=LatLng(lat,lng)
                         showUserLocationOnMap(latLng)
                     }
 
@@ -111,7 +115,7 @@ class CustomerMainActivity : AppCompatActivity(),OnMapReadyCallback ,MyBroadcast
     }
 
 
-    override fun onResponse() {
+    override fun onGpsBroadcastResponse() {
 
         getLocation()
     }

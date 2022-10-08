@@ -152,23 +152,24 @@ class VerificationFragment : Fragment ,LoginObserver {
     }
 
     override fun onSignInWIthGoogleSuccessed() {
-        TODO("Not yet implemented")
     }
 
     override fun onSignInWIthFacebookSuccessed() {
-        TODO("Not yet implemented")
     }
 
     override fun onSignInWIthPhoneFailed(message: String) {
         Toast.makeText(activity,message,Toast.LENGTH_LONG).show()
+        binding.progressIndicator.visibility = View.INVISIBLE
+
     }
 
     override fun onSignInWIthGoogleFailed(message: String) {
-        TODO("Not yet implemented")
+        binding.progressIndicator.visibility = View.INVISIBLE
     }
 
     override fun onSignInWIthFacebookFailed(message: String) {
-        TODO("Not yet implemented")
+        binding.progressIndicator.visibility = View.INVISIBLE
+
     }
 
     private fun verifyNumber(){
