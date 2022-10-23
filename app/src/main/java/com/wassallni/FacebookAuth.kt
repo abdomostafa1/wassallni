@@ -3,10 +3,7 @@ package com.wassallni
 import android.content.Context
 import android.content.Intent
 import android.service.controls.ControlsProviderService
-import android.service.controls.ControlsProviderService.TAG
 import android.util.Log
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.facebook.AccessToken
@@ -15,11 +12,9 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.facebook.login.widget.LoginButton
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.events.Subscriber
-import com.wassallni.login_fragments.LoginPresenter
+import com.wassallni.fragments.LoginPresenter
 
 class FacebookAuth (private val presenter:LoginPresenter,val context: Context){
 

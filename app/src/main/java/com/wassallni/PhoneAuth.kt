@@ -3,13 +3,11 @@ package com.wassallni
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
-import com.wassallni.login_fragments.LoginFragment
-import com.wassallni.login_fragments.LoginPresenter
+import com.wassallni.fragments.LoginPresenter
 import java.util.concurrent.TimeUnit
 
   open  class PhoneAuth (private var presenter: LoginPresenter,private var context: Context){

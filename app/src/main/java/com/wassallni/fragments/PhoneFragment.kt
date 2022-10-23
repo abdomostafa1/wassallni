@@ -1,4 +1,4 @@
-package com.wassallni.login_fragments
+package com.wassallni.fragments
 
 import android.os.Build
 import android.os.Bundle
@@ -14,9 +14,6 @@ import androidx.annotation.RequiresApi
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
-import com.wassallni.GoogleAuth
-import com.wassallni.LoginActivity
-import com.wassallni.LoginObserver
 import com.wassallni.R
 import com.wassallni.databinding.FragmentPhoneBinding
 
@@ -30,7 +27,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [PhoneFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class PhoneFragment : Fragment() ,LoginObserver{
+class PhoneFragment : Fragment() , LoginObserver {
 
     lateinit var binding: FragmentPhoneBinding
     private  var presenter=LoginPresenter.getInstance()

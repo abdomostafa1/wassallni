@@ -3,6 +3,7 @@ package com.wassallni
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import java.util.*
 
 class BroadcastReceiver(var mainView:BroadcastObserver): BroadcastReceiver() {
     override fun onReceive(p0: Context?, intent: Intent?) {
@@ -13,4 +14,8 @@ class BroadcastReceiver(var mainView:BroadcastObserver): BroadcastReceiver() {
     private fun notifySubscriber(){
         mainView.onGpsBroadcastResponse()
     }
+}
+
+interface BroadcastObserver {
+     fun onGpsBroadcastResponse()
 }

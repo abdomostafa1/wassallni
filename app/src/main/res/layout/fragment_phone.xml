@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:layoutDirection="ltr"
     android:paddingBottom="@dimen/fragment_vertical_margin"
-    tools:context=".login_fragments.PhoneFragment">
+    tools:context=".fragments.PhoneFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <com.google.android.material.progressindicator.LinearProgressIndicator

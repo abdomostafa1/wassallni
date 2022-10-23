@@ -1,34 +1,55 @@
-package com.wassallni.login_fragments
+package com.wassallni.fragments
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.facebook.*
 import com.facebook.login.LoginManager
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthProvider
 import com.wassallni.*
 import com.wassallni.R
 import com.wassallni.databinding.FragmentLoginBinding
 
 
-class LoginFragment(context: Context) : Fragment(R.layout.fragment_login),LoginObserver{
+class LoginFragment(context: Context) : Fragment(R.layout.fragment_login), LoginObserver {
 
     private lateinit var binding: FragmentLoginBinding
     private var presenter: LoginPresenter? =null
     private lateinit var callbackManager:CallbackManager
     val auth=FirebaseAuth.getInstance()
     lateinit var  phoneNumber:String
-    val google= activity?.let { GoogleAuth.getInstance(it) }
+
+    private var launcher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
+            val data = result.data
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            val exception = task.exception
+            if (task.isSuccessful) {
+                try {
+                    val account=task.result
+                    presenter?.google?.firebaseAuthWithGoogle(account.idToken!!)
+                } catch (e: ApiException) {
+                    // Google Sign In failed, update UI appropriately
+                    presenter?.onSignInWIthGoogleFailed(e.toString())
+                }
+            } else {
+                Log.w("Google Exception ", "${exception.toString()}")
+                presenter?.onSignInWIthGoogleFailed(exception.toString())
+            }
+        }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,7 +73,9 @@ class LoginFragment(context: Context) : Fragment(R.layout.fragment_login),LoginO
             checkDataValidation()
         }
         binding.googleLogo.setOnClickListener{
-            presenter?.signInWithGoogle()
+
+            val signInIntent =presenter?.google?.getSignInIntent()
+            launcher.launch(signInIntent)
         }
 
     }

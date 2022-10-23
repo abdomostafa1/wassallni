@@ -1,10 +1,10 @@
-package com.wassallni.login_fragments
+package com.wassallni.fragments
 
-import android.app.Activity
 import android.graphics.Paint
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -32,22 +32,21 @@ private const val ARG_PARAM2 = "param2"
  * Use the [VerificationFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class VerificationFragment : Fragment ,LoginObserver {
+class VerificationFragment : Fragment , LoginObserver {
     // TODO: Rename and change types of parameters
 
     var phoneNumber:String
     lateinit var countryCode:String
-    private var viewModel= LoginViewModel()
-    private val auth=FirebaseAuth.getInstance()
     private var presenter: LoginPresenter? =null
     lateinit var handler:Handler
     var seconds = 45
+    var timeOut:Boolean=false
     private lateinit var binding:FragmentVerificationBinding
 
     constructor(phoneNumber: String,countryCode:String)  {
         this.phoneNumber=phoneNumber
         this.countryCode=countryCode
-
+        handler = Handler(Looper.getMainLooper())
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,21 +72,7 @@ class VerificationFragment : Fragment ,LoginObserver {
         val text = "<font color=#757575>SMS verification code sent to </font> <font color=#000000>${encryptedNumber}</font>"
         binding.tvGuide.text= HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY);
 
-        viewModel.mutableDataCounterDown.observe(viewLifecycleOwner, Observer<String> {
-            binding.tvCountDown.text=viewModel.mutableDataCounterDown.value
-        })
-
-        viewModel.mutableDataTvResendCodeVisibility.observe(viewLifecycleOwner, Observer<Int> {
-            val visibility= viewModel.mutableDataTvResendCodeVisibility.value!!
-            binding.tvResendCode.visibility=visibility
-            if (visibility==View.INVISIBLE)
-                binding.tvCountDown.visibility=View.VISIBLE
-            else
-                binding.tvCountDown.visibility=View.INVISIBLE
-
-        })
-
-        viewModel.startCounter()
+        startCounter()
         binding.phoneFragmentFab.setOnClickListener{
             activity?.supportFragmentManager?.popBackStack()
         }
@@ -98,7 +83,35 @@ class VerificationFragment : Fragment ,LoginObserver {
 
     }
 
+     fun countDown() {
+        handler.postDelayed(runnable, 1000)
+    }
+     fun startCounter() {
 
+        handler.postDelayed(runnable, 0)
+    }
+    private val runnable = Runnable {
+        val minutes=0
+        binding.tvCountDown.setText(String.format("%02d",minutes)+":"+String.format("%02d",seconds))
+        --seconds
+        if (seconds != -1)
+            countDown()
+        else
+            notifyTimeOut()
+    }
+    private fun notifyTimeOut() {
+        timeOut=true
+        handler.removeCallbacks(runnable)
+        binding.tvCountDown.visibility=View.INVISIBLE
+        binding.tvResendCode.visibility=View.VISIBLE
+
+    }
+    fun resetCountDown() {
+        binding.tvResendCode.visibility = View.INVISIBLE
+        binding.tvCountDown.visibility = View.VISIBLE
+        seconds = 45
+        handler.postDelayed(runnable, 0)
+    }
     private fun setOnClickListener() {
 
         binding.verifyCodeEditText.setCompleteListener (object : CodeCompleteListener{
@@ -111,10 +124,11 @@ class VerificationFragment : Fragment ,LoginObserver {
             binding.verifyBtn.isEnabled=false
             val userCode = binding.verifyCodeEditText.text
 
-            if (LoginViewModel.time_Out)
+            if (timeOut)
                 binding.verifyCodeEditText.setCodeItemErrorLineDrawable()
             else
                 verifyNumber()
+            timeOut=false
         }
         binding.tvResendCode.setOnClickListener {
             binding.progressIndicator.visibility = View.VISIBLE
@@ -122,9 +136,8 @@ class VerificationFragment : Fragment ,LoginObserver {
         }
     }
 
-
     override fun onCodeSent() {
-        viewModel.resetCountDown()
+        resetCountDown()
         binding.progressIndicator.visibility=View.INVISIBLE
     }
 

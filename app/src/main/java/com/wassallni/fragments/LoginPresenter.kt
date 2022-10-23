@@ -1,10 +1,8 @@
-package com.wassallni.login_fragments
+package com.wassallni.fragments
 
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
@@ -13,7 +11,7 @@ import com.wassallni.*
 
 class LoginPresenter  {
 
-    private lateinit var mainView:LoginObserver
+    private lateinit var mainView: LoginObserver
     lateinit var facebookAuth: FacebookAuth
     private var phoneNumber = "01112345678"
     private  var token: PhoneAuthProvider.ForceResendingToken? =null
@@ -26,12 +24,11 @@ class LoginPresenter  {
         private var presenter: LoginPresenter? =null
 
         public fun getInstance(): LoginPresenter? {
-            if (presenter == null)
+            if (presenter == null) {
                 presenter = LoginPresenter()
-
+            }
             return presenter
         }
-
     }
 
     private constructor(){}
@@ -39,11 +36,11 @@ class LoginPresenter  {
 
         phoneAuth= PhoneAuth(this,context)
         facebookAuth = FacebookAuth(this,context)
-        google= GoogleAuth.getInstance(context)!!
+        google= GoogleAuth(context)
         google.notifyPresenter(this)
      }
 
-    fun setActiveFragment(fragment:LoginObserver){
+    fun setActiveFragment(fragment: LoginObserver){
         mainView=fragment
     }
 
@@ -51,20 +48,13 @@ class LoginPresenter  {
         return phoneNumber.trim().isEmpty()
     }
 
-
     fun sendVerificationCode(phoneNumber: String) {
         this.phoneNumber = phoneNumber
         phoneAuth.sendVerificationCode(phoneNumber, token)
-
     }
 
     fun signInWithFacebook(fragment:Fragment) {
         facebookAuth.signIn(fragment)
-
-    }
-
-    fun signInWithGoogle() {
-        google?.signIn()
     }
 
      fun onSignInWIthGoogleSuccessed() {

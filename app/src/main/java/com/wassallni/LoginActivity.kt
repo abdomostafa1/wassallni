@@ -4,10 +4,9 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
-import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
-import com.wassallni.login_fragments.LoginFragment
-import com.wassallni.login_fragments.LoginPresenter
+import com.wassallni.fragments.LoginFragment
+import com.wassallni.fragments.LoginPresenter
 
 
 class LoginActivity : AppCompatActivity() {
@@ -15,14 +14,12 @@ class LoginActivity : AppCompatActivity() {
 
     val auth=FirebaseAuth.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         context =this
         frameLayout=findViewById(R.id.fr_layout)
         val transaction = supportFragmentManager.beginTransaction();
         transaction.replace(R.id.fr_layout,LoginFragment(this));
-        //transaction.addToBackStack(null)
         transaction.commit();
         auth.addAuthStateListener {
             if(auth.currentUser==null){
