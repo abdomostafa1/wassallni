@@ -1,12 +1,21 @@
 <resources>
     <string name="app_name">wassallni</string>
     <!-- Strings related to login -->
+    <string name="prompt_name">Name</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="prompt_confirm_password">Confirm Password</string>
+    <string name="prompt_phone">Phone</string>
+    <string name="action_sign_in">register</string>
     <string name="action_sign_in_short">Sign in</string>
+    <string name="sign_in_not_available_today">Sorry ,Sign in Tomorrow \n
+        Sign in isn\'t available Today</string>
     <string name="welcome">"Welcome!"</string>
-    <string name="invalid_username">Not a valid username</string>
+    <string name="verification_code_invalid">The verification code entered was invalid</string>
+    <string name="error_occurred">An error occurred</string>
+    <string name="invalid_username">Invalid Name</string>
+    <string name="invalid_phone_number">Invalid Number</string>
+    <string name="valid_data">Valid Data ❤❤😍</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <!-- TODO: Remove or change this placeholder text -->
