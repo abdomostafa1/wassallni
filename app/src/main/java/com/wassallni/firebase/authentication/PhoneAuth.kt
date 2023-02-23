@@ -21,7 +21,7 @@ open class PhoneAuth(private val activity: Activity) {
         notifier = verificationCallbacks
     }
 
-    public fun verifyPhoneNumber(
+    fun sendVerificationCode(
         phoneNumber: String
     ) {
         val optionsBuilder = PhoneAuthOptions.newBuilder(auth)
@@ -42,7 +42,7 @@ open class PhoneAuth(private val activity: Activity) {
         }
 
         override fun onVerificationFailed(p0: FirebaseException) {
-            var error: String = ""
+            var error = ""
 
             error = if (p0 is FirebaseTooManyRequestsException)
                 activity.getString(R.string.sign_in_not_available_today)
@@ -68,9 +68,9 @@ open class PhoneAuth(private val activity: Activity) {
 
     }
 
-    fun signInWithFirebase(credential: PhoneAuthCredential) {
+    fun verifyWithFirebase(credential: PhoneAuthCredential) {
 
-        val task = auth.signInWithCredential(credential).addOnCompleteListener(activity) { task ->
+         auth.signInWithCredential(credential).addOnCompleteListener(activity) { task ->
             if (task.isSuccessful) {
                 // Sign in success, update UI with the signed-in user's information
                 Log.e(TAG, "signInWithCredential:success")
@@ -78,7 +78,7 @@ open class PhoneAuth(private val activity: Activity) {
             } else {
                 Log.e(TAG, "signInWithCredential:failure", task.exception)
 
-                var error: String = ""
+                var error = ""
                 error = if (task.exception is FirebaseAuthInvalidCredentialsException)
                     activity.getString(R.string.verification_code_invalid)
                 else

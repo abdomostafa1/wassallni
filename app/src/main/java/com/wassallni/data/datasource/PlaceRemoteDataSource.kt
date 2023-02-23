@@ -9,6 +9,7 @@ import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
 import com.wassallni.R
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,6 +20,7 @@ import retrofit2.http.Query
 
 class PlaceRemoteDataSource (val context: Context) {
 
+    lateinit var responseBody: RequestBody
     private val url = "https://maps.googleapis.com/"
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(url)
@@ -31,6 +33,7 @@ class PlaceRemoteDataSource (val context: Context) {
 
     fun getAddressFromLatLng(latLng: String, callback: (body: String) -> Unit) {
 
+        responseBody
         // https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key=YOUR_API_KEY
 
         val placeRetrofit: PlaceRetrofit =
@@ -61,7 +64,7 @@ class PlaceRemoteDataSource (val context: Context) {
             })
     }
 
-    fun getLatLngFromPlaceId(placeId: String, callback: (body: String) -> kotlin.Unit) {
+    fun getLatLngFromPlaceId(placeId: String, callback: (body: String) -> Unit) {
 
         //  https://maps.googleapis.com/maps/api/geocode/xml?place_id=ChIJeRpOeF67j4AR9ydy_PIzPuM&key=YOUR_API_KEY
 

@@ -22,7 +22,7 @@
             android:name=".ui.DriverRequest"
             android:exported="false"
             android:label="@string/title_activity_driver_request"
-            android:theme="@style/Theme.Wassallni.NoActionBar" />
+            />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -40,13 +40,11 @@
 
         <activity
             android:name=".ui.MainActivity"
-            android:exported="true"></activity>
+            android:exported="true"/>
         <activity
             android:name=".ui.LocationSelectionActivity"
             android:exported="true"
-            android:theme="@style/Theme.Wassallni.NoActionBar"
             android:windowSoftInputMode="adjustNothing"
-
             >
 
         </activity>
@@ -74,11 +72,12 @@
 <!--                <data android:scheme="@string/fb_login_protocol_scheme" />-->
 <!--            </intent-filter>-->
 <!--        </activity>-->
-        <activity android:name=".ui.LoginActivity" />
+        <activity android:name=".ui.LoginActivity"
+            android:theme="@style/loginTheme"
+            />
         <activity
             android:name=".ui.SplashScreenActivity"
             android:exported="true"
-            android:theme="@style/Theme.Wassallni.NoActionBar"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

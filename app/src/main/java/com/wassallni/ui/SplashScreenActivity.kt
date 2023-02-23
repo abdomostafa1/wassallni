@@ -2,16 +2,16 @@ package com.wassallni.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import com.google.firebase.auth.FirebaseAuth
+import com.wassallni.data.model.LoggedInUser
 import com.wassallni.databinding.ActivitySplashScreenBinding
-import kotlin.system.measureTimeMillis
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    private  val TAG = "SplashScreenActivity"
+    private val TAG = "SplashScreenActivity"
     val auth = FirebaseAuth.getInstance()
     private lateinit var binding: ActivitySplashScreenBinding
 
@@ -19,15 +19,7 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val e= measureTimeMillis {
-            val auth = FirebaseAuth.getInstance()
-        }
 
-        val ee=measureTimeMillis {
-            getPreferences(MODE_PRIVATE)
-        }
-        Log.e(TAG, "time 1: $e", )
-        Log.e(TAG,  "time 2: $ee", )
         checkAuthentication()
         binding.btSignOut.setOnClickListener {
             auth.signOut()
@@ -37,45 +29,48 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private fun checkAuthentication() {
-        val user = auth.currentUser
-        when {
-            user == null ->
-                login()
-            user.phoneNumber == null -> {
-                auth.signOut()
-                login()
-            }
-            else -> {
-                //binding.btSignOut.visibility = View.VISIBLE
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            }
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+        if (!isLoggedIn) {
+            openLoginActivity()
+        } else {
+            val name=sharedPreferences.getString("name","")
+            val token=sharedPreferences.getString("token","")
+            val loggedInUser=LoggedInUser.getInstance(displayName =name!!,token=token!!)
+            openMainActivity()
         }
-
     }
 
-    private fun login() {
-        val intent: Intent = Intent(this, LoginActivity::class.java)
+    private fun openLoginActivity() {
+        val intent = Intent(this, LoginActivity::class.java)
         loginLauncher.launch(intent)
     }
-
+    private fun openMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        mainLauncher.launch(intent)
+    }
     private val loginLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult())
         { result ->
-            val data = result.data
 
             if (result.resultCode == RESULT_CANCELED)
                 finish()
-             else {
+            else {
                 val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-//                 binding.btSignOut.visibility=View.VISIBLE
+                mainLauncher.launch(intent)
             }
+        }
+
+    private val mainLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+        { _ ->
+            finish()
         }
 
     override fun onDestroy() {
         super.onDestroy()
-        if(auth.currentUser?.phoneNumber==null)
+        if (auth.currentUser?.phoneNumber == null)
             auth.signOut()
+
     }
 }

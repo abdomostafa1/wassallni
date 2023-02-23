@@ -5,82 +5,170 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/fragment_horizontal_margin"
-    android:paddingTop="@dimen/fragment_vertical_margin"
-    android:paddingRight="@dimen/fragment_horizontal_margin"
-    android:paddingBottom="@dimen/fragment_vertical_margin"
+    android:background="#FCF0F2"
     tools:context=".ui.fragment.">
 
-    <EditText
-        android:id="@+id/edt_name"
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline9"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="24dp"
-        android:hint="@string/prompt_name"
-        android:inputType="textEmailAddress"
-        android:minHeight="48dp"
-        android:selectAllOnFocus="true"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.90"
+
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.30"
+
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35"
+
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.50"
+
+        />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/top_background"
+        app:layout_constraintBottom_toTopOf="@id/guideline7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.hbb20.CountryCodePicker
-        android:id="@+id/ccp"
+    <TextView
+
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        app:ccp_defaultNameCode="EG"
-        app:ccp_hintExampleNumber="true"
-        app:ccp_showNameCode="false"
-        app:layout_constraintBottom_toBottomOf="@+id/number_edit_text"
-        app:layout_constraintHeight_percent="0.70"
-        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/segoe_semibold"
+        android:text="Login"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toTopOf="@id/guideline5"
+        app:layout_constraintStart_toStartOf="@id/guideline9"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        app:layout_constraintTop_toTopOf="@+id/number_edit_text">
+    <TextView
 
-    </com.hbb20.CountryCodePicker>
-
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/segoe_semibold"
+        android:text="Welcome"
+        android:textColor="#5E4386"
+        android:textSize="40sp"
+        app:layout_constraintStart_toStartOf="@id/guideline9"
+        app:layout_constraintTop_toTopOf="@id/guideline5" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/number_edit_text"
+        android:id="@+id/name_edt"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/white_rectangle"
-        android:hint="0111 9499 687"
-        android:imeActionLabel="@string/action_sign_in_short"
-        android:imeOptions="actionDone"
-        android:inputType="phone"
-        android:selectAllOnFocus="true"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ccp"
-        app:layout_constraintTop_toBottomOf="@+id/edt_name" />
+        android:background="@drawable/edittext_background"
+        android:drawableStart="@drawable/name"
+        android:drawablePadding="8dp"
+        android:hint="Name"
+        android:paddingTop="4dp"
+        android:textColor="#756C6C"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/guideline8"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toTopOf="@+id/guideline6" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:background="@drawable/edittext_background"
+        app:layout_constraintEnd_toEndOf="@+id/guideline8"
+        app:layout_constraintStart_toStartOf="@+id/guideline9"
+        app:layout_constraintTop_toBottomOf="@+id/name_edt">
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/ccp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            app:ccp_defaultNameCode="EG"
+            app:ccp_hintExampleNumber="true"
+            app:ccp_showNameCode="false"
+
+            />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/phone_edt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:hint="01234567890"
+            android:textColor="#756C6C"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/verify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/btn_login"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="582dp"
+        app:layout_constraintTop_toBottomOf="@id/name_edt" />
 
     <ProgressBar
         android:id="@+id/loader"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="invisible"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
 
-    <Button
-        android:id="@+id/sign_in"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/action_sign_in_short"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/number_edit_text" />
+        tools:visibility="invisible" />
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

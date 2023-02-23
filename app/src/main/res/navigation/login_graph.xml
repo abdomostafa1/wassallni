@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/register"
-        android:name="com.wassallni.ui.fragment.RegisterFragment"
+        android:name="com.wassallni.ui.fragment.login_graph.RegisterFragment"
         android:label="Sign in"
         tools:layout="@layout/fragment_register" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/verificationFragment"
-        android:name="com.wassallni.ui.fragment.VerificationFragment"
+        android:name="com.wassallni.ui.fragment.login_graph.VerificationFragment"
         android:label="otp" >
         <action
             android:id="@+id/action_verificationFragment_to_successfulLoginFragment"
@@ -24,7 +24,7 @@
     </fragment>
     <fragment
         android:id="@+id/successfulLoginFragment"
-        android:name="com.wassallni.ui.fragment.SuccessfulLoginFragment"
+        android:name="com.wassallni.ui.fragment.login_graph.SuccessfulLoginFragment"
         android:label="Success"
         tools:layout="@layout/fragment_successful_login" />
 </navigation>

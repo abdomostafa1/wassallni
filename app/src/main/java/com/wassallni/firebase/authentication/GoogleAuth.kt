@@ -11,11 +11,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.wassallni.R
-import com.wassallni.ui.viewmodel.LoginPresenter
 
-class GoogleAuth (private var context:Context){
+class GoogleAuth(private var context: Context) {
 
-    private lateinit var presenter: LoginPresenter
+    //private lateinit var presenter: LoginPresenter
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     private lateinit var googleSignInOptions: GoogleSignInOptions
@@ -28,7 +27,7 @@ class GoogleAuth (private var context:Context){
             .requestProfile()
             .build()
 
-        googleSignInClient= GoogleSignIn.getClient(context, googleSignInOptions)
+        googleSignInClient = GoogleSignIn.getClient(context, googleSignInOptions)
     }
 
 
@@ -36,7 +35,7 @@ class GoogleAuth (private var context:Context){
         return googleSignInClient.signInIntent
     }
 
-     fun firebaseAuthWithGoogle(idToken: String) {
+    fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
@@ -44,18 +43,20 @@ class GoogleAuth (private var context:Context){
 
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
-                    presenter.onSignInWIthGoogleSuccessed()
+                    //                presenter.onSignInWIthGoogleSuccessed()
                 } else {
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
-                    presenter.onSignInWIthGoogleFailed(task.exception.toString())
+                    //              presenter.onSignInWIthGoogleFailed(task.exception.toString())
                 }
             }
     }
 
-    fun notifyPresenter(presenter: LoginPresenter){
-        this.presenter=presenter
-    }
-    fun signOut(){
+
+//    fun notifyPresenter(presenter: LoginPresenter) {
+//        this.presenter = presenter
+//    }
+
+    fun signOut() {
         googleSignInClient.signOut()
     }
 

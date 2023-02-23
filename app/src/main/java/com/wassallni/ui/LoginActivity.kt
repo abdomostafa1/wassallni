@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.preference.PreferenceManager
 import com.wassallni.R
 
 
@@ -18,7 +19,7 @@ class LoginActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
 
-        setupActionBarWithNavController(navController)
+       // setupActionBarWithNavController(navController)
 
     }
 

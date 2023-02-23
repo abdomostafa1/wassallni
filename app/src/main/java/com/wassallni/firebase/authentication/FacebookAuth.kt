@@ -4,9 +4,8 @@ import android.content.Context
 import android.content.Intent
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
-import com.wassallni.ui.viewmodel.LoginPresenter
 
-class FacebookAuth (private val presenter: LoginPresenter, val context: Context){
+class FacebookAuth ( val context: Context){
 
     //var callbackManager: CallbackManager =CallbackManager.Factory.create()
     val auth=FirebaseAuth.getInstance()
