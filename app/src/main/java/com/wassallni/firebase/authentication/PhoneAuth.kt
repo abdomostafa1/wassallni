@@ -1,15 +1,18 @@
 package com.wassallni.firebase.authentication
 
 import android.app.Activity
+import android.content.Context
 import android.util.Log
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import com.wassallni.R
 import com.wassallni.data.repository.VerificationCallbacks
+import dagger.hilt.android.qualifiers.ActivityContext
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-open class PhoneAuth(private val activity: Activity) {
+open class PhoneAuth @Inject constructor (@ActivityContext private val context: Context) {
 
     private val TAG = "PhoneAuth"
     private var notifier: VerificationCallbacks? = null
@@ -27,7 +30,7 @@ open class PhoneAuth(private val activity: Activity) {
         val optionsBuilder = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(phoneNumber)       // Phone number to verify
             .setTimeout(120L, TimeUnit.SECONDS) // Timeout and unit
-            .setActivity(activity)
+            .setActivity(context as Activity)
             // Activity (for callback binding)
             .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
         if (token != null) {
@@ -45,9 +48,9 @@ open class PhoneAuth(private val activity: Activity) {
             var error = ""
 
             error = if (p0 is FirebaseTooManyRequestsException)
-                activity.getString(R.string.sign_in_not_available_today)
+                context.getString(R.string.sign_in_not_available_today)
             else
-                p0.message ?: activity.getString(R.string.error_occurred)
+                p0.message ?: context.getString(R.string.error_occurred)
 
             notifier?.onVerificationFailed(error)
         }
@@ -70,7 +73,7 @@ open class PhoneAuth(private val activity: Activity) {
 
     fun verifyWithFirebase(credential: PhoneAuthCredential) {
 
-         auth.signInWithCredential(credential).addOnCompleteListener(activity) { task ->
+         auth.signInWithCredential(credential).addOnCompleteListener(context as Activity) { task ->
             if (task.isSuccessful) {
                 // Sign in success, update UI with the signed-in user's information
                 Log.e(TAG, "signInWithCredential:success")
@@ -80,9 +83,9 @@ open class PhoneAuth(private val activity: Activity) {
 
                 var error = ""
                 error = if (task.exception is FirebaseAuthInvalidCredentialsException)
-                    activity.getString(R.string.verification_code_invalid)
+                    context.getString(R.string.verification_code_invalid)
                 else
-                    task.exception?.message ?: activity.getString(R.string.error_occurred)
+                    task.exception?.message ?: context.getString(R.string.error_occurred)
 
                 notifier?.onVerificationFailed(error)
             }

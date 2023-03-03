@@ -13,11 +13,16 @@ import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 import com.jakode.verifycodeedittext.CodeCompleteListener
 import com.wassallni.R
+import com.wassallni.data.datasource.LoginUiState
 import com.wassallni.databinding.FragmentVerificationBinding
 import com.wassallni.ui.viewmodel.LoginViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -26,12 +31,14 @@ import kotlinx.coroutines.launch
  * Use the [VerificationFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
+@AndroidEntryPoint
 class VerificationFragment : Fragment() {
     // TODO: Rename and change types of parameters
 
-    private  val TAG = "VerificationFragment"
+    private val TAG = "VerificationFragment"
     private lateinit var binding: FragmentVerificationBinding
     private val loginViewModel: LoginViewModel by activityViewModels()
+    private lateinit var navController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,53 +53,59 @@ class VerificationFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        navController = findNavController()
 
         showPhoneNumber()
 
-        loginViewModel.counter.observe(viewLifecycleOwner) {
-            binding.tvCountDown.text = it
-        }
-
-        loginViewModel.timeOut.observe(viewLifecycleOwner) {
-            if (it) {
-                binding.tvCountDown.visibility = View.INVISIBLE
-                binding.tvResendCode.visibility = View.VISIBLE
+        lifecycleScope.launchWhenStarted {
+            loginViewModel.timeOut.collect {
+                if (it) {
+                    binding.tvCountDown.visibility = View.INVISIBLE
+                    binding.tvResendCode.visibility = View.VISIBLE
+                }
             }
         }
 
-        loginViewModel.codeSent.observe(viewLifecycleOwner) {
-            binding.progressIndicator.visibility = View.INVISIBLE
+        lifecycleScope.launchWhenStarted {
 
+            loginViewModel.loginUiState.collect {
+                when (it) {
+                    is LoginUiState.CodeSent -> {
+                        binding.progressIndicator.visibility = View.INVISIBLE
+                        loginViewModel.startCounter()
+                        binding.tvResendCode.visibility = View.INVISIBLE
+                        binding.tvCountDown.visibility = View.VISIBLE
+                    }
+                    is LoginUiState.Loading -> {
+                        binding.progressIndicator.visibility = View.VISIBLE
+                    }
+                    is LoginUiState.VerificationSuccess -> {
+                        loginViewModel.makeLoginRequest()
+                    }
+                    is LoginUiState.LoginSuccess -> {
+                        findNavController().navigate(R.id.action_verificationFragment_to_successfulLoginFragment)
+                    }
+                    is LoginUiState.Error -> {
+                        binding.progressIndicator.visibility = View.INVISIBLE
+                        binding.verifyCodeEditText.setCodeItemErrorLineDrawable()
+                        Toast.makeText(requireActivity(), it.errorMsg, Toast.LENGTH_LONG).show()
+                        signOut()
+                    }
+                    else -> Unit
+
+                }
+            }
+
+        }
+
+        lifecycleScope.launchWhenStarted {
+            loginViewModel.counter.collect{
+                binding.tvCountDown.text = it
+            }
+        }
+        lifecycleScope.launch(Dispatchers.Default) {
             loginViewModel.startCounter()
-            binding.tvResendCode.visibility = View.INVISIBLE
-            binding.tvCountDown.visibility = View.VISIBLE
-
         }
-
-        loginViewModel.verificationCompleted.observe(viewLifecycleOwner) {
-            Log.e(TAG, "onView: $it")
-           if(it){
-               lifecycleScope.launch(Dispatchers.IO) {
-                   loginViewModel.makeLoginRequest()
-               }
-           }
-        }
-
-        loginViewModel.loginCompleted.observe(viewLifecycleOwner){
-                     //   if (it==true)
-                findNavController().navigate(R.id.action_verificationFragment_to_successfulLoginFragment)
-
-            Log.e(TAG, "Login Completed ",)
-        }
-
-        loginViewModel.onFailure.observe(viewLifecycleOwner) {
-            binding.progressIndicator.visibility = View.INVISIBLE
-            binding.verifyCodeEditText.setCodeItemErrorLineDrawable()
-            Toast.makeText(requireActivity(), it, Toast.LENGTH_LONG).show()
-        }
-
-        loginViewModel.startCounter()
-
         binding.tvResendCode.paintFlags =
             binding.tvResendCode.paintFlags or Paint.UNDERLINE_TEXT_FLAG
 
@@ -102,7 +115,7 @@ class VerificationFragment : Fragment() {
     }
 
 
-    private fun showPhoneNumber(){
+    private fun showPhoneNumber() {
         val phoneNumber = loginViewModel.phoneNumber!!
         var encryptedNumber = ""
 
@@ -115,29 +128,45 @@ class VerificationFragment : Fragment() {
         binding.tvGuide.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY);
 
     }
+
     private fun setOnClickListener() {
 
+        binding.navigateUp.setOnClickListener {
+            navController.navigateUp()
+        }
         binding.verifyCodeEditText.setCompleteListener { complete ->
             binding.verifyBtn.isEnabled = complete
         }
 
         binding.verifyBtn.setOnClickListener {
-            binding.verifyBtn.isEnabled = false
             val smsCode = binding.verifyCodeEditText.text
 
-            Log.e("timeOut.value", "${(loginViewModel.timeOut.value)}")
-            if (loginViewModel.timeOut.value == true)
+            if (loginViewModel.timeOut.value)
                 binding.verifyCodeEditText.setCodeItemErrorLineDrawable()
             else {
-                binding.progressIndicator.visibility = View.VISIBLE
-                loginViewModel.verifyWithFirebase(smsCode)
+                lifecycleScope.launch {
+                    loginViewModel.verifyWithFirebase(smsCode)
+                }
             }
         }
 
         binding.tvResendCode.setOnClickListener {
-            binding.progressIndicator.visibility = View.VISIBLE
-            loginViewModel.resendVerificationCode()
+            lifecycleScope.launch {
+                loginViewModel.resendVerificationCode()
+            }
         }
     }
 
+
+    private fun signOut(){
+        if(FirebaseAuth.getInstance().currentUser!=null){
+            FirebaseAuth.getInstance().signOut()
+        }
+    }
+
+
+    override fun onStop() {
+        loginViewModel.resetUiState()
+        super.onStop()
+    }
 }

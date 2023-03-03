@@ -7,7 +7,7 @@
     >
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
+        android:id="@+id/recyclerView"
         android:name="com.wassallni.ui.fragment.main_graph.MainFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

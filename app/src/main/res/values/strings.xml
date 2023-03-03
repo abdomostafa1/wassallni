@@ -3,43 +3,43 @@
     <!-- Strings related to login -->
 
     <string name="login">Login</string>
-    <string name="prompt_name">Name</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="prompt_confirm_password">Confirm Password</string>
-    <string name="prompt_phone">Phone</string>
-    <string name="action_sign_in">register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="sign_in_not_available_today">Sorry ,Sign in Tomorrow \n
+    <string name="prompt_name" translatable="false">Name</string>
+    <string name="prompt_email" translatable="false">Email</string>
+    <string name="prompt_password" translatable="false">Password</string>
+    <string name="prompt_confirm_password" translatable="false">Confirm Password</string>
+    <string name="prompt_phone" translatable="false">Phone</string>
+    <string name="action_sign_in" translatable="false">register</string>
+    <string name="action_sign_in_short" translatable="false">Sign in</string>
+    <string name="sign_in_not_available_today" translatable="false">Sorry ,Sign in Tomorrow \n
         Sign in isn\'t available Today</string>
-    <string name="welcome">"Welcome!"</string>
-    <string name="verification_code_invalid">The verification code entered was invalid</string>
-    <string name="error_occurred">An error occurred</string>
-    <string name="invalid_username">Invalid Name</string>
-    <string name="invalid_phone_number">Invalid Number</string>
-    <string name="valid_data">Valid Data ❤❤😍</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="welcome" translatable="false">"Welcome!"</string>
+    <string name="verification_code_invalid" translatable="false">The verification code entered was invalid</string>
+    <string name="error_occurred" translatable="false">An error occurred</string>
+    <string name="invalid_username" translatable="false">Invalid Name</string>
+    <string name="invalid_phone_number" translatable="false">Invalid Number</string>
+    <string name="valid_data" translatable="false">Valid Data ❤❤😍</string>
+    <string name="invalid_password" translatable="false">Password must be >5 characters</string>
+    <string name="login_failed" translatable="false">"Login failed"</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="google_map_api_key">Helloblankfragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="google_map_api_key" translatable="false">Helloblankfragment</string>
 
-    <string name="facebook_app_id">385793220291840</string>
-    <string name="fb_login_protocol_scheme">fb385793220291840</string>
+    <string name="facebook_app_id" translatable="false">385793220291840</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb385793220291840</string>
 
-    <string name="facebook_client_token">e3194b4992ad9e083d57731c9fe11c42</string>
-    <string name="title_activity_maps">MapsActivity</string>
-    <string name="title_activity_maps2">MapsActivity2</string>
-    <string name="title_activity_driver_request">DriverRequest</string>
+    <string name="facebook_client_token" translatable="false">e3194b4992ad9e083d57731c9fe11c42</string>
+    <string name="title_activity_maps" translatable="false">MapsActivity</string>
+    <string name="title_activity_maps2" translatable="false">MapsActivity2</string>
+    <string name="title_activity_driver_request" translatable="false">DriverRequest</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="first_fragment_label" translatable="false">First Fragment</string>
+    <string name="second_fragment_label" translatable="false">Second Fragment</string>
+    <string name="next" translatable="false">Next</string>
+    <string name="previous" translatable="false">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="errormin">error occurred</string>
+    <string name="hello_first_fragment" translatable="false">Hello first fragment</string>
+    <string name="hello_second_fragment" translatable="false">Hello second fragment. Arg: %1$s</string>
+    <string name="errormin" translatable="false">error occurred</string>
 
 
 </resources>

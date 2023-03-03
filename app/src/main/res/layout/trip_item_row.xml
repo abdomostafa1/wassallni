@@ -1,61 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/_8sdp"
+    >
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_8sdp"
     >
 
     <TextView
-        android:id="@+id/firstTime"
+        android:id="@+id/startTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="first time"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:text="startTime"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
 
     <TextView
-        android:id="@+id/finalTime"
+        android:id="@+id/endTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="finalTime"
-        android:layout_marginTop="16dp"
+        android:text="endTime"
+        android:layout_marginTop="@dimen/_8sdp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/from" />
+        app:layout_constraintTop_toBottomOf="@id/start" />
 
 
     <TextView
-        android:id="@+id/from"
+        android:id="@+id/start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="From"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        app:layout_constraintStart_toEndOf="@id/firstTime"
+        android:text="start"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_24sdp"
+        app:layout_constraintStart_toEndOf="@id/startTime"
         app:layout_constraintTop_toTopOf="parent"
         />
 
     <TextView
-        android:id="@+id/to"
+        android:id="@+id/destination"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="To"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        app:layout_constraintStart_toEndOf="@id/finalTime"
-        app:layout_constraintTop_toBottomOf="@+id/from" />
+        android:text="estination"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginStart="@dimen/_24sdp"
+        app:layout_constraintStart_toEndOf="@id/endTime"
+        app:layout_constraintTop_toBottomOf="@+id/start" />
 
 
     <TextView
         android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="@dimen/_16sdp"
         android:text="price"
+        android:textColor="@color/green"
+        android:layout_marginTop="@dimen/_8sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/to"
+        app:layout_constraintTop_toBottomOf="@+id/destination"
+
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

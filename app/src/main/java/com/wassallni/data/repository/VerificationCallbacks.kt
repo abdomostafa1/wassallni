@@ -2,10 +2,10 @@ package com.wassallni.data.repository
 
 interface VerificationCallbacks {
 
-     fun onVerificationCompleted()
+      fun onVerificationCompleted()
 
-     fun onVerificationFailed(error: String)
+      fun onVerificationFailed(error: String)
 
-     fun onCodeSent()
+      fun onCodeSent()
 
 }

@@ -9,12 +9,15 @@ import androidx.appcompat.app.AppCompatActivity
 import com.wassallni.data.model.LoggedInUser
 import com.wassallni.databinding.ActivityMainBinding
 import com.wassallni.ui.viewmodel.RouteViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(){
 
     private val TAG = "MainActivity"
     private lateinit var binding:ActivityMainBinding
-    val model:RouteViewModel by viewModels()
+    @Inject lateinit var loggedInUser: LoggedInUser
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +25,6 @@ class MainActivity : AppCompatActivity(){
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val loggedInUser=LoggedInUser.getInstance()
         val token =loggedInUser.getToken()
         val name =loggedInUser.getName()
         Log.e(TAG, "Token:$token" )

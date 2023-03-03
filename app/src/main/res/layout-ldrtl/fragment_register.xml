@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        android:src="@drawable/top_background"
+        android:src="@drawable/top_background_rtl"
         app:layout_constraintBottom_toTopOf="@id/guideline7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,23 +70,24 @@
         android:fontFamily="@font/segoe_semibold"
         android:text="@string/login"
         android:textColor="@color/white"
-        android:textSize="50sp"
+        android:textSize="35sp"
+        android:maxLines="1"
         app:layout_constraintBottom_toTopOf="@id/guideline5"
         app:layout_constraintStart_toStartOf="@id/guideline9"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <TextView-->
+    <!--    <TextView-->
 
-<!--        android:id="@+id/textView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:fontFamily="@font/segoe_semibold"-->
-<!--        android:text="Welcome"-->
-<!--        android:textColor="#5E4386"-->
-<!--        android:textSize="40sp"-->
-<!--        app:layout_constraintStart_toStartOf="@id/guideline9"-->
-<!--        app:layout_constraintTop_toTopOf="@id/guideline5" />-->
+    <!--        android:id="@+id/textView"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        android:fontFamily="@font/segoe_semibold"-->
+    <!--        android:text="Welcome"-->
+    <!--        android:textColor="#5E4386"-->
+    <!--        android:textSize="40sp"-->
+    <!--        app:layout_constraintStart_toStartOf="@id/guideline9"-->
+    <!--        app:layout_constraintTop_toTopOf="@id/guideline5" />-->
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/name_edt"
@@ -142,8 +143,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/ccp"
-            app:layout_constraintStart_toStartOf="parent"
-            />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -151,10 +151,9 @@
         android:id="@+id/verify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/btn_login"
+        android:src="@drawable/btn_login_rtl"
         app:layout_constraintBottom_toBottomOf="parent"
-
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <androidx.constraintlayout.widget.Guideline

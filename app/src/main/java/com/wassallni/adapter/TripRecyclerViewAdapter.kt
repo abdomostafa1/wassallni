@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.wassallni.data.model.Trip
 import com.wassallni.databinding.TripItemRowBinding
+import com.wassallni.utils.DateUseCase
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
@@ -12,7 +13,8 @@ import com.wassallni.databinding.TripItemRowBinding
  */
 class TripRecyclerViewAdapter: RecyclerView.Adapter<TripRecyclerViewAdapter.ViewHolder>() {
 
-    private var trips=ArrayList<Trip>()
+    private var trips= listOf<Trip>()
+    private val date=DateUseCase()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
@@ -28,16 +30,16 @@ class TripRecyclerViewAdapter: RecyclerView.Adapter<TripRecyclerViewAdapter.View
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val trip = trips[position]
 
-        holder.binding.from.text=trip.from
-        holder.binding.to.text=trip.to
-        holder.binding.firstTime.text=trip.firstTime
-        holder.binding.finalTime.text=trip.finalTime
+        holder.binding.start.text=trip.start
+        holder.binding.destination.text=trip.destination
+        holder.binding.price.text=trip.price.toString()
+        holder.binding.startTime.text=date.fromMillisToString(trip.startTime)
+        holder.binding.endTime.text=date.fromMillisToString(trip.endTime)
     }
 
     override fun getItemCount(): Int = trips.size
 
-    fun setData(newTrips:ArrayList<Trip>){
-        trips.clear()
+    fun setData(newTrips:List<Trip>){
         trips=newTrips
         notifyDataSetChanged()
     }
