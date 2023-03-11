@@ -1,6 +1,6 @@
 <resources >
     <!-- Base application theme. -->
     <style name="Theme.Wassallni" parent="Theme.Material3.Light.NoActionBar">
-
+        <item name="android:statusBarColor">#FEA9A7</item>
     </style>
 </resources>

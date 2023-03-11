@@ -37,6 +37,8 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private fun checkAuthentication() {
         val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+        val token=sharedPreferences.getString("token","")
+
 
         if (!isLoggedIn)
             openLoginActivity()
@@ -44,6 +46,7 @@ class SplashScreenActivity : AppCompatActivity() {
             openMainActivity()
 
     }
+
 
     private fun openLoginActivity() {
         val intent = Intent(this, LoginActivity::class.java)

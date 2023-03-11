@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">wassallni</string>
+    <string name="app_name">وصلني</string>
     <string name="login">تسجيل الدخول</string>
+    <string name="verification_code_invalid">الكود غير صحيح</string>
+    <string name="name">الاسم</string>
+    <string name="resend_code">إعادة ارسال</string>
+    <string name="verify">تأكيد</string>
+    <string name="sms_code_sent_to">"تم إرسال كود الي"</string>
+    <string name="you_signed_in_successfully">تم التسجيل بنجاح</string>
 </resources>

@@ -80,19 +80,20 @@ class VerificationFragment : Fragment() {
                         binding.progressIndicator.visibility = View.VISIBLE
                     }
                     is LoginUiState.VerificationSuccess -> {
+                        Log.e(TAG, "VerificationSuccess: true " )
                         loginViewModel.makeLoginRequest()
                     }
                     is LoginUiState.LoginSuccess -> {
                         findNavController().navigate(R.id.action_verificationFragment_to_successfulLoginFragment)
                     }
                     is LoginUiState.Error -> {
+
                         binding.progressIndicator.visibility = View.INVISIBLE
                         binding.verifyCodeEditText.setCodeItemErrorLineDrawable()
-                        Toast.makeText(requireActivity(), it.errorMsg, Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireActivity(),it.errorMsg , Toast.LENGTH_LONG).show()
                         signOut()
                     }
                     else -> Unit
-
                 }
             }
 
@@ -122,9 +123,9 @@ class VerificationFragment : Fragment() {
         for (i in 1..phoneNumber.length - 3)
             encryptedNumber += "*"
         encryptedNumber += phoneNumber.subSequence(phoneNumber.length - 3, phoneNumber.length)
-
+        val smsCodeSentTo=getString(R.string.sms_code_sent_to)
         val text =
-            "<font color=#757575>SMS verification code sent to </font> <font color=#000000>${encryptedNumber}</font>"
+            "<font color=#757575>$smsCodeSentTo</font>\n<font color=#000000>${encryptedNumber}</font>"
         binding.tvGuide.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY);
 
     }
@@ -145,14 +146,14 @@ class VerificationFragment : Fragment() {
                 binding.verifyCodeEditText.setCodeItemErrorLineDrawable()
             else {
                 lifecycleScope.launch {
-                    loginViewModel.verifyWithFirebase(smsCode)
+                    loginViewModel.verifyWithFirebase(smsCode,requireActivity())
                 }
             }
         }
 
         binding.tvResendCode.setOnClickListener {
             lifecycleScope.launch {
-                loginViewModel.resendVerificationCode()
+                loginViewModel.resendVerificationCode(requireActivity())
             }
         }
     }

@@ -2,71 +2,82 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/_8sdp"
+    app:cardCornerRadius="@dimen/_16sdp"
+    android:background="@drawable/card_view_background"
+    android:elevation="@dimen/_8sdp"
+
+
     >
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_8sdp"
-        >
+        android:layout_marginStart="@dimen/_16sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_16sdp"
 
-        <TextView
+        >
+        <View
             android:id="@+id/startTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_28sdp"
+            android:layout_height="@dimen/_28sdp"
             android:layout_marginTop="@dimen/_8sdp"
-            android:text="08:00"
-            android:foreground="#dddddd"
+            android:foreground="@drawable/circular_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
 
-        <TextView
+        <View
             android:id="@+id/endTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="08:00"
-            android:foreground="#dddddd"
+            android:layout_width="@dimen/_28sdp"
+            android:layout_height="@dimen/_28sdp"
             android:layout_marginTop="@dimen/_8sdp"
+            android:foreground="@drawable/circular_background"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/start" />
+            app:layout_constraintTop_toBottomOf="@+id/startTime"
+
+            />
 
 
         <TextView
             android:id="@+id/start"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_17sdp"
             android:layout_marginStart="@dimen/_24sdp"
-            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"
+            android:text="كوبري المشاه طريق صلاح سالم"
             android:foreground="#dddddd"
+            app:layout_constraintBottom_toBottomOf="@+id/startTime"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/startTime"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/startTime" />
 
         <TextView
             android:id="@+id/destination"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_18sdp"
             android:layout_marginStart="@dimen/_24sdp"
-            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
             android:foreground="#dddddd"
+            app:layout_constraintBottom_toBottomOf="@+id/endTime"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/endTime"
-            app:layout_constraintTop_toBottomOf="@+id/start" />
+            app:layout_constraintTop_toTopOf="@+id/endTime" />
 
 
         <TextView
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:text="price"
-            android:foreground="#dddddd"
             android:layout_marginTop="@dimen/_8sdp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:foreground="#dddddd"
+            android:text="price"
+            app:layout_constraintEnd_toEndOf="@+id/destination"
             app:layout_constraintTop_toBottomOf="@+id/destination"
 
             />

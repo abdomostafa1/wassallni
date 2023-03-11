@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.coordinatorlayout.widget.CoordinatorLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.MainActivity"
-    >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_height="wrap_content"
-        android:text="Hello welcome"
-        android:textSize="40sp"
+        android:layout_width="match_parent"
+        >
 
-        />
-</androidx.appcompat.widget.LinearLayoutCompat>
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            app:title="@string/app_name"
+            app:titleCentered="true"
+            app:navigationIcon="@drawable/ic_nav_drawer"
+            android:backgroundTint="@color/teal_200"
+            android:background="@color/teal_200"
+            app:titleTextColor="@color/white"
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/mainFragmentContainerView"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/main_graph"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

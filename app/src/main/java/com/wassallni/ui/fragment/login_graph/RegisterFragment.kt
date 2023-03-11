@@ -13,11 +13,13 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.wassallni.R
 import com.wassallni.data.datasource.LoginUiState
+import com.wassallni.data.model.DoHomeWork
 import com.wassallni.databinding.FragmentRegisterBinding
 import com.wassallni.ui.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -29,6 +31,8 @@ class RegisterFragment : Fragment() {
     private val binding get() = _binding!!
     private val loginViewModel: LoginViewModel by activityViewModels()
     private lateinit var navController: NavController
+    @Inject
+    lateinit var doHomeWork:DoHomeWork
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -90,14 +94,10 @@ class RegisterFragment : Fragment() {
             val name = binding.nameEdt.text.toString()
             val number = binding.phoneEdt.text.toString()
             val phoneNumber = "+${binding.ccp.selectedCountryCode}${number}"
-//            Log.e(TAG, "$phoneNumber ")
-//            lifecycleScope.launch(Dispatchers.IO) {
-//                loginViewModel.verifyPhoneNumber(name, phoneNumber)
-//            }
-
-            loginViewModel.phoneNumber=phoneNumber
-            loginViewModel.name=name
-            navController.navigate(R.id.action_register_to_verificationFragment)
+            Log.e(TAG, "$phoneNumber ")
+            lifecycleScope.launch(Dispatchers.IO) {
+                loginViewModel.verifyPhoneNumber(name, phoneNumber,requireActivity())
+            }
         }
     }
 

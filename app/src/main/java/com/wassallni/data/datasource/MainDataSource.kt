@@ -4,15 +4,16 @@ import com.wassallni.data.model.Trip
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
-class MainDataSource {
+class MainDataSource @Inject constructor(){
 
     private val _state = MutableStateFlow<MainUiState>(MainUiState.Loading)
     val state = _state.asStateFlow()
 
     suspend fun getTrips() {
         _state.emit(MainUiState.Loading)
-        delay(4000)
+        delay(15000)
         _state.emit(MainUiState.Success(list))
     }
 

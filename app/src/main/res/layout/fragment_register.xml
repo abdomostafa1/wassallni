@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    android:id="@+id/scrollView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    >
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FCF0F2"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".ui.fragment.">
 
     <androidx.constraintlayout.widget.Guideline
@@ -53,8 +63,8 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:scaleType="centerCrop"
         android:src="@drawable/top_background"
         app:layout_constraintBottom_toTopOf="@id/guideline7"
@@ -75,39 +85,29 @@
         app:layout_constraintStart_toStartOf="@id/guideline9"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <TextView-->
-
-<!--        android:id="@+id/textView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:fontFamily="@font/segoe_semibold"-->
-<!--        android:text="Welcome"-->
-<!--        android:textColor="#5E4386"-->
-<!--        android:textSize="40sp"-->
-<!--        app:layout_constraintStart_toStartOf="@id/guideline9"-->
-<!--        app:layout_constraintTop_toTopOf="@id/guideline5" />-->
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/name_edt"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_40sdp"
         android:background="@drawable/edittext_background"
-        android:drawableStart="@drawable/name"
-        android:drawablePadding="8dp"
+        android:drawableLeft="@drawable/name"
+        android:drawablePadding="@dimen/_12sdp"
         android:hint="Name"
-        android:paddingTop="4dp"
+        android:textAlignment="gravity"
+        android:gravity="center|left"
+        android:paddingLeft="@dimen/_8sdp"
         android:textColor="#756C6C"
-        android:textSize="18sp"
+        android:textSize="@dimen/_18ssp"
         app:layout_constraintEnd_toEndOf="@+id/guideline8"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
         app:layout_constraintTop_toTopOf="@+id/guideline6" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/childConstrainLayout"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_24sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/edittext_background"
         app:layout_constraintEnd_toEndOf="@+id/guideline8"
         app:layout_constraintStart_toStartOf="@+id/guideline9"
@@ -115,8 +115,8 @@
 
         <com.hbb20.CountryCodePicker
             android:id="@+id/ccp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/_88sdp"
+            android:layout_height="@dimen/_40sdp"
             android:clickable="true"
             android:focusable="true"
             app:ccp_defaultNameCode="EG"
@@ -133,16 +133,16 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:gravity="left"
             android:hint="01234567890"
             android:inputType="phone"
             android:textAlignment="gravity"
+            android:gravity="center|left"
             android:textColor="#756C6C"
-            android:textSize="18sp"
+            android:textSize="@dimen/_18ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/ccp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -153,9 +153,8 @@
         android:layout_height="wrap_content"
         android:src="@drawable/btn_login"
         app:layout_constraintBottom_toBottomOf="parent"
-
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/childConstrainLayout" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -189,3 +188,5 @@
     </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

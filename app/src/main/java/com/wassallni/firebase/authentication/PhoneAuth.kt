@@ -8,11 +8,16 @@ import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import com.wassallni.R
 import com.wassallni.data.repository.VerificationCallbacks
+import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ActivityScoped
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import javax.inject.Singleton
 
-open class PhoneAuth @Inject constructor (@ActivityContext private val context: Context) {
+
+class PhoneAuth @Inject constructor(@ApplicationContext private  val context: Context) {
 
     private val TAG = "PhoneAuth"
     private var notifier: VerificationCallbacks? = null
@@ -25,12 +30,12 @@ open class PhoneAuth @Inject constructor (@ActivityContext private val context: 
     }
 
     fun sendVerificationCode(
-        phoneNumber: String
+        phoneNumber: String,activity:Activity
     ) {
         val optionsBuilder = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(phoneNumber)       // Phone number to verify
             .setTimeout(120L, TimeUnit.SECONDS) // Timeout and unit
-            .setActivity(context as Activity)
+            .setActivity(activity)
             // Activity (for callback binding)
             .setCallbacks(callbacks)          // OnVerificationStateChangedCallbacks
         if (token != null) {
@@ -71,9 +76,9 @@ open class PhoneAuth @Inject constructor (@ActivityContext private val context: 
 
     }
 
-    fun verifyWithFirebase(credential: PhoneAuthCredential) {
+    fun verifyWithFirebase(credential: PhoneAuthCredential,activity: Activity) {
 
-         auth.signInWithCredential(credential).addOnCompleteListener(context as Activity) { task ->
+         auth.signInWithCredential(credential).addOnCompleteListener(activity) { task ->
             if (task.isSuccessful) {
                 // Sign in success, update UI with the signed-in user's information
                 Log.e(TAG, "signInWithCredential:success")

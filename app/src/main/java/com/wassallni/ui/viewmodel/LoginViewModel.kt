@@ -2,6 +2,7 @@ package com.wassallni.ui.viewmodel
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.*
 import androidx.lifecycle.viewmodel.CreationExtras
@@ -14,37 +15,35 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel @Inject constructor(private val loginRepository: LoginRepository) :
+    ViewModel() {
 
     // Register Fragment LiveData
     var phoneNumber: String? = null
     var name: String? = null
 
     private val _usernameError = MutableStateFlow<Int>(0)
-    val usernameError: StateFlow<Int>
-        get() = _usernameError
+    val usernameError = _usernameError.asStateFlow()
 
     private val _phoneNumberError = MutableStateFlow<Int>(0)
-    val phoneNumberError: StateFlow<Int>
-        get() = _phoneNumberError
+    val phoneNumberError = _phoneNumberError.asStateFlow()
 
     val loginUiState = loginRepository.loginUiState
 
     // Verification Fragment LiveData
     private val _counter = MutableStateFlow<String>("")
-    val counter: StateFlow<String>
-        get() = _counter
+    val counter = _counter.asStateFlow()
 
     private val _timeOut = MutableStateFlow<Boolean>(false)
-    val timeOut: StateFlow<Boolean>
-        get() = _timeOut
+    val timeOut = _timeOut.asStateFlow()
 
-    suspend fun verifyPhoneNumber(name: String, phone: String) {
+    suspend fun verifyPhoneNumber(name: String, phone: String, activity: Activity) {
 
         if (!isNameValid(name))
             _usernameError.emit(R.string.invalid_username)
@@ -53,7 +52,7 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
         else {
             this.name = name
             phoneNumber = phone
-            loginRepository.sendVerificationCode(phone)
+            loginRepository.sendVerificationCode(phone, activity)
         }
     }
 
@@ -86,21 +85,26 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
 
     }
 
-    suspend fun resendVerificationCode() {
-        loginRepository.sendVerificationCode(phoneNumber!!)
+    suspend fun resendVerificationCode(activity: Activity) {
+        loginRepository.sendVerificationCode(phoneNumber!!, activity)
     }
 
     suspend fun makeLoginRequest() {
-        loginRepository.makeLoginRequest(name!!, phoneNumber!!)
+        Log.e("TAG", "name:$name ")
+        Log.e("TAG", "phone:$phoneNumber ")
+        viewModelScope.launch(Dispatchers.IO) {
+            loginRepository.makeLoginRequest(name!!, phoneNumber!!)
+        }
+
     }
 
-    suspend fun verifyWithFirebase(smsCode: String) {
-        loginRepository.verifyWithFirebase(smsCode)
+    suspend fun verifyWithFirebase(smsCode: String, activity: Activity) {
+        loginRepository.verifyWithFirebase(smsCode, activity)
     }
 
     fun resetUiState() {
-        _usernameError.value=0
-        _phoneNumberError.value=0
+        _usernameError.value = 0
+        _phoneNumberError.value = 0
         loginRepository.resetUiState()
     }
 

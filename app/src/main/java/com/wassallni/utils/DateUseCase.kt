@@ -9,7 +9,7 @@ class DateUseCase {
 
         val date = Date(millis) // create a Date object from the millisecond value
 
-        val sdf = SimpleDateFormat("hh:mm ") // create a date format
+        val sdf = SimpleDateFormat("hh:mm a") // create a date format
 
         return sdf.format(date)
 

@@ -10,7 +10,8 @@
     </style>
 
     <style name="loginTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimaryDark">#FEA9A7</item>
+        <item name="android:statusBarColor">#FEA9A7</item>
+
     </style>
 
     <style name="Material3" parent="Theme.Material3.Light.NoActionBar">
@@ -31,4 +32,8 @@
     <style name="Theme.Wassallni.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Wassallni.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="mainActivityTheme" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/teal_200</item>
+    </style>
 </resources>
