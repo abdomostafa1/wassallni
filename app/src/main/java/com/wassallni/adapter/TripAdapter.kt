@@ -2,21 +2,22 @@ package com.wassallni.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import com.wassallni.ui.fragment.main_graph.MainFragmentDirections
 import androidx.navigation.findNavController
 import com.wassallni.data.model.Trip
 import com.wassallni.databinding.TripItemRowBinding
 import com.wassallni.utils.DateUseCase
+import okhttp3.internal.immutableListOf
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
  * TODO: Replace the implementation with code for your data type.
  */
-class TripAdapter : RecyclerView.Adapter<TripAdapter.ViewHolder>() {
+class TripAdapter : RecyclerView.Adapter<TripAdapter.ViewHolder>() , View.OnClickListener{
 
-    private var trips= listOf<Trip>()
-    private val date=DateUseCase()
+    private var trips= immutableListOf<Trip>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
@@ -34,19 +35,24 @@ class TripAdapter : RecyclerView.Adapter<TripAdapter.ViewHolder>() {
 
         holder.binding.start.text=trip.start
         holder.binding.destination.text=trip.destination
-        holder.binding.price.text=trip.price.toString()
+        holder.binding.tvPrice.text=trip.price.toString()
 
-        holder.binding.startTime.text=date.fromMillisToString(trip.startTime)
-        holder.binding.endTime.text=date.fromMillisToString(trip.endTime)
-        holder.binding.cardView.setOnClickListener {
-            //val action=Trip
-            //it.findNavController().navigate()
+        holder.binding.startTime.text=DateUseCase.fromMillisToString1(trip.startTime)
+        holder.binding.endTime.text=DateUseCase.fromMillisToString1(trip.endTime)
+        val id =trip.id
+        holder.itemView.setOnClickListener {
+
+            val action=MainFragmentDirections.goToTripFragment(id)
+            it.findNavController().navigate(action)
         }
 
     }
 
     override fun getItemCount(): Int = trips.size
 
+    fun main(){
+
+    }
     fun setData(newTrips:List<Trip>){
         trips=newTrips
         notifyDataSetChanged()
@@ -55,4 +61,8 @@ class TripAdapter : RecyclerView.Adapter<TripAdapter.ViewHolder>() {
         val binding=binding
     }
 
+
+    override fun onClick(v: View?) {
+        TODO("Not yet implemented")
+    }
 }

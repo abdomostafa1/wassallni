@@ -33,7 +33,9 @@
 
     <style name="Theme.Wassallni.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="temp_activity_theme" parent="Theme.Material3.Light.NoActionBar" />
+
     <style name="mainActivityTheme" parent="Theme.Material3.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/teal_200</item>
+        <item name="android:statusBarColor">@color/toolbar_color</item>
     </style>
 </resources>

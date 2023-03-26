@@ -7,11 +7,12 @@ import com.google.maps.android.PolyUtil
 import com.wassallni.R
 import com.wassallni.data.datasource.RouteRemoteDataSource
 import com.wassallni.data.model.PlaceInfo
+import com.wassallni.utils.LatLngUseCase
 import org.json.JSONObject
 
 class RouteRepository (val context: Context, val origin: PlaceInfo, val destination: PlaceInfo){
     private val routeRemoteDataSource=RouteRemoteDataSource()
-    private val latLngUseCase=LatLngUseCase()
+//    private val latLngUseCase=LatLngUseCase()
     private val apiKey: String = context.resources.getString(R.string.google_map_api_key)
 
     private val maximumLng: Double = 31.212882
@@ -23,13 +24,12 @@ class RouteRepository (val context: Context, val origin: PlaceInfo, val destinat
         val originLatLng=LatLng(origin.latitude!!, origin.longitude!!)
         val destinationLatLng=LatLng(destination.latitude!!, destination.longitude!!)
         // Format LatLng to match query
-        val originFormattedLatLng=latLngUseCase.formatLatLng(originLatLng)
-        val destinationFormattedLatLng=latLngUseCase.formatLatLng(destinationLatLng)
+        val originFormattedLatLng=LatLngUseCase.formatLatLng(originLatLng)
+        val destinationFormattedLatLng=LatLngUseCase.formatLatLng(destinationLatLng)
 
         routeRemoteDataSource.drawRoute(originFormattedLatLng,destinationFormattedLatLng,apiKey){
 
             val root= JSONObject(it)
-
             val route= root.getJSONArray("routes").getJSONObject(0)
             //val leg=route.getJSONArray("legs").getJSONObject(0)
             val overviewPolyline=route.getJSONObject("overview_polyline")
@@ -43,7 +43,7 @@ class RouteRepository (val context: Context, val origin: PlaceInfo, val destinat
     fun getOriginLatLng() :LatLng{
         return LatLng(origin.latitude!!,origin.longitude!!)
     }
-    fun getDestinationLatLng() :LatLng{
+    fun getDestinationLatLng() :LatLng {
         return return LatLng(destination.latitude!!,destination.longitude!!)
     }
 

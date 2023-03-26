@@ -5,6 +5,7 @@ import android.util.Log
 import com.google.android.gms.maps.model.LatLng
 import com.wassallni.data.model.PlaceInfo
 import com.wassallni.data.datasource.PlaceRemoteDataSource
+import com.wassallni.utils.LatLngUseCase
 import org.json.JSONObject
 
 class PlaceRepository(val context: Context) {
@@ -20,10 +21,10 @@ class PlaceRepository(val context: Context) {
 
     private val FOCUS_IN_ORIGIN_EDT: Int = 1
     private val predictedPlaces = ArrayList<PlaceInfo>()
-    private val latLngUseCase=LatLngUseCase()
+    private val latLngUseCase= LatLngUseCase()
 
     fun getAddressFromLatLng(latLng: LatLng,currentFocus: Int, callback: (address: String?) -> Unit) {
-        val formattedLatLng = latLngUseCase.formatLatLng(latLng)
+        val formattedLatLng = LatLngUseCase.formatLatLng(latLng)
         if(currentFocus==FOCUS_IN_ORIGIN_EDT)
             updateOrigin(latLng)
         else

@@ -4,25 +4,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        >
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_width="match_parent"
-            app:title="@string/app_name"
-            app:titleCentered="true"
-            app:navigationIcon="@drawable/ic_nav_drawer"
-            android:backgroundTint="@color/teal_200"
-            android:background="@color/teal_200"
-            app:titleTextColor="@color/white"
-            />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mainFragmentContainerView"
         android:layout_height="match_parent"
@@ -30,7 +11,6 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         app:defaultNavHost="true"
         app:navGraph="@navigation/main_graph"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
     />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

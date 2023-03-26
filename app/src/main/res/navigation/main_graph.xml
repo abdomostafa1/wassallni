@@ -8,15 +8,28 @@
         android:id="@+id/mainFragment"
         android:name="com.wassallni.ui.fragment.main_graph.MainFragment"
         android:label="Trips"
-
         >
         <action
-            android:id="@+id/action_mainFragment_to_tripFragment"
+            android:id="@+id/go_to_tripFragment"
             app:destination="@id/tripFragment" />
     </fragment>
     <fragment
         android:id="@+id/tripFragment"
         android:name="com.wassallni.ui.fragment.main_graph.TripFragment"
-        android:label="fragment_trip"
-        tools:layout="@layout/fragment_trip" />
+        android:label="@string/trip_details"
+        tools:layout="@layout/fragment_trip"
+        >
+        <argument
+            android:name="id"
+            app:argType="string"
+            android:defaultValue="" />
+        <action
+            android:id="@+id/action_tripFragment_to_stationsFragment"
+            app:destination="@id/stationsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/stationsFragment"
+        android:name="com.wassallni.ui.fragment.main_graph.StationsFragment"
+        android:label="StationsFragment" />
+
 </navigation>

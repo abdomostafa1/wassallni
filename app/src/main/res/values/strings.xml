@@ -13,7 +13,7 @@
     <string name="sign_in_not_available_today" translatable="false">Sorry ,Sign in Tomorrow \n
         Sign in isn\'t available Today</string>
     <string name="welcome" translatable="false">"Welcome!"</string>
-    <string name="verification_code_invalid" >The verification code entered was invalid</string>
+    <string name="verification_code_invalid">The verification code entered was invalid</string>
     <string name="error_occurred" translatable="false">An error occurred</string>
     <string name="invalid_username" translatable="false">Invalid Name</string>
     <string name="invalid_phone_number" translatable="false">Invalid Number</string>
@@ -41,10 +41,20 @@
     <string name="hello_second_fragment" translatable="false">Hello second fragment. Arg: %1$s</string>
     <string name="errormin" translatable="false">error occurred</string>
     <string name="name">Name</string>
+    <string name="trip_details">trip details</string>
     <string name="resend_code">resend code</string>
     <string name="verify">verify</string>
     <string name="sms_code_sent_to">SMS code sent to </string>
     <string name="you_signed_in_successfully">you signed in Successfully</string>
+    <string name="seat_num">Seats Number</string>
+    <string name="price">Trip price</string>
+    <string name="EGP">EGP</string>
+    <string name="driver">driver</string>
+    <string name="date">Date</string>
+    <string name="to">to</string>
+    <string name="stations">stations</string>
+    <string name="book_trip">book trip</string>
+    <string name="ride_station">ride station</string>
 
 
 </resources>

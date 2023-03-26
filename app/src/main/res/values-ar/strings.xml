@@ -8,4 +8,17 @@
     <string name="verify">تأكيد</string>
     <string name="sms_code_sent_to">"تم إرسال كود الي"</string>
     <string name="you_signed_in_successfully">تم التسجيل بنجاح</string>
+    <string name="trip_details">تفاصيل الرحلة</string>
+    <string name="seat_num">عدد الكراسي</string>
+    <string name="price">سعر الرحلة</string>
+    <string name="EGP">ج.م</string>
+    <string name="driver">السائق</string>
+    <string name="date">التاريخ</string>
+    <string name="to">الي</string>
+    <string name="stations">المحطات</string>
+    <string name="book_trip">حجز الرحلة</string>
+    <string name="ride_station">محطات الركوب</string>
+
+
+
 </resources>

@@ -32,6 +32,7 @@ class DriverRequest : AppCompatActivity(), OnMapReadyCallback {
         val destination= intent.getSerializableExtra("destination") as PlaceInfo
         routeViewModel=RouteViewModel(this,origin,destination)
 
+
         mapFragment = supportFragmentManager
             .findFragmentById(R.id.selection_map) as SupportMapFragment
 

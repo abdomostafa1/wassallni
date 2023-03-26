@@ -4,7 +4,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
+//import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -14,7 +14,7 @@ class RouteRemoteDataSource (){
     private val url = "https://maps.googleapis.com/"
     private val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl(url)
-        .addConverterFactory(ScalarsConverterFactory.create())
+        //.addConverterFactory(ScalarsConverterFactory.create())
         .build()
 
     fun drawRoute(originLatLng: String,destinationLatLng: String,key:String,callback:(response:String) ->Unit){
