@@ -12,7 +12,7 @@
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/toolbar_color"
+            android:background="#EBEFE2"
             app:navigationIcon="@drawable/ic_nav_drawer"
             app:title="@string/app_name"
             app:titleCentered="true"

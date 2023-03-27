@@ -16,22 +16,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.50"
-        app:layout_constraintGuide_begin="20dp" />
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.50" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="اقرب محطة ركوب"
         android:textSize="18sp"
-        android:layout_marginTop="16dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
@@ -39,9 +38,9 @@
         android:id="@+id/first_station"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="TextView"
         android:textSize="22sp"
-        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -50,9 +49,9 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="تاني اقرب محطة ركوب"
         android:textSize="18sp"
-        android:layout_marginTop="16dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/first_station" />
 
@@ -60,9 +59,9 @@
         android:id="@+id/second_station"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="TextView"
         android:textSize="22sp"
-        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -71,8 +70,8 @@
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:layout_marginLeft="16dp"
+        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/first_station"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@+id/first_station" />
@@ -81,9 +80,32 @@
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:layout_marginLeft="16dp"
+        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="@+id/second_station"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@+id/second_station" />
+
+    <Button
+        android:id="@+id/change_station"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="change station"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/confirm" />
+
+    <Button
+        android:id="@+id/confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="book"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/change_station"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="16dp"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,5 +18,7 @@
     <color name="route_color">#E98D58</color>
     <color name="blue">#162762</color>
     <color name="green">#66F9B0</color>
+    <color name="green_500">#7FCE79</color>
+    <color name="dot_marker_color">#4285F4</color>
 
 </resources>

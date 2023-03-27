@@ -85,7 +85,7 @@ class TripFragment : Fragment(), OnMapReadyCallback {
                     if (points != null) {
                         Log.e("TAG", "new polyline1: ")
                         val polyline1 = PolylineOptions().addAll(points!!)
-                        polyline1.color(requireActivity().getColor(R.color.blue))
+//                        polyline1.color(requireActivity().getColor(R.color.blue))
                         polyline1.width(6f)
                         map.addPolyline(polyline1)
                         //map2.addPolyline(polyline1)

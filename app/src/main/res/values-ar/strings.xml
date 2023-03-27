@@ -18,6 +18,10 @@
     <string name="stations">المحطات</string>
     <string name="book_trip">حجز الرحلة</string>
     <string name="ride_station">محطات الركوب</string>
+    <string name="settings">الإعدادات</string>
+    <string name="turn_device_location">قم بتشغيل موقع الجهاز</string>
+    <string name="gps_message">GPS غير مفعل. هل تريد الذهاب إلى قائمة الإعدادات؟</string>
+    <string name="location_permission_failure">التطبيق لن يعمل بشكل صحيح, يجب ان تسمح بالوصول الي موقعك</string>
 
 
 

@@ -14,7 +14,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,7 +23,7 @@ class ReservationVM @Inject constructor(
 ) : ViewModel() {
     private val TAG = "ReservationVM"
 
-    private var fullTrip :FullTrip?=null
+    private var fullTrip: FullTrip? = null
 
     private val _tripUiState = MutableStateFlow<TripUiState?>(null)
     val tripUiState = _tripUiState.asStateFlow()
@@ -41,57 +40,74 @@ class ReservationVM @Inject constructor(
     private val _counter = MutableStateFlow<Int>(1)
     val counter = _counter.asStateFlow()
 
-    private val _nearestStation = MutableStateFlow<List<NearestStation>?>(null)
-    val nearestStation = _nearestStation.asStateFlow()
+    private val _nearestStations = MutableStateFlow<List<NearestStation>?>(null)
+    val nearestStations = _nearestStations.asStateFlow()
 
-    private var distances:List<DistanceItem>?=null
+    private var distances: List<DistanceItem>? = null
+    var userLocation: LatLng? = null
+     var selectedStation: Int = 0
+
     fun getTripDetails(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            fullTrip= tripRepository.getTripDetails(id)
-            val driverName=fullTrip?.driverName!!
-            val price=fullTrip?.price!!
-            val fullDate=DateUseCase.fromMillisToString2(fullTrip?.startTime!!)
-            val firstDate=DateUseCase.fromMillisToString1(fullTrip?.startTime!!)
-            val lastDate=DateUseCase.fromMillisToString1(fullTrip?.endTime!!)
+            fullTrip = tripRepository.getTripDetails(id)
+            val driverName = fullTrip?.driverName!!
+            val price = fullTrip?.price!!
+            val fullDate = DateUseCase.fromMillisToString2(fullTrip?.startTime!!)
+            val firstDate = DateUseCase.fromMillisToString1(fullTrip?.startTime!!)
+            val lastDate = DateUseCase.fromMillisToString1(fullTrip?.endTime!!)
 
-            _tripUiState.value=TripUiState(driverName,price,firstDate,lastDate,fullDate)
-            _stations.value=fullTrip?.stations
-            calculateDistances()
+            _tripUiState.value = TripUiState(driverName, price, firstDate, lastDate, fullDate)
+            _stations.value = fullTrip?.stations
 
         }
-
     }
 
-    private fun calculateDistances(){
-        val userLocation=LatLng(29.322664,31.200781 )
-        distances=tripRepository.calculateDistances(userLocation,fullTrip?.stations!!)
-        _nearestStation.value=tripRepository.calculateShortDistances(stations.value!!, distances!!)
-        Log.e(TAG, "_nearestStation: ${nearestStation.value.toString()}", )
+    fun callDistanceMatrixApi(userLocation: LatLng) {
+        this.userLocation = userLocation
+        viewModelScope.launch(Dispatchers.IO) {
+            distances = tripRepository.callDistanceMatrixApi(userLocation, fullTrip?.stations!!)
+            _nearestStations.value =
+                tripRepository.calculateShortDistances(stations.value!!, distances!!)
+            Log.e(TAG, "_nearestStation: ${nearestStations.value.toString()}")
+
+            val station = nearestStations.value?.get(selectedStation)
+            getPolyLine2(LatLng(station?.location?.lat!!, station?.location?.lng!!))
+        }
     }
+
     fun getPolyLine1() {
         viewModelScope.launch(Dispatchers.IO) {
-            Log.e(TAG, " why it doesn't work: " )
+            Log.e(TAG, " why it doesn't work: ")
             _polyline1.value = tripRepository.getPolyLine1(fullTrip?.stations!!)
         }
     }
 
-    fun getPolyLine2() {
+    fun getPolyLine2(station:LatLng) {
         viewModelScope.launch(Dispatchers.IO) {
-            _polyline2.value = tripRepository.getPolyLine2()
+            _polyline2.value = tripRepository.getPolyLine2(userLocation!!, station)
         }
     }
 
     fun incrementCounter() {
-        if(counter.value==2)
+        if (counter.value == 2)
             return
         else
             ++_counter.value
     }
+
     fun decrementCounter() {
-        if(counter.value==1)
+        if (counter.value == 1)
             return
         else
             --_counter.value
+    }
+
+    fun updatePolyline2() {
+        val station = nearestStations.value?.get(selectedStation)
+        val lat = station?.location?.lat
+        val lng = station?.location?.lng
+        val latLng = LatLng(lat!!, lng!!)
+        getPolyLine2(latLng)
     }
 
 

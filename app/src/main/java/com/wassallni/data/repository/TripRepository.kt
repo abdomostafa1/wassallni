@@ -9,7 +9,6 @@ import com.wassallni.data.model.FullTrip
 import com.wassallni.data.model.NearestStation
 import com.wassallni.data.model.Station
 import com.wassallni.utils.LatLngUseCase
-import org.intellij.lang.annotations.Language
 import javax.inject.Inject
 
 class TripRepository @Inject constructor(private val tripDataSource: TripDataSource) {
@@ -37,7 +36,7 @@ class TripRepository @Inject constructor(private val tripDataSource: TripDataSou
         return tripDataSource.getPolyLine1(origin, destination, wayPoints)
     }
 
-    fun calculateDistances(userLocation: LatLng, stations: List<Station>): List<DistanceItem> {
+    fun callDistanceMatrixApi(userLocation: LatLng, stations: List<Station>): List<DistanceItem> {
         val origin = LatLngUseCase.formatLatLng(userLocation)
         var points = ArrayList<LatLng>()
         for (element in stations) {
@@ -47,10 +46,13 @@ class TripRepository @Inject constructor(private val tripDataSource: TripDataSou
         val encodedPoints = PolyUtil.encode(points)
         val destinations = "enc:${encodedPoints}:"
         Log.e(TAG, "origin:$origin & destination:$destinations")
-        return tripDataSource.calculateDistances(origin, destinations)
+        return tripDataSource.callDistanceMatrixApi(origin, destinations)
     }
 
-    fun calculateShortDistances(stations: List<Station>, distances: List<DistanceItem>) :List<NearestStation>{
+    fun calculateShortDistances(
+        stations: List<Station>,
+        distances: List<DistanceItem>
+    ): List<NearestStation> {
         var index1: Int = 0
         var nearestDistance: Int = distances[0].distance.value
         var index2: Int = 1
@@ -85,22 +87,25 @@ class TripRepository @Inject constructor(private val tripDataSource: TripDataSou
         distanceItem2: DistanceItem,
         index1: Int,
         index2: Int
-    ) :List<NearestStation>{
+    ): List<NearestStation> {
         val name1 = station1.name
         val time1 = distanceItem1.duration.text
         val location1 = station1.location
-        val nearestStation=NearestStation(name1,index1,time1,location1)
+        val nearestStation = NearestStation(name1, index1, time1, location1)
 
         val name2 = station2.name
         val time2 = distanceItem2.duration.text
         val location2 = station2.location
-        val secondNearStation=NearestStation(name2,index2,time2,location2)
-        val nearestStations= emptyList<NearestStation>()
+        val secondNearStation = NearestStation(name2, index2, time2, location2)
+        val nearestStations = emptyList<NearestStation>()
         return nearestStations.plus(nearestStation).plus(secondNearStation)
     }
 
 
-    suspend fun getPolyLine2(): List<LatLng>? {
-        return tripDataSource.getPolyLine2()
+    fun getPolyLine2(origin: LatLng, destination: LatLng): List<LatLng> {
+        val originParam = LatLngUseCase.formatLatLng(origin)
+        val destinationParam = LatLngUseCase.formatLatLng(destination)
+        Log.e(TAG, "origin:$originParam,destination:$destinationParam ", )
+        return tripDataSource.getPolyLine2(originParam, destinationParam)
     }
 }

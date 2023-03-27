@@ -43,16 +43,14 @@ class TripDataSource @Inject constructor(
             throw Exception(task.errorBody()?.string())
     }
 
-    suspend fun getPolyLine2(): List<LatLng>? {
+    fun getPolyLine2(origin:String,destination:String): List<LatLng> {
         val key = MAPS_API_KEY
-        val originParam = LatLngUseCase.formatLatLng(station)
-        val destinationParam = LatLngUseCase.formatLatLng(myLocation)
-        val task = directionApiService.getPolyLine2(originParam, destinationParam, key).execute()
+        val task = directionApiService.getPolyLine2(origin, destination, key).execute()
         return if (task.isSuccessful) {
             Log.e(TAG, "getPolyLine: ${task.body()}")
             handlePolyLineResponse(task.body()!!)
         } else
-            null
+            throw Exception(task.errorBody()?.string())
 
     }
 
@@ -72,19 +70,19 @@ class TripDataSource @Inject constructor(
         //val leg=route.getJSONArray("legs").getJSONObject(0)
     }
 
-    fun calculateDistances(origin: String, destination: String):List<DistanceItem>{
+    fun callDistanceMatrixApi(origin: String, destination: String): List<DistanceItem> {
         val key = MAPS_API_KEY
-        val mode="walking"
-        val language=Locale.getDefault().language
-        val task=distanceApiService.getDistances(origin,destination,language, mode, key).execute()
+        val mode = "walking"
+        val language = Locale.getDefault().language
+        val task =
+            distanceApiService.getDistances(origin, destination, language, mode, key).execute()
         if (task.isSuccessful) {
-            val body= task.body()
-            Log.e(TAG, "Distances Body:$body ", )
-            val list=task.body()?.rows?.get(0)?.elements!!
-            Log.e(TAG, "distances list:$list ", )
+            val body = task.body()
+            Log.e(TAG, "Distances Body:$body ")
+            val list = task.body()?.rows?.get(0)?.elements!!
+            Log.e(TAG, "distances list:$list ")
             return list
-        }
-        else
+        } else
             throw Exception(task.errorBody()?.string())
     }
 }

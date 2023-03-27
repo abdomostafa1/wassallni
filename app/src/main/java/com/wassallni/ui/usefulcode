@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback , BroadcastObserver 
         mapFragment.getMapAsync(this)
         broadcastReceiver=BroadcastReceiver(this)
        // ViewModelProvider()[RouteViewModel::class.java]
-        //fusedLocationProviderClient= FusedLocationProviderClient()
+        //fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(this)
         intentFilter= IntentFilter("android.location.PROVIDERS_CHANGED")
         binding.cvTuktuk.setOnClickListener {
             if(permissions.checkLocationPermission()) {

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:checkedButton="@+id/station1"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        >
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/station1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Elwasta"
+
+            />
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/station2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="elshader"
+
+            />
+
+    </RadioGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>

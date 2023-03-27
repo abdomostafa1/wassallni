@@ -116,7 +116,7 @@ class LocationSelectionActivity : AppCompatActivity(), OnMapReadyCallback, Broad
             ) != PackageManager.PERMISSION_GRANTED
         )
             return
-        googleMap.isMyLocationEnabled = true
+        //googleMap.isMyLocationEnabled = true
 
         setMapListeners()
     }
@@ -180,8 +180,8 @@ class LocationSelectionActivity : AppCompatActivity(), OnMapReadyCallback, Broad
     }
 
     override fun onGpsBroadcastResponse() {
-        if (!permissions.isGpsOpen())
-            permissions.openGps(false)
+      //  if (!permissions.isGpsOpen())
+         //   permissions.openGps(false)
     }
 
     private fun showDialog() {

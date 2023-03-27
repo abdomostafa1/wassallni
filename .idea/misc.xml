@@ -8,6 +8,8 @@
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/drawable/circle_gradien.xml" value="0.1365" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/drawable/circular_background.xml" value="0.1575" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/drawable/effect.xml" value="0.1725" />
+        <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/drawable/ic_circle.xml" value="0.1225" />
+        <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/drawable/ic_marker.xml" value="0.1385" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/drawable/ripple_effect.xml" value="0.119" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/drawable/tarnsparent_circle_back.xml" value="0.1575" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/font/sf_compact_rounded.xml" value="0.12" />
@@ -15,8 +17,10 @@
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout-v26/trip_card.xml" value="0.22" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/activity_temp.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/fragment_main.xml" value="0.24930491195551435" />
+        <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/fragment_maps.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/fragment_stations.xml" value="0.1" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/fragment_trip.xml" value="0.15" />
+        <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/station_dialog.xml" value="0.25" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/station_item_row.xml" value="0.25" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/trip_card.xml" value="0.22" />
         <entry key="..\:/Users/abdo mostafa/StudioProjects/wassallni/app/src/main/res/layout/trip_info_shimmer_layout.xml" value="0.20416666666666666" />

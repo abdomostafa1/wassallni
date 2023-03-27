@@ -55,6 +55,11 @@
     <string name="stations">stations</string>
     <string name="book_trip">book trip</string>
     <string name="ride_station">ride station</string>
+    <string name="settings">Settings</string>
+    <string name="turn_device_location">turn on device location</string>
+    <string name="gps_message">GPS is not enabled. Do you want to go to Settings menu ?</string>
+
+    <string name="location_permission_failure">The app won\'t work properly ,you must give us location permission</string>
 
 
 </resources>
