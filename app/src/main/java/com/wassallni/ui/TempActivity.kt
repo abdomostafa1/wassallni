@@ -1,61 +1,58 @@
 package com.wassallni.ui
 
-import android.Manifest.permission.ACCESS_COARSE_LOCATION
-import android.Manifest.permission.ACCESS_FINE_LOCATION
-import android.annotation.SuppressLint
-import android.content.pm.PackageManager
+import android.content.Intent
 import android.graphics.Color
-import android.location.Location
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.widget.Toast
+import android.view.View
+import android.view.ViewTreeObserver
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.google.android.gms.dynamic.SupportFragmentWrapper
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
-import com.google.android.gms.tasks.CancellationToken
-import com.google.android.gms.tasks.CancellationTokenSource
-import com.google.android.gms.tasks.OnTokenCanceledListener
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.wassallni.R
+import com.wassallni.data.model.FullTrip
+import com.wassallni.data.model.LoggedInUser
+import com.wassallni.data.model.uiState.CancelTripUiState
 import com.wassallni.databinding.ActivityTempBinding
-import com.wassallni.databinding.StationDialogBinding
-import com.wassallni.ui.viewmodel.ReservationVM
+import com.wassallni.ui.viewmodel.BookedTripVM
+import com.wassallni.utils.DateUseCase
 import com.wassallni.utils.Permissions
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.internal.managers.FragmentComponentManager
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
+import kotlin.math.*
 
+
+private const val TAG = "TempActivity"
 
 @AndroidEntryPoint
-class TempActivity : AppCompatActivity(), OnMapReadyCallback {
+class TempActivity : AppCompatActivity() ,OnMapReadyCallback {
+
     lateinit var binding: ActivityTempBinding
     private lateinit var mapFragment: SupportMapFragment
-    lateinit var map: GoogleMap
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     @Inject
     lateinit var permission: Permissions
-    private var polyline: Polyline? = null
-    private val viewModel: ReservationVM by viewModels()
 
+    @Inject
+    lateinit var loggedInUser: LoggedInUser
+    private val viewModel: BookedTripVM by viewModels()
+    lateinit var map: GoogleMap
     val origin = LatLng(29.343262, 31.203258)
     val destination = LatLng(29.043484, 31.109482)
     val station = LatLng(29.327294, 31.197011)
@@ -69,94 +66,160 @@ class TempActivity : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         binding = ActivityTempBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        mapFragment = supportFragmentManager.findFragmentById(R.id.temp_map) as SupportMapFragment
+
+
+        mapFragment = supportFragmentManager
+            .findFragmentById(R.id.bookedTripMap) as SupportMapFragment
 
         mapFragment.getMapAsync(this)
-        permission = Permissions(this)
-        viewModel.getTripDetails("id")
-        binding.changeStation.setOnClickListener {
-            showDialog()
-        }
+
+        binding.centerView.viewTreeObserver.addOnGlobalLayoutListener(onGlobalLayoutListener)
+
+        viewModel.getTripDetails("args.tripId")
+
+        setOnClickListeners()
+
+        Log.e(TAG, "token:${loggedInUser.getToken()} ")
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.nearestStations.collect {
-                    if (it != null) {
-                        binding.firstStation.text = it[0].name
-                        binding.secondStation.text = it[1].name
-                        binding.textView10.text = it[0].time
-                        binding.textView11.text = it[1].time
-                    }
+                viewModel.fullTrip.collect {
+                    if (it != null)
+                        showUiState(it)
+
                 }
             }
         }
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.tripUiState.collect {
-                    if (it != null) {
-                        getLocation()
-                    }
-                }
-            }
-
-
-        }
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.polyline2.collect { points ->
+                viewModel.polyline1.collect { points ->
                     if (points != null) {
-                        if (polyline != null) { //update polyline
-                            polyline?.points = points
-                            setMapBounds(points[0], points[points.size - 1])
-                            return@collect
-                        }
-                        Log.e("TAG", "polyline2: ")
-                        val polylineOptions = PolylineOptions()
-                        polylineOptions.addAll(points)
-                        polylineOptions.color(getColor(R.color.green_500))
-                        polylineOptions.width(7f)
-                        polyline = map.addPolyline(polylineOptions)
-                        setMapBounds(points[0], points[points.size - 1])
-                        drawCircle()
-
+                        Log.e("TAG", "new polyline1: ")
+                        val polyline1 = PolylineOptions().addAll(points!!)
+                        polyline1.color(getColor(R.color.blue))
+                        polyline1.width(7f)
+                        map.addPolyline(polyline1)
+                        drawMarker(points[0], points[points.size - 1])
                     }
                 }
-
             }
-
         }
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        Log.e("TAG", "language:${Locale.getDefault().language} ")
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.cancelRequest.collect { state ->
+                    when (state) {
+                        is CancelTripUiState.Loading -> {
+                            showLoadingState()
+                        }
+                        is CancelTripUiState.Success -> {
+                            onCancelSuccess()
+                        }
+                        is CancelTripUiState.Error -> {
+                            onCancelFailed(state.errorMsg)
+                        }
 
+                        else -> Unit
+                    }
+                }
+            }
+        }
+    }
+
+    private fun setOnClickListeners() {
+        binding.cancelTrip.setOnClickListener {
+            viewModel.cancelTrip("id")
+        }
+
+        binding.call.setOnClickListener {
+            val phoneIntent=Intent(Intent.ACTION_DIAL)
+            val phoneNumber="01119499687"
+            phoneIntent.data = Uri.parse("tel:$phoneNumber")
+            startActivity(phoneIntent)
+        }
+        binding.toStation.setOnClickListener {
+            val location= viewModel.fullTrip.value?.stations?.get(1)?.location!!
+            openGoogleMapDirections(LatLng(location.lat,location.lng))
+        }
+    }
+
+    val onGlobalLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
+        val height = binding.centerView.height
+        Log.e("TAG", "height=$height")
+        val behaviour = BottomSheetBehavior.from(binding.bottomSheet)
+        behaviour.peekHeight = height
+    }
+
+    override fun onMapReady(p0: GoogleMap) {
+        map = p0
+    }
+
+    private fun openGoogleMapDirections(location: LatLng) {
+        val latitude = location.latitude.toString()
+        // Create a Uri from an intent string. Use the result to create an Intent.
+        val gmmIntentUri =
+            Uri.parse("google.navigation:q=${location.latitude},${location.longitude}")
+
+        // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+        val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+        // Make the Intent explicit by setting the Google Maps package
+        mapIntent.setPackage("com.google.android.apps.maps")
+
+        mapIntent.resolveActivity(packageManager)?.let {
+            startActivity(mapIntent)
+        }
+        // Attempt to start an activity that can handle the Intent
+
+    }
+
+    private fun showUiState(it: FullTrip) {
+        binding.loadingState.root.visibility=View.GONE
+        binding.tripView.tvPrice.visibility = View.INVISIBLE
+        binding.tripView.start.text = it.start
+        binding.tripView.destination.text = it.destination
+        binding.tripView.startTime.text = DateUseCase.fromMillisToString1(it.startTime)
+        binding.tripView.endTime.text = DateUseCase.fromMillisToString1(it.endTime)
+        binding.tripView.date.text = DateUseCase.fromMillisToString3(it.endTime)
+
+        binding.rideStation.text = it.stations[1].name
+        binding.rideTime.text = DateUseCase.fromMillisToString1(it.stations[1].time)
+        binding.seatsNum.text = "2"
+        binding.price.text = "${it.price}"
+        binding.totalPrice.text = "${it.price*2}"
+    }
+
+    private fun showLoadingState(){
+        binding.loadingState.root.visibility=View.VISIBLE
+    }
+
+    private fun onCancelSuccess() {
+        Snackbar.make(
+            findViewById(android.R.id.content),
+            getString(R.string.cancel_success), Snackbar.LENGTH_LONG
+        ).show()
+
+    }
+
+    private fun onCancelFailed(msg:String) {
+        binding.loadingState.root.visibility=View.GONE
+        Snackbar.make(
+            findViewById(android.R.id.content),
+            msg, Snackbar.LENGTH_LONG
+        ).show()
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun drawCircle() {
         val circleOptions = CircleOptions()
-            .center(viewModel.userLocation!!)
+            //.center(viewModel.userLocation!!)
             .radius(40.0) // radius in meters
             .fillColor(getColor(R.color.dot_marker_color)) //this is a half transparent blue, change "88" for the transparency
             .strokeColor(Color.WHITE) //The stroke (border) is blue
             .strokeWidth(6F) // The width is in pixel, so try it!
 
-        map.addCircle(circleOptions)
+        //map.addCircle(circleOptions)
     }
 
-
-    override fun onMapReady(p0: GoogleMap) {
-        map = p0
-        val mapStyleOptions = MapStyleOptions.loadRawResourceStyle(this, R.raw.custom_map_style)
-        map.setMapStyle(mapStyleOptions)
-
-    }
-
-    private fun drawMarker(point1: LatLng, point2: LatLng) {
-        map.addMarker(MarkerOptions().position(point1))
-        map.addMarker(MarkerOptions().position(point2))
-        setMapBounds(point1, point2)
-
-    }
 
     private fun setMapBounds(point1: LatLng, point2: LatLng) {
 
@@ -168,53 +231,18 @@ class TempActivity : AppCompatActivity(), OnMapReadyCallback {
             LatLng(south, west),
             LatLng(north, east)
         )
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(bounds.center,14f))
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(bounds.center, 8f))
         //map1.animate
         // map2.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 60))
     }
 
-    fun showDialog() {
-        val dialog = MaterialAlertDialogBuilder(this)
-        val binding = StationDialogBinding.inflate(layoutInflater)
-        addDialogInfo(binding)
-        dialog.setView(binding.root)
+    private fun drawMarker(point1: LatLng, point2: LatLng) {
+        map.addMarker(MarkerOptions().position(point1))
+        //map2.addMarker(MarkerOptions().position(origin).title("الواسطي"))
+        map.addMarker(MarkerOptions().position(point2))
+        //map2.addMarker(MarkerOptions().position(destination).title("تعليم صناعي"))
+        setMapBounds(point1, point2)
 
-        dialog.setTitle("Change ride destination ?")
-        dialog.setMessage("we provide you the two nearest stations according to your location")
-        dialog.setPositiveButton("choose") { dialog, which ->
-            val checkedRadioButtonId = binding.radioGroup.checkedRadioButtonId
-            dialog.dismiss()
-            checkSelection(checkedRadioButtonId)
-        }
-        dialog.setNegativeButton("cancel") { dialog, which ->
-            dialog.dismiss()
-        }
-        dialog.setIcon(R.drawable.ic_language_24)
-        dialog.show()
-    }
-
-    private fun addDialogInfo(binding: StationDialogBinding) {
-        val text1 = viewModel.nearestStations.value?.get(0)?.name
-        val text2 = viewModel.nearestStations.value?.get(1)?.name
-        val time1 = viewModel.nearestStations.value?.get(0)?.time
-        val time2 = viewModel.nearestStations.value?.get(1)?.time
-        binding.station1.text = text1
-        binding.station2.text = text2
-        if (viewModel.selectedStation == 0)
-            binding.radioGroup.check(binding.station1.id)
-        else
-            binding.radioGroup.check(binding.station2.id)
-
-    }
-
-    private fun checkSelection(newCheckedRadioButtonId: Int) {
-        if (viewModel.selectedStation == 0 && newCheckedRadioButtonId != R.id.station1) {
-            viewModel.selectedStation = 1
-            viewModel.updatePolyline2()
-        } else if (viewModel.selectedStation == 1 && newCheckedRadioButtonId != R.id.station2) {
-            viewModel.selectedStation = 0
-            viewModel.updatePolyline2()
-        } else;
     }
 
     fun haversine(
@@ -232,73 +260,14 @@ class TempActivity : AppCompatActivity(), OnMapReadyCallback {
         lat2 = Math.toRadians(lat2)
 
         // apply formulae
-        val a = Math.pow(Math.sin(dLat / 2), 2.0) +
-                Math.pow(Math.sin(dLon / 2), 2.0) *
-                Math.cos(lat1) *
-                Math.cos(lat2)
+        val a = sin(dLat / 2).pow(2.0) +
+                sin(dLon / 2).pow(2.0) *
+                cos(lat1) *
+                cos(lat2)
         val rad = 6371.0
-        val c = 2 * Math.asin(Math.sqrt(a))
+        val c = 2 * asin(sqrt(a))
         return rad * c * 1000
     }
-
-
-    private fun isLocationSetup(action: () -> Unit): Boolean {
-
-        if (permission.isLocationPermissionEnabled()) {
-            if (permission.isGpsOpen())
-                return true
-            else {
-                permission.openGps(action, false)
-            }
-        } else {
-            permission.requestLocationPermission(action)
-        }
-        return false
-    }
-
-    val getLocationFun: () -> Unit = {
-        getLocation()
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun getLocation() {
-        if (!isLocationSetup(getLocationFun))
-            return
-
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-            && ActivityCompat.checkSelfPermission(
-                this,
-                ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        )
-
-            return
-
-        fusedLocationProviderClient.getCurrentLocation(
-            Priority.PRIORITY_HIGH_ACCURACY,
-            object : CancellationToken() {
-                override fun onCanceledRequested(p0: OnTokenCanceledListener) =
-                    CancellationTokenSource().token
-
-                override fun isCancellationRequested() = false
-            })
-            .addOnSuccessListener { location: Location? ->
-                if (location == null)
-                    Toast.makeText(this, "error location = null", Toast.LENGTH_SHORT).show()
-                else {
-                    val userLocation = LatLng(location.latitude, location.longitude)
-                    viewModel.callDistanceMatrixApi(userLocation)
-                    Log.e("TAG", "myLocation:${userLocation} ")
-                }
-
-            }
-
-    }
-
-
 }
 
 //        val myLocation = LatLng(29.322664,31.200781 )

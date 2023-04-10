@@ -33,16 +33,17 @@ class TripAdapter : RecyclerView.Adapter<TripAdapter.ViewHolder>() , View.OnClic
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val trip = trips[position]
 
-        holder.binding.start.text=trip.start
-        holder.binding.destination.text=trip.destination
-        holder.binding.tvPrice.text=trip.price.toString()
+        holder.binding.tripView.start.text=trip.start
+        holder.binding.tripView.destination.text=trip.destination
+        holder.binding.tripView.tvPrice.text=trip.price.toString()
 
-        holder.binding.startTime.text=DateUseCase.fromMillisToString1(trip.startTime)
-        holder.binding.endTime.text=DateUseCase.fromMillisToString1(trip.endTime)
+        holder.binding.tripView.date.text=DateUseCase.fromMillisToString3(trip.startTime)
+        holder.binding.tripView.startTime.text=DateUseCase.fromMillisToString1(trip.startTime)
+        holder.binding.tripView.endTime.text=DateUseCase.fromMillisToString1(trip.endTime)
         val id =trip.id
         holder.itemView.setOnClickListener {
 
-            val action=MainFragmentDirections.goToTripFragment(id)
+            val action=MainFragmentDirections.actionMainToTripGraph(id)
             it.findNavController().navigate(action)
         }
 
@@ -50,9 +51,6 @@ class TripAdapter : RecyclerView.Adapter<TripAdapter.ViewHolder>() , View.OnClic
 
     override fun getItemCount(): Int = trips.size
 
-    fun main(){
-
-    }
     fun setData(newTrips:List<Trip>){
         trips=newTrips
         notifyDataSetChanged()

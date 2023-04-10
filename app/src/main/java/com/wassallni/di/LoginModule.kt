@@ -3,6 +3,7 @@ package com.wassallni.di
 import android.content.Context
 import com.wassallni.data.datasource.LoginService
 import com.wassallni.firebase.authentication.PhoneAuth
+import com.wassallni.utils.Domain
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +25,7 @@ object LoginModule {
     @ViewModelScoped
     fun provideRetrofit(): Retrofit {
 
-        var url="https://c0d6-102-188-100-97.eu.ngrok.io/api/v1/users/"
+        var url= Domain+"api/v1/users/"
 
         return Retrofit.Builder()
             .baseUrl(url)

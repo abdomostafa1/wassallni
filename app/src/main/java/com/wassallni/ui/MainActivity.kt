@@ -16,6 +16,7 @@ import com.wassallni.data.model.Trip
 import com.wassallni.databinding.ActivityMainBinding
 import com.wassallni.ui.fragment.main_graph.TripFragment
 import com.wassallni.ui.viewmodel.RouteViewModel
+import com.wassallni.utils.Permissions
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -26,23 +27,16 @@ class MainActivity : AppCompatActivity(){
     private lateinit var binding:ActivityMainBinding
     lateinit var navController: NavController
     @Inject lateinit var loggedInUser: LoggedInUser
-
+    @Inject lateinit var permission: Permissions
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.mainFragmentContainerView) as NavHostFragment
-        navController = navHostFragment.navController
 
+      //  permission=Permissions(this)
 
         //val config= AppBarConfiguration(navController.graph)
         //binding.topAppBar.setupWithNavController(navController,config)
-
-    }
-
-    val recyclerOnClick={trip:Trip ->
-        //val data=TripFragmentDirections
 
     }
 

@@ -4,7 +4,9 @@
         <!-- Primary brand color. -->
         <!-- Secondary brand color. -->
         <!-- Status bar color. -->
-
+        <item name="colorOnSurface">@color/green</item>
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorAccent">@color/red</item>
 
         <!-- Customize your theme here. -->
     </style>
@@ -36,6 +38,35 @@
     <style name="temp_activity_theme" parent="Theme.Material3.Light.NoActionBar" />
 
     <style name="mainActivityTheme" parent="Theme.Material3.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/toolbar_color</item>
+
+    </style>
+
+    <style name="MaterialAlertDialog.MaterialComponents" parent="AlertDialog.AppCompat">
+        <item name="android:layout">@layout/mtrl_alert_dialog</item>
+        <item name="listItemLayout">@layout/mtrl_alert_select_dialog_item</item>
+        <item name="multiChoiceItemLayout">@layout/mtrl_alert_select_dialog_multichoice</item>
+        <item name="singleChoiceItemLayout">@layout/mtrl_alert_select_dialog_singlechoice</item>
+
+        <item name="android:background">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
+
+        <item name="backgroundInsetStart">@dimen/mtrl_alert_dialog_background_inset_start</item>
+        <item name="backgroundInsetTop">@dimen/mtrl_alert_dialog_background_inset_top</item>
+        <item name="backgroundInsetEnd">@dimen/mtrl_alert_dialog_background_inset_end</item>
+        <item name="backgroundInsetBottom">@dimen/mtrl_alert_dialog_background_inset_bottom</item>
+        <item name="shapeAppearance">?attr/shapeAppearanceMediumComponent</item>
+    </style>
+
+    <style name="navigation_view_style" parent="Widget.Material3.NavigationView">
+        <item name="itemTextAppearance">@style/AppNavigationViewItemTextAppearance</item>
+
+    </style>
+    <style name="AppNavigationViewItemTextAppearance" parent="@style/TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="bookedTripFragmentTheme" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/black</item>
     </style>
 </resources>

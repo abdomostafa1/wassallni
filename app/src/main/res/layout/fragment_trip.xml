@@ -32,7 +32,7 @@
 
 
     <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmer_layout"
+        android:id="@+id/shimmerLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -72,36 +72,41 @@
             android:layout_marginTop="@dimen/_16sdp"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_16sdp"
-            android:background="#4B4B87"
-            android:text="@string/book_trip"
-            android:textSize="@dimen/_14ssp"
-
-            app:cornerRadius="@dimen/_40sdp"
+            android:layout_height="@dimen/_56sdp"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/ride_station" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/ride_station"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_16sdp"
-            android:background="#4B4B87"
-            android:text="@string/ride_station"
+
+            >
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/book_trip"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_background"
+            app:backgroundTint="@null"
+            android:text="@string/book_trip"
+            android:textColor="@color/black"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
-            app:cornerRadius="@dimen/_40sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="@dimen/_16sdp"
+            />
+
+        <Button
+            android:id="@+id/ride_stations"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_background2"
+            app:backgroundTint="@null"
+            android:text="@string/stations"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
 
             />
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,58 +1,31 @@
 package com.wassallni.data.datasource
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.google.android.gms.maps.model.LatLng
 import com.wassallni.data.model.Trip
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
-import okhttp3.internal.immutableListOf
-import retrofit2.Call
-import retrofit2.Response
-import retrofit2.http.GET
+import com.wassallni.data.model.TripService
 import javax.inject.Inject
 
 class MainDataSource @Inject constructor(private val tripService: TripService) {
 
     private val TAG = "MainDataSource"
 
-    suspend fun getTrips(): List<Trip> {
-//        val task = tripService.getAllTrips().execute()
-//        if (task.isSuccessful) {
-//            Log.e(TAG, "isSuccessful ")
-//            val allTripsResponse = task.body()
-//            val trips = allTripsResponse?.trips
-//            Log.e(TAG, "Trips: ${trips.toString()}")
-//            return trips!!
-//        } else {
-//            val error = task.errorBody()?.string()
-//            throw Exception(error)
-//        }
-        delay(3000)
-        return trips
+    fun getTrips(): List<Trip> {
+        val task = tripService.getAllTrips().execute()
+        if (task.isSuccessful) {
+            Log.e(TAG, "isSuccessful ")
+            val allTripsResponse = task.body()
+            val trips = allTripsResponse?.trips
+            Log.e(TAG, "Trips: ${trips.toString()}")
+            return trips!!
+        } else {
+            val error = task.errorBody()?.string()
+            throw Exception(error)
+        }
     }
 }
 
-interface TripService {
-
-    @GET("trips/getAllTrips")
-    fun getAllTrips(): Call<AllTripsResponse>
-}
 
 data class AllTripsResponse(val trips: List<Trip>)
-
-sealed class MainUiState {
-    object Loading : MainUiState()
-    data class Success(val trips: List<Trip>) : MainUiState()
-    data class Error(val errorMsg: String) : MainUiState()
-}
-
 
 val trips = listOf(
     Trip(

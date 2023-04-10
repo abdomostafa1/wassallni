@@ -20,8 +20,10 @@ import androidx.core.content.ContextCompat.getSystemService
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.wassallni.R
 import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
+@ActivityScoped
 class Permissions @Inject constructor(@ActivityContext val context: Context) {
     val dialog = MaterialAlertDialogBuilder(context)
     var action: () -> Unit? = {}

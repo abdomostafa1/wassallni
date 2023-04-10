@@ -24,5 +24,6 @@ data class NearestStation(
     val name: String,
     val index: Int,
     val time: String,
-    val location:Location
+    val location:Location,
+    var mode:String="walking"
 )

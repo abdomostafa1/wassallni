@@ -48,18 +48,42 @@
     <string name="you_signed_in_successfully">you signed in Successfully</string>
     <string name="seat_num">Seats Number</string>
     <string name="price">Trip price</string>
+    <string name="total_price">Total price</string>
     <string name="EGP">EGP</string>
     <string name="driver">driver</string>
     <string name="date">Date</string>
     <string name="to">to</string>
-    <string name="stations">stations</string>
-    <string name="book_trip">book trip</string>
+    <string name="stations">Stations</string>
+    <string name="book_trip">Book Trip</string>
     <string name="ride_station">ride station</string>
-    <string name="settings">Settings</string>
+    <string name="ride_time">ride time</string>
     <string name="turn_device_location">turn on device location</string>
     <string name="gps_message">GPS is not enabled. Do you want to go to Settings menu ?</string>
 
     <string name="location_permission_failure">The app won\'t work properly ,you must give us location permission</string>
-
-
+    <string name="from_where">Choose your location</string>
+    <string name="calculate_distance">currently calculating the nearest station.</string>
+    <string name="nearest_station">The nearest station from your location.</string>
+    <string name="select_on_map">Select on map</string>
+    <string name="accept">accept</string>
+    <string name="maximum_seats_num">maximum number of seats is </string>
+    <string name="seats_num">number of seats </string>
+    <string name="num_available_seats">number of available seats currently on the trip is </string>
+    <string name="current_location">Current location</string>
+    <string name="myTrips">My Trips</string>
+    <string name="balance">Balance</string>
+    <string name="settings">Settings</string>
+    <string name="complain">Complain</string>
+    <string name="logout">Logout</string>
+    <string name="open_nav">open</string>
+    <string name="close_nav">close</string>
+    <string name="no_trips">there is no trips</string>
+    <string name="cancelled">Cancelled</string>
+    <string name="missed">Missed</string>
+    <string name="retry">retry</string>
+    <string name="cancel_trip">Cancel Trip</string>
+    <string name="to_station">To Station</string>
+    <string name="call">Call</string>
+    <string name="cancel_success">Trip is Cancelled Successfully</string>
+    <string name="cancel_failed">Failed to cancel reservation</string>
 </resources>

@@ -1,8 +1,9 @@
 package com.wassallni.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wassallni.data.datasource.MainUiState
+import com.wassallni.data.model.uiState.MainUiState
 import com.wassallni.data.repository.MainRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -19,8 +20,17 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
 
     fun getTrips() {
         viewModelScope.launch(Dispatchers.IO) {
-            val trips=mainRepository.getTrips()
-            _state.value=MainUiState.Success(trips)
+            try {
+                Log.e("TAG", "getTrips: again!!!!!", )
+                _state.emit(MainUiState.Loading)
+                val trips = mainRepository.getTrips()
+                if (trips.isNotEmpty())
+                    _state.value = MainUiState.Success(trips)
+                else
+                    _state.value = MainUiState.Empty
+            } catch (ex: Exception) {
+                ex.message?.let { _state.emit(MainUiState.Error(it)) }
+            }
         }
     }
 

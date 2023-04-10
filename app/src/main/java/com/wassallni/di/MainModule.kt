@@ -2,7 +2,8 @@ package com.wassallni.di
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.wassallni.data.datasource.TripService
+import com.wassallni.data.model.TripService
+import com.wassallni.utils.Domain
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,8 +18,8 @@ object MainModule {
 
     @Provides
     @ViewModelScoped
-    fun provideTripService():TripService{
-        val baseUrl="https://022a-41-68-149-136.eu.ngrok.io/api/v1/"
+    fun provideTripService(): TripService {
+        val baseUrl=Domain+"api/v1/"
         val retrofit=Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(

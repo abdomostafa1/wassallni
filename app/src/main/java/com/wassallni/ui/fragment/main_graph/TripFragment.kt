@@ -1,6 +1,5 @@
 package com.wassallni.ui.fragment.main_graph
 
-import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -8,33 +7,37 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.navGraphViewModels
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.wassallni.R
-import com.wassallni.data.model.TripUiState
-import com.wassallni.data.model.fullTrip
+import com.wassallni.data.model.uiState.TripUiState
 import com.wassallni.databinding.FragmentTripBinding
 import com.wassallni.ui.viewmodel.ReservationVM
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class TripFragment : Fragment(), OnMapReadyCallback {
 
     lateinit var binding: FragmentTripBinding
-    val viewModel: ReservationVM by activityViewModels()
+    val viewModel: ReservationVM by navGraphViewModels(R.id.trip_graph) { defaultViewModelProviderFactory }
+
     private val args: TripFragmentArgs by navArgs()
     lateinit var mapFragment: SupportMapFragment
     private lateinit var map: GoogleMap
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,69 +52,64 @@ class TripFragment : Fragment(), OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState)
         val id = args.id
 
-
         mapFragment = childFragmentManager
             .findFragmentById(R.id.tripMap) as SupportMapFragment
 
         mapFragment.getMapAsync(this)
 
-        binding.rideStation.setOnClickListener {
-            Log.e("TAG", "rideStation.setOnClickListener: ", )
+        viewModel.getTripDetails(id)
+
+        binding.rideStations.setOnClickListener {
+            Log.e("TAG", "rideStation.setOnClickListener: ")
             it.findNavController().navigate(R.id.action_tripFragment_to_stationsFragment)
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            setFonts()
+        binding.bookTrip.setOnClickListener {
+            Log.e("TAG", "rideStation.setOnClickListener: ")
+            it.findNavController().navigate(R.id.action_tripFragment_to_userLocationFragment)
         }
-        viewModel.getTripDetails(id)
+
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.tripUiState.collect {
                     Log.e("TAG", "viewModel.fullTrip.collect ")
                     if (it != null) {
-                        Log.e("xxxxx", "fullTrip : motherrr fuckeeerrrrr:$fullTrip ")
                         showUiState(it)
-                        viewModel.getPolyLine1()
                     }
                 }
-
             }
         }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.polyline1.collect { points ->
-                    Log.e("TAG", "myyyyyyyyyyy polyline1: ")
-
                     if (points != null) {
                         Log.e("TAG", "new polyline1: ")
                         val polyline1 = PolylineOptions().addAll(points!!)
-//                        polyline1.color(requireActivity().getColor(R.color.blue))
-                        polyline1.width(6f)
+                        polyline1.color(requireActivity().getColor(R.color.blue))
+                        polyline1.width(7f)
                         map.addPolyline(polyline1)
-                        //map2.addPolyline(polyline1)
                         drawMarker(points[0], points[points.size - 1])
                     }
                 }
-
-            }
-
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.counter.collect {
-                    binding.tripCard.counter.text = String.format(it.toString())
-                }
             }
         }
+
+        viewModel.message.observe(viewLifecycleOwner) {
+            if (it != null)
+                Toast.makeText(requireActivity(), it, Toast.LENGTH_LONG).show()
+        }
+
     }
 
     private fun showUiState(it: TripUiState) {
-        binding.tripCard.driver.text=it.driver
-        binding.tripCard.date.text=it.fullDate
-        binding.tripCard.price.text=it.price.toString()
-        binding.shimmerLayout.visibility=View.GONE
-        binding.childLayout.visibility=View.VISIBLE
+        binding.tripCard.driver.text = it.driver
+        binding.tripCard.date.text = it.fullDate
+        binding.tripCard.price.text = it.price.toString()
+        binding.tripCard.counter.text = it.counter.toString()
+        binding.shimmerLayout.visibility = View.GONE
+        binding.childLayout.visibility = View.VISIBLE
         setOnClickListener()
     }
 
@@ -155,6 +153,7 @@ class TripFragment : Fragment(), OnMapReadyCallback {
         // map2.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 60))
 
     }
+
 
     @RequiresApi(Build.VERSION_CODES.P)
     fun setFonts() {

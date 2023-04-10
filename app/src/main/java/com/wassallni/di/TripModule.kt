@@ -4,7 +4,9 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.wassallni.data.datasource.DirectionApiService
 import com.wassallni.data.datasource.DistanceApiService
-import com.wassallni.data.datasource.TripInfoService
+import com.wassallni.data.datasource.GeocodingApiService
+import com.wassallni.data.model.TripService
+import com.wassallni.utils.Domain
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -48,12 +50,13 @@ object TripModule {
 
     @Provides
     @ViewModelScoped
-    fun provideTripInfoService(): TripInfoService {
+    fun provideGeocodingApiService(): GeocodingApiService {
+        //https://maps.googleapis.com/maps/api/directions/json?origin=Disneyland&destination=Universal+Studios+Hollywood&key=YOUR_API_KEY
         val baseUrl = "https://maps.googleapis.com/maps/api/"
         val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(ScalarsConverterFactory.create())
             .build()
-        return retrofit.create(TripInfoService::class.java)
+        return retrofit.create(GeocodingApiService::class.java)
     }
 }

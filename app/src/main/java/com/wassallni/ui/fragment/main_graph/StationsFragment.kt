@@ -12,6 +12,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
+import androidx.navigation.navGraphViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.wassallni.R
 import com.wassallni.adapter.StationAdapter
 import com.wassallni.adapter.TripAdapter
@@ -35,7 +38,7 @@ class StationsFragment : Fragment() {
 
     lateinit var binding: FragmentStationsBinding
     lateinit var adapter: StationAdapter
-    private val viewModel: ReservationVM by activityViewModels()
+    val viewModel :ReservationVM by navGraphViewModels(R.id.trip_graph){ defaultViewModelProviderFactory  }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,6 +53,10 @@ class StationsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         adapter = StationAdapter()
         binding.recyclerView.adapter = adapter
+
+        val divider = MaterialDividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL /*or LinearLayoutManager.HORIZONTAL*/)
+        divider.dividerColor=requireActivity().getColor(R.color.divider_color)
+        binding.recyclerView.addItemDecoration(divider)
 
         binding.topAppBar.setNavigationOnClickListener {
             it.findNavController().navigateUp()

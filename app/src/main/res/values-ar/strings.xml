@@ -9,20 +9,43 @@
     <string name="sms_code_sent_to">"تم إرسال كود الي"</string>
     <string name="you_signed_in_successfully">تم التسجيل بنجاح</string>
     <string name="trip_details">تفاصيل الرحلة</string>
+    <string name="cancel_success">تم الغاء حجز الرحلة</string>
+    <string name="cancel_failed">فشل الغاء حجز الرحلة</string>
     <string name="seat_num">عدد الكراسي</string>
     <string name="price">سعر الرحلة</string>
+    <string name="total_price">السعر الاجمالي</string>
     <string name="EGP">ج.م</string>
     <string name="driver">السائق</string>
     <string name="date">التاريخ</string>
     <string name="to">الي</string>
     <string name="stations">المحطات</string>
     <string name="book_trip">حجز الرحلة</string>
-    <string name="ride_station">محطات الركوب</string>
-    <string name="settings">الإعدادات</string>
+    <string name="ride_station">محطة الركوب</string>
+    <string name="ride_time">ميعاد الركوب</string>
     <string name="turn_device_location">قم بتشغيل موقع الجهاز</string>
     <string name="gps_message">GPS غير مفعل. هل تريد الذهاب إلى قائمة الإعدادات؟</string>
     <string name="location_permission_failure">التطبيق لن يعمل بشكل صحيح, يجب ان تسمح بالوصول الي موقعك</string>
-
-
-
+    <string name="from_where">اختار موقعك</string>
+    <string name="calculate_distance">جاري حساب اقرب محطة للركوب</string>
+    <string name="nearest_station">أقرب محطة للركوب من موقعك</string>
+    <string name="select_on_map">اختار من الخريطة</string>
+    <string name="accept">تم</string>
+    <string name="maximum_seats_num">الحد الأقصى لعدد الكراسي هو </string>
+    <string name="num_available_seats">عدد الكراسي المتوفرة حاليا في الرحلة </string>
+    <string name="seats_num">عدد الكراسي المحجوزة</string>
+    <string name="current_location">الموقع الحالي</string>
+    <string name="myTrips">رحلاتي</string>
+    <string name="balance">الرصيد</string>
+    <string name="settings">الإعدادات</string>
+    <string name="complain">شكوي</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="open_nav">فتح</string>
+    <string name="close_nav">غلق</string>
+    <string name="no_trips">لا يوجد رحلات</string>
+    <string name="cancelled">تم الالغاء</string>
+    <string name="missed">فائتة</string>
+    <string name="retry">اعادة محاولة</string>
+    <string name="cancel_trip">إلغاء الرحلة</string>
+    <string name="to_station">إلى المحطة</string>
+    <string name="call">اتصال</string>
 </resources>

@@ -36,5 +36,4 @@ class SuccessfulLoginFragment : Fragment() {
             requireActivity().finish()
         }
     }
-
 }
