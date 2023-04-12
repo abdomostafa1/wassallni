@@ -21,6 +21,9 @@
         <action
             android:id="@+id/action_mainFragment_to_myTripsFragment"
             app:destination="@id/myTripsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_supportFragment"
+            app:destination="@id/supportFragment" />
     </fragment>
    <include app:graph="@navigation/trip_graph"/>
     <fragment
@@ -59,4 +62,9 @@
             app:argType="boolean"
             android:defaultValue="true" />
     </fragment>
+    <fragment
+        android:id="@+id/supportFragment"
+        android:name="com.wassallni.ui.fragment.main_graph.SupportFragment"
+        android:label="fragment_support"
+        tools:layout="@layout/fragment_support" />
 </navigation>

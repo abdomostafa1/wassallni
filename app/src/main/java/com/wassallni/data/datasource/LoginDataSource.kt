@@ -146,7 +146,7 @@ class LoginDataSource @Inject constructor(
     }
 
     interface LoginService {
-        @POST("signUp")
+        @POST("register")
         @JvmSuppressWildcards
         fun login(@Body body: Map<String, Any>): Call<Map<String, Any>>
     }

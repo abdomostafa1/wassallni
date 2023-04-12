@@ -14,7 +14,7 @@
         Sign in isn\'t available Today</string>
     <string name="welcome" translatable="false">"Welcome!"</string>
     <string name="verification_code_invalid">The verification code entered was invalid</string>
-    <string name="error_occurred" translatable="false">An error occurred</string>
+    <string name="error_occurred" translatable="true">An error occurred</string>
     <string name="invalid_username" translatable="false">Invalid Name</string>
     <string name="invalid_phone_number" translatable="false">Invalid Number</string>
     <string name="valid_data" translatable="false">Valid Data ❤❤😍</string>
@@ -73,7 +73,7 @@
     <string name="myTrips">My Trips</string>
     <string name="balance">Balance</string>
     <string name="settings">Settings</string>
-    <string name="complain">Complain</string>
+    <string name="support">Support</string>
     <string name="logout">Logout</string>
     <string name="open_nav">open</string>
     <string name="close_nav">close</string>
@@ -86,4 +86,5 @@
     <string name="call">Call</string>
     <string name="cancel_success">Trip is Cancelled Successfully</string>
     <string name="cancel_failed">Failed to cancel reservation</string>
+    <string name="type_here">Type here ...</string>
 </resources>

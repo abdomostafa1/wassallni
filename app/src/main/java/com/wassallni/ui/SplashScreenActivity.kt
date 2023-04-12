@@ -72,8 +72,13 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private val mainLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-        { _ ->
-            finish()
+        { result ->
+
+            if (result.resultCode == RESULT_CANCELED)
+                finish()
+            else {
+               checkAuthentication()
+            }
         }
 
     override fun onDestroy() {

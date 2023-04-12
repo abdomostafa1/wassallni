@@ -2,6 +2,7 @@ package com.wassallni.ui.fragment.main_graph
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -89,7 +90,10 @@ class BookedTripFragment : Fragment() ,OnMapReadyCallback {
                     if (points != null) {
                         Log.e("TAG", "new polyline1: ")
                         val polyline1 = PolylineOptions().addAll(points!!)
-                        polyline1.color(requireActivity().getColor(R.color.blue))
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            polyline1.color(requireActivity().getColor(R.color.blue))
+                        }
                         polyline1.width(7f)
                         map.addPolyline(polyline1)
                         drawMarker(points[0], points[points.size - 1])
@@ -125,7 +129,7 @@ class BookedTripFragment : Fragment() ,OnMapReadyCallback {
     }
 
     private fun showUiState(it: FullTrip) {
-        binding.loadingState.root.visibility=View.GONE
+        binding.loadingState.visibility=View.GONE
         binding.tripView.tvPrice.visibility=View.INVISIBLE
         binding.tripView.start.text=it.start
         binding.tripView.destination.text=it.destination
@@ -209,7 +213,7 @@ class BookedTripFragment : Fragment() ,OnMapReadyCallback {
     }
 
     private fun showLoadingState(){
-        binding.loadingState.root.visibility=View.VISIBLE
+        binding.loadingState.visibility=View.VISIBLE
     }
 
     private fun onCancelSuccess() {
@@ -226,7 +230,7 @@ class BookedTripFragment : Fragment() ,OnMapReadyCallback {
     }
 
     private fun onCancelFailed(msg:String) {
-        binding.loadingState.root.visibility=View.GONE
+        binding.loadingState.visibility=View.GONE
         Snackbar.make(
             requireActivity().findViewById(android.R.id.content),
             msg, Snackbar.LENGTH_LONG

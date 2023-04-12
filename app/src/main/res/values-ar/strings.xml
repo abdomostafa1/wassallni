@@ -8,6 +8,7 @@
     <string name="verify">تأكيد</string>
     <string name="sms_code_sent_to">"تم إرسال كود الي"</string>
     <string name="you_signed_in_successfully">تم التسجيل بنجاح</string>
+    <string name="error_occurred" translatable="true">للأسف حدث خطأ</string>
     <string name="trip_details">تفاصيل الرحلة</string>
     <string name="cancel_success">تم الغاء حجز الرحلة</string>
     <string name="cancel_failed">فشل الغاء حجز الرحلة</string>
@@ -37,7 +38,7 @@
     <string name="myTrips">رحلاتي</string>
     <string name="balance">الرصيد</string>
     <string name="settings">الإعدادات</string>
-    <string name="complain">شكوي</string>
+    <string name="support">الدعم</string>
     <string name="logout">تسجيل الخروج</string>
     <string name="open_nav">فتح</string>
     <string name="close_nav">غلق</string>
@@ -48,4 +49,5 @@
     <string name="cancel_trip">إلغاء الرحلة</string>
     <string name="to_station">إلى المحطة</string>
     <string name="call">اتصال</string>
+    <string name="type_here">إكتب هنا ...</string>
 </resources>

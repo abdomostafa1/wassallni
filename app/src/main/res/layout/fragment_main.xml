@@ -9,7 +9,6 @@
 
     >
 
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,14 +35,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-
             >
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/_16sdp"
                 android:visibility="gone"
                 app:layoutManager="LinearLayoutManager" />
 
@@ -129,6 +126,8 @@
                 android:visibility="gone"
                 />
 
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -137,7 +136,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/nav_view_header"
         app:menu="@menu/nav_view_menu"
         style="@style/navigation_view_style"
         />

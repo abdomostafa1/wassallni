@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/_16sdp"
+    android:layout_marginLeft="@dimen/_48sdp"
+    >
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Purple is a mixture of blue and red and, thus, sits between the two in the color wheel. Its hex code is #A020F0. Purple has many variations, such as violet and amethyst, depending on the proportions of the two primary colors."
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14ssp"
+        android:padding="@dimen/_8sdp"
+        android:background="@drawable/chat_message_background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_8sdp"
+        android:text="9:30 am"
+        android:textColor="@color/gray_500"
+        android:textSize="@dimen/_12ssp"
+        android:layout_marginTop="@dimen/_4sdp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/message" />
+
+    <ImageView
+        android:id="@+id/seenIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_seen"
+        app:layout_constraintBottom_toBottomOf="@+id/time"
+        app:layout_constraintLeft_toRightOf="@id/time"
+        app:layout_constraintTop_toTopOf="@+id/time"
+        app:tint="#A020F0"
+        android:visibility="gone"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

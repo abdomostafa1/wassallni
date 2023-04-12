@@ -83,10 +83,10 @@
             android:id="@+id/loader"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginEnd="@dimen/_8sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/sendMessage"
-            app:layout_constraintRight_toRightOf="@+id/sendMessage"
-            app:layout_constraintTop_toTopOf="@+id/sendMessage"
+            android:layout_marginEnd="@dimen/_12sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/chatEditText"
+            app:layout_constraintEnd_toEndOf="@+id/chatEditText"
+            app:layout_constraintTop_toTopOf="@+id/chatEditText"
             android:visibility="gone"
             />
         <View

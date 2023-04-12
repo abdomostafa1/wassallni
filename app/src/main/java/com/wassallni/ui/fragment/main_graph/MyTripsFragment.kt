@@ -12,6 +12,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.wassallni.R
+import com.wassallni.adapter.ItemDecorator
 import com.wassallni.adapter.ReservedTripAdapter
 import com.wassallni.data.model.uiState.MyTripsUiState
 import com.wassallni.data.model.ReservedTrip
@@ -48,6 +50,9 @@ class MyTripsFragment : Fragment() {
             findNavController().navigateUp()
         }
         binding.recyclerView.adapter = adapter
+        val spacingInPixels = resources.getDimensionPixelSize(R.dimen._16sdp)
+        binding.recyclerView.addItemDecoration(ItemDecorator(spacingInPixels))
+
         viewModel.getReservedTrips()
 
         binding.errorState.retry.setOnClickListener {

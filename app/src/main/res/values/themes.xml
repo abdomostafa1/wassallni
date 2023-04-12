@@ -62,11 +62,19 @@
 
     </style>
     <style name="AppNavigationViewItemTextAppearance" parent="@style/TextAppearance.MaterialComponents.Subtitle2">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/_18ssp</item>
     </style>
 
     <style name="bookedTripFragmentTheme" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:statusBarColor">@color/black</item>
+    </style>
+
+    <style name="myIconButtonStyle" parent="Widget.Material3.Button.IconButton">
+        <item name="android:tint">@null</item>
+
+    </style>
+
+    <style name="navigationViewStyle" parent="Widget.Design.NavigationView">
+        <item name="android:tint">@null</item>
     </style>
 </resources>

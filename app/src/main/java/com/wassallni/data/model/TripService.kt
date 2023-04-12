@@ -27,5 +27,9 @@ interface TripService {
         @Body body: Map<String, Any>,
         @Path("id") id: String
     ): Call<CancelTripResponse>
+
+    @POST("support")
+    fun sendFeedback(@Header("token") token: String, @Body body: Map<String, Any>): Call<Any>
+
 }
 

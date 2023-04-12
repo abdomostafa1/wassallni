@@ -7,19 +7,19 @@
     <group>
         <item android:id="@+id/nav_myTrips"
             android:title="@string/myTrips"
-            
+            android:icon="@drawable/ic_mybus"
+            android:iconTint="@null"
             />
         <item
             android:id="@+id/nav_balance"
             android:title="@string/balance"
+            android:icon="@drawable/ic_balance"
             />
-        <item
-            android:id="@+id/nav_settings"
-            android:title="@string/settings"
-            />
+
         <item
             android:id="@+id/nav_complain"
-            android:title="@string/complain"
+            android:title="@string/support"
+            android:icon="@drawable/ic_feedback"
             />
     </group>
 
@@ -30,6 +30,7 @@
         <item
             android:id="@+id/nav_logout"
             android:title="@string/logout"
+            android:icon="@drawable/baseline_logout_24"
             />
 
         </menu>

@@ -165,9 +165,9 @@ class ReservationFragment : Fragment(), OnMapReadyCallback {
             Log.e("TAG", "new polyline1: ")
             val polylineOptions = PolylineOptions().addAll(points!!)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                polylineOptions.color(requireActivity().getColor(R.color.start_circle))
+                polylineOptions.color(requireActivity().getColor(R.color.blue))
             }
-            polylineOptions.width(6f)
+            polylineOptions.width(8f)
             map.addPolyline(polylineOptions)
             drawMarker(points[0], points[points.size - 1])
         }

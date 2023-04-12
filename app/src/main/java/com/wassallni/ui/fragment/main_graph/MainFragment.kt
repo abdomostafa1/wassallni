@@ -1,6 +1,8 @@
 package com.wassallni.ui.fragment.main_graph
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,12 +18,15 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.navigation.NavigationView
 import com.wassallni.R
+import com.wassallni.adapter.ItemDecorator
 import com.wassallni.adapter.TripAdapter
 import com.wassallni.data.model.uiState.MainUiState
 import com.wassallni.databinding.FragmentMainBinding
+import com.wassallni.databinding.NavViewHeaderBinding
 import com.wassallni.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * A fragment representing a list of Items.
@@ -32,6 +37,8 @@ class MainFragment : Fragment() , NavigationView.OnNavigationItemSelectedListene
     lateinit var binding: FragmentMainBinding
     lateinit var adapter: TripAdapter
     private val mainViewModel: MainViewModel by viewModels()
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,11 +60,22 @@ class MainFragment : Fragment() , NavigationView.OnNavigationItemSelectedListene
             binding.drawerLayout.open()
         }
 
+        val pixelsSize=resources.getDimensionPixelSize(R.dimen._16sdp)
+        binding.recyclerView.addItemDecoration(ItemDecorator(pixelsSize))
+
+        val headerBinding=NavViewHeaderBinding.inflate(layoutInflater)
+        binding.navView.addHeaderView(headerBinding.root)
+        binding.navView.itemIconTintList=null
+        val name=sharedPreferences.getString("name","")
+        headerBinding.userName.text=name
+
         mainViewModel.getTrips()
         Log.e(TAG, "onViewCreated: again", )
         binding.errorState.retry.setOnClickListener {
             mainViewModel.getTrips()
         }
+
+
         // binding.recycler
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -73,9 +91,7 @@ class MainFragment : Fragment() , NavigationView.OnNavigationItemSelectedListene
                         }
                         is MainUiState.Error -> {
                             showErrorState()
-
-                            Toast.makeText(requireContext(), state.errorMsg, Toast.LENGTH_LONG)
-                                .show()
+                            Log.e(TAG, "error:${state.errorMsg} ", )
                         }
                         is MainUiState.Empty -> {
                             showEmptyState()
@@ -97,19 +113,26 @@ class MainFragment : Fragment() , NavigationView.OnNavigationItemSelectedListene
             R.id.nav_balance ->{
                 Toast.makeText(requireActivity(),R.string.balance,Toast.LENGTH_LONG).show()
             }
-            R.id.nav_settings ->{
-                Toast.makeText(requireActivity(),R.string.settings,Toast.LENGTH_LONG).show()
-            }
             R.id.nav_complain ->{
-                Toast.makeText(requireActivity(),R.string.complain,Toast.LENGTH_LONG).show()
+                findNavController().navigate(R.id.action_mainFragment_to_supportFragment)
             }
             R.id.nav_logout ->{
-                Toast.makeText(requireActivity(),R.string.logout,Toast.LENGTH_LONG).show()
+                signOut()
             }
         }
 
         binding.drawerLayout.close()
         return true
+    }
+
+    private fun signOut() {
+        val editor=sharedPreferences.edit()
+        editor.putBoolean("isLoggedIn",false)
+        editor.putString("token","")
+        editor.putString("name","")
+        editor.apply()
+        requireActivity().setResult(Activity.RESULT_OK)
+        requireActivity().finish()
     }
 
     private fun showLoadingState(){

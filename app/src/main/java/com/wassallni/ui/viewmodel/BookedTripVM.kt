@@ -1,6 +1,7 @@
 package com.wassallni.ui.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
@@ -49,7 +50,9 @@ class BookedTripVM @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 _cancelRequest.value = CancelTripUiState.Loading
-                val isSuccessful = bookedTripRepo.cancelTrip(id,fullTrip.value?.startTime!!)
+                val startTime=fullTrip.value?.startTime!!
+                Log.e("TAG", "startTime=$startTime ", )
+                val isSuccessful = bookedTripRepo.cancelTrip(id,startTime)
                 if (isSuccessful)
                     _cancelRequest.value = CancelTripUiState.Success
                 else
