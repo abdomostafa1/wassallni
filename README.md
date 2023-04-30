@@ -14,3 +14,16 @@ is an app-based transportation service that allows users to book rides on air-co
 
 #### Here is a video expalins app
 [Youtube](https://www.youtube.com/watch?v=PRjTZOXwIPQ&t=206s)
+
+## Tools
+* MVVM Arch
+* Retrofit
+* Navigation components
+* Kotlin Coroutines
+* Dagger Hilt
+* State Flow & Live Data
+* Google Material Design
+* Google map
+* FCM(Firebase Cloud Messaging)
+* View binding
+
