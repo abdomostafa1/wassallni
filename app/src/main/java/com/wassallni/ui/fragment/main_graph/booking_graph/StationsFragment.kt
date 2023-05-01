@@ -1,4 +1,4 @@
-package com.wassallni.ui.fragment.main_graph
+package com.wassallni.ui.fragment.main_graph.booking_graph
 
 import android.os.Bundle
 import android.util.Log

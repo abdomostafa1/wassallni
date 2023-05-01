@@ -6,11 +6,11 @@
     app:startDestination="@id/tripFragment">
         <fragment
             android:id="@+id/stationsFragment"
-            android:name="com.wassallni.ui.fragment.main_graph.StationsFragment"
+            android:name="com.wassallni.ui.fragment.main_graph.booking_graph.StationsFragment"
             android:label="StationsFragment" />
         <fragment
             android:id="@+id/tripFragment"
-            android:name="com.wassallni.ui.fragment.main_graph.TripFragment"
+            android:name="com.wassallni.ui.fragment.main_graph.booking_graph.TripFragment"
             android:label="@string/trip_details"
             tools:layout="@layout/fragment_trip">
             <argument
@@ -26,7 +26,7 @@
         </fragment>
         <fragment
             android:id="@+id/reservationFragment"
-            android:name="com.wassallni.ui.fragment.main_graph.ReservationFragment"
+            android:name="com.wassallni.ui.fragment.main_graph.booking_graph.ReservationFragment"
             android:label="ReservationFragment">
             <action
                 android:id="@+id/action_reservationFragment_to_mainFragment"
@@ -36,7 +36,7 @@
         </fragment>
     <fragment
         android:id="@+id/userLocationFragment"
-        android:name="com.wassallni.ui.fragment.main_graph.UserLocationFragment"
+        android:name="com.wassallni.ui.fragment.main_graph.booking_graph.UserLocationFragment"
         android:label="fragment_user_location"
         tools:layout="@layout/fragment_user_location" >
         <action
@@ -48,7 +48,7 @@
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
-        android:name="com.wassallni.ui.fragment.main_graph.MapsFragment"
+        android:name="com.wassallni.ui.fragment.main_graph.booking_graph.MapsFragment"
         android:label="MapsFragment" >
         <action
             android:id="@+id/action_mapsFragment_to_reservationFragment"
