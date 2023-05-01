@@ -12,7 +12,7 @@ is an app-based transportation service that allows users to book rides on air-co
 * View booking history
 * Rate and review bus drivers
 
-#### Here is a video expalins app
+#### Here is a video for app
 [Youtube](https://www.youtube.com/watch?v=PRjTZOXwIPQ&t=206s)
 
 ## Screenshoots
