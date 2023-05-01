@@ -17,4 +17,9 @@ LoginObserver.kt
 DriverRequest.kt
 TempActivity.kt
 LocationSelectionActivity.kt
+LocationSelectionViewModel.kt
+RouteViewModel.kt
+PlaceRepository.kt
+RouteRemoteDataSource.kt
+PlaceRemoteDataSource.kt
 usefulcode
