@@ -14,3 +14,5 @@
 .cxx
 local.properties
 LoginObserver.kt
+DriverRequest.kt
+TempActivity.kt
