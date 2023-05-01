@@ -2,19 +2,12 @@ package com.wassallni.data.datasource
 
 import android.util.Log
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.PolyUtil
 import com.wassallni.BuildConfig.MAPS_API_KEY
 import com.wassallni.data.model.DistanceAPIResponse
 import com.wassallni.data.model.DistanceItem
-import com.wassallni.data.model.FullTrip
 import com.wassallni.data.model.TripService
-import org.json.JSONObject
 import retrofit2.Call
-import retrofit2.http.Body
 import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
-import retrofit2.http.Path
 import retrofit2.http.Query
 import java.util.*
 import javax.inject.Inject

@@ -15,14 +15,11 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.wassallni.R
 import com.wassallni.data.datasource.LoginUiState
-import com.wassallni.data.model.DoHomeWork
 import com.wassallni.databinding.FragmentRegisterBinding
-import com.wassallni.databinding.LoadingView2Binding
 import com.wassallni.ui.viewmodel.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 
 @AndroidEntryPoint

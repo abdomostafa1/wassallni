@@ -1,6 +1,6 @@
 package com.wassallni.data.model
 
-data class ReservedTrip(
+data class BookedTrip(
     val _id:String,
     val tripId: String,
     val point: Int,

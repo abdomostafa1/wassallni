@@ -8,21 +8,19 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.wassallni.R
-import com.wassallni.data.model.ReservedTrip
+import com.wassallni.data.model.BookedTrip
 import com.wassallni.databinding.ReservedTripItemBinding
-import com.wassallni.ui.fragment.main_graph.MainFragmentDirections
-import com.wassallni.ui.fragment.main_graph.MyTripsFragment.Companion.UPCOMING_TRIP
-import com.wassallni.ui.fragment.main_graph.MyTripsFragmentDirections
+import com.wassallni.ui.fragment.main_graph.PassengerTripsFragment.Companion.UPCOMING_TRIP
+import com.wassallni.ui.fragment.main_graph.PassengerTripsFragmentDirections
 import com.wassallni.utils.DateUseCase
 import dagger.hilt.android.qualifiers.ApplicationContext
-import okhttp3.internal.immutableListOf
 import javax.inject.Inject
 
 
-class ReservedTripAdapter @Inject constructor(@ApplicationContext val context: Context) :
-    RecyclerView.Adapter<ReservedTripAdapter.ViewHolder>() {
+class BookedTripsAdapter @Inject constructor(@ApplicationContext val context: Context) :
+    RecyclerView.Adapter<BookedTripsAdapter.ViewHolder>() {
 
-    private var trips = emptyList<ReservedTrip>()
+    private var trips = emptyList<BookedTrip>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
@@ -34,7 +32,6 @@ class ReservedTripAdapter @Inject constructor(@ApplicationContext val context: C
         )
 
     }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val trip = trips[position]
 
@@ -62,7 +59,7 @@ class ReservedTripAdapter @Inject constructor(@ApplicationContext val context: C
         val id = trip.tripId
         holder.binding.trip.cardView.setOnClickListener {
 
-            val action = MyTripsFragmentDirections.actionMyTripsFragmentToBookedTripFragment(
+            val action = PassengerTripsFragmentDirections.actionMyTripsFragmentToBookedTripFragment(
                 trip._id, trip.tripId, trip.point, trip.numOfSeat, UPCOMING_TRIP
             )
             it.findNavController().navigate(action)
@@ -73,7 +70,7 @@ class ReservedTripAdapter @Inject constructor(@ApplicationContext val context: C
     override fun getItemCount(): Int = trips.size
 
 
-    fun setData(newTrips: List<ReservedTrip>) {
+    fun setData(newTrips: List<BookedTrip>) {
 
         trips = newTrips
         notifyDataSetChanged()

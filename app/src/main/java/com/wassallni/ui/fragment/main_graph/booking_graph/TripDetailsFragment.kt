@@ -24,17 +24,17 @@ import com.google.android.gms.maps.model.*
 import com.wassallni.R
 import com.wassallni.data.model.uiState.TripUiState
 import com.wassallni.databinding.FragmentTripBinding
-import com.wassallni.ui.viewmodel.ReservationVM
+import com.wassallni.ui.viewmodel.BookVM
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TripFragment : Fragment(), OnMapReadyCallback {
+class TripDetailsFragment : Fragment(), OnMapReadyCallback {
 
     lateinit var binding: FragmentTripBinding
-    val viewModel: ReservationVM by navGraphViewModels(R.id.trip_graph) { defaultViewModelProviderFactory }
+    val viewModel: BookVM by navGraphViewModels(R.id.trip_graph) { defaultViewModelProviderFactory }
 
-    private val args: TripFragmentArgs by navArgs()
+    private val args: TripDetailsFragmentArgs by navArgs()
     lateinit var mapFragment: SupportMapFragment
     private lateinit var map: GoogleMap
 

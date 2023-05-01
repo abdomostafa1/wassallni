@@ -6,7 +6,6 @@ import com.google.maps.android.PolyUtil
 import com.wassallni.BuildConfig
 import com.wassallni.data.model.FullTrip
 import com.wassallni.data.model.TripService
-import com.wassallni.data.model.fullTrip
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.GET

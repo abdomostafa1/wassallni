@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -28,7 +27,7 @@ import com.wassallni.R
 import com.wassallni.data.model.uiState.ReservationUiState
 import com.wassallni.databinding.FragmentReservationBinding
 import com.wassallni.databinding.StationDialogBinding
-import com.wassallni.ui.viewmodel.ReservationVM
+import com.wassallni.ui.viewmodel.BookVM
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -42,7 +41,7 @@ class ReservationFragment : Fragment(), OnMapReadyCallback {
     private var stationMarker :Marker?=null
 
     private var polyline: Polyline? = null
-    val viewModel: ReservationVM by navGraphViewModels(R.id.trip_graph) { defaultViewModelProviderFactory }
+    val viewModel: BookVM by navGraphViewModels(R.id.trip_graph) { defaultViewModelProviderFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

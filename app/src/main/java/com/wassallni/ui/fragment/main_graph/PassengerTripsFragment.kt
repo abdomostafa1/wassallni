@@ -14,27 +14,26 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.wassallni.R
 import com.wassallni.adapter.ItemDecorator
-import com.wassallni.adapter.ReservedTripAdapter
+import com.wassallni.adapter.BookedTripsAdapter
 import com.wassallni.data.model.uiState.MyTripsUiState
-import com.wassallni.data.model.ReservedTrip
 import com.wassallni.databinding.FragmentMyTripsBinding
-import com.wassallni.ui.viewmodel.MyTripsVM
+import com.wassallni.ui.viewmodel.PassengerTripsVM
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MyTripsFragment : Fragment() {
+class PassengerTripsFragment : Fragment() {
 
     companion object {
         var UPCOMING_TRIP: Boolean = true
     }
 
     lateinit var binding: FragmentMyTripsBinding
-    private val viewModel by viewModels<MyTripsVM>()
+    private val viewModel by viewModels<PassengerTripsVM>()
 
     @Inject
-    lateinit var adapter: ReservedTripAdapter
+    lateinit var adapter: BookedTripsAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -72,7 +71,7 @@ class MyTripsFragment : Fragment() {
                         }
                         is MyTripsUiState.Success -> {
                             showSuccessState()
-                            adapter.setData(it.reservedTrips)
+                            adapter.setData(it.bookedTrips)
                         }
                         is MyTripsUiState.Error -> {
                             showErrorState()

@@ -8,7 +8,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.wassallni.R
 import com.wassallni.data.model.FullTrip
 import com.wassallni.data.model.uiState.CancelTripUiState
-import com.wassallni.data.repository.BookedTripRepo
+import com.wassallni.data.repository.PassengerTripRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -18,8 +18,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BookedTripVM @Inject constructor(
-    private val bookedTripRepo: BookedTripRepo,
+class PassengerTripVM @Inject constructor(
+    private val passengerTripRepo: PassengerTripRepo,
     @ApplicationContext val context: Context
 ) : ViewModel() {
 
@@ -34,7 +34,7 @@ class BookedTripVM @Inject constructor(
 
     fun getTripDetails(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            _fullTrip.value = bookedTripRepo.getTripDetails(id)
+            _fullTrip.value = passengerTripRepo.getTripDetails(id)
 
             getPolyLine1()
         }
@@ -42,7 +42,7 @@ class BookedTripVM @Inject constructor(
 
     private fun getPolyLine1() {
         viewModelScope.launch(Dispatchers.IO) {
-            _polyline1.value = bookedTripRepo.getPolyLine1(fullTrip.value?.stations!!)
+            _polyline1.value = passengerTripRepo.getPolyLine1(fullTrip.value?.stations!!)
         }
     }
 
@@ -52,7 +52,7 @@ class BookedTripVM @Inject constructor(
                 _cancelRequest.value = CancelTripUiState.Loading
                 val startTime=fullTrip.value?.startTime!!
                 Log.e("TAG", "startTime=$startTime ", )
-                val isSuccessful = bookedTripRepo.cancelTrip(id,startTime)
+                val isSuccessful = passengerTripRepo.cancelTrip(id,startTime)
                 if (isSuccessful)
                     _cancelRequest.value = CancelTripUiState.Success
                 else

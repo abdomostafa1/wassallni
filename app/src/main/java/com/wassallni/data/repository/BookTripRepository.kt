@@ -11,7 +11,7 @@ import org.json.JSONObject
 import javax.inject.Inject
 import kotlin.math.*
 
-class ReservationRepository @Inject constructor(private val reservationDataSource: ReservationDataSource) :TripRepository(){
+class BookTripRepository @Inject constructor(private val reservationDataSource: ReservationDataSource) :TripRepository(){
 
     private val TAG = "TripRepository"
     @Inject

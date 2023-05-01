@@ -10,7 +10,7 @@ import com.wassallni.databinding.StationItemRowBinding
 import com.wassallni.utils.DateUseCase
 import okhttp3.internal.immutableListOf
 
-class StationAdapter : RecyclerView.Adapter<StationAdapter.ViewHolder>() , View.OnClickListener{
+class StationsAdapter : RecyclerView.Adapter<StationsAdapter.ViewHolder>() , View.OnClickListener{
 
     private var stations= immutableListOf<Station>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

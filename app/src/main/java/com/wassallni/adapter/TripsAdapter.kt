@@ -15,7 +15,7 @@ import okhttp3.internal.immutableListOf
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
  * TODO: Replace the implementation with code for your data type.
  */
-class TripAdapter : RecyclerView.Adapter<TripAdapter.ViewHolder>() , View.OnClickListener{
+class TripsAdapter : RecyclerView.Adapter<TripsAdapter.ViewHolder>() , View.OnClickListener{
 
     private var trips= immutableListOf<Trip>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

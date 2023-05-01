@@ -11,7 +11,7 @@ import com.wassallni.R
 import com.wassallni.data.model.*
 import com.wassallni.data.model.uiState.ReservationUiState
 import com.wassallni.data.model.uiState.TripUiState
-import com.wassallni.data.repository.ReservationRepository
+import com.wassallni.data.repository.BookTripRepository
 import com.wassallni.utils.DateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -23,8 +23,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ReservationVM @Inject constructor(
-    private val reservationRepository: ReservationRepository,
+class BookVM @Inject constructor(
+    private val bookTripRepository: BookTripRepository,
     @ApplicationContext val appContext: Context
 ) : ViewModel() {
     private val TAG = "ReservationVM"
@@ -66,7 +66,7 @@ class ReservationVM @Inject constructor(
 
     fun getTripDetails(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            fullTrip = reservationRepository.getTripDetails(id)
+            fullTrip = bookTripRepository.getTripDetails(id)
             val driverName = fullTrip?.driverName!!
             val price = fullTrip?.price!!
             val date = DateUseCase.fromMillisToString2(fullTrip?.startTime!!)
@@ -81,18 +81,18 @@ class ReservationVM @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             movementMode = calculateMovementMode()
             try {
-                distances = reservationRepository.callDistanceMatrixApi(
+                distances = bookTripRepository.callDistanceMatrixApi(
                     userLocation,
                     fullTrip?.stations!!,
                     movementMode
                 )
                 _nearestStations.value =
-                    reservationRepository.calculateShortDistances(stations.value!!, distances!!)
+                    bookTripRepository.calculateShortDistances(stations.value!!, distances!!)
                 Log.e(TAG, "_nearestStation: ${nearestStations.value.toString()}")
                 val lat = nearestStations.value?.get(0)?.location?.lat
                 val lng = nearestStations.value?.get(0)?.location?.lng
                 val destination = LatLng(lat!!, lng!!)
-                _polyline2.value = reservationRepository.getPolyLine2(userLocation, destination)
+                _polyline2.value = bookTripRepository.getPolyLine2(userLocation, destination)
             } catch (ex: Exception) {
                 _message.postValue(ex.message)
             }
@@ -103,7 +103,7 @@ class ReservationVM @Inject constructor(
         if (userLocation.placeId != null)
             return "driving"
         else
-            return reservationRepository.chooseMovementMode(
+            return bookTripRepository.chooseMovementMode(
                 userLocation.coordinates!!,
                 stations.value!!
             )
@@ -113,7 +113,7 @@ class ReservationVM @Inject constructor(
     private fun getPolyLine1() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                _polyline1.value = reservationRepository.getPolyLine1(fullTrip?.stations!!)
+                _polyline1.value = bookTripRepository.getPolyLine1(fullTrip?.stations!!)
             } catch (ex: Exception) {
                 _message.postValue( ex.message)
             }
@@ -154,7 +154,7 @@ class ReservationVM @Inject constructor(
             val lng = station?.location?.lng
             val destination = LatLng(lat!!, lng!!)
             try {
-                _polyline2.value = reservationRepository.getPolyLine2(userLocation, destination)
+                _polyline2.value = bookTripRepository.getPolyLine2(userLocation, destination)
             } catch (ex: Exception) {
                 _message.postValue( ex.message)
             }
@@ -168,7 +168,7 @@ class ReservationVM @Inject constructor(
 
                 val point= nearestStations.value?.get(selectedStation)?.index!!
                 val numOfSeat=counter
-                val bookingTrip = reservationRepository.bookTrip(fullTrip!!, point,numOfSeat)
+                val bookingTrip = bookTripRepository.bookTrip(fullTrip!!, point,numOfSeat)
                 if (bookingTrip)
                     _reservationUiState.value = ReservationUiState.Success
             } catch (ex: Exception) {
@@ -189,7 +189,7 @@ class ReservationVM @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val latLng = userLocation.coordinates
             try {
-                _address.value = reservationRepository.callGeocodeApi(latLng)
+                _address.value = bookTripRepository.callGeocodeApi(latLng)
             } catch (ex: Exception) {
                 _message.postValue( ex.message)
             }

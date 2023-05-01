@@ -1,5 +1,7 @@
 package com.wassallni.data.model
 
+import com.google.android.gms.maps.model.LatLng
+
 data class FullTrip(
     val _id: String,
     val start: String,
@@ -27,6 +29,10 @@ data class Location(
     val lat: Double,
     val lng: Double
 )
+
+
+data class Origin(var placeId:String?=null,var coordinates: LatLng?=null)
+
 
 var stations = listOf(
     Station(

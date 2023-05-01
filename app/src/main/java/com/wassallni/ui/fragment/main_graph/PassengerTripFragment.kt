@@ -30,7 +30,7 @@ import com.wassallni.R
 import com.wassallni.data.model.FullTrip
 import com.wassallni.data.model.uiState.CancelTripUiState
 import com.wassallni.databinding.FragmentBookedTripBinding
-import com.wassallni.ui.viewmodel.BookedTripVM
+import com.wassallni.ui.viewmodel.PassengerTripVM
 import com.wassallni.utils.DateUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -40,14 +40,14 @@ import kotlinx.coroutines.launch
 
 private const val TAG = "BookedTripFragment"
 @AndroidEntryPoint
-class BookedTripFragment : Fragment() ,OnMapReadyCallback {
+class PassengerTripFragment : Fragment() ,OnMapReadyCallback {
 
     companion object{
         var IS_CANCELLED=false
     }
     lateinit var binding: FragmentBookedTripBinding
-    private val args:BookedTripFragmentArgs by navArgs()
-    private val viewModel:BookedTripVM by viewModels()
+    private val args:PassengerTripFragmentArgs by navArgs()
+    private val viewModel:PassengerTripVM by viewModels()
     lateinit var mapFragment: SupportMapFragment
     lateinit var map: GoogleMap
     override fun onCreateView(
@@ -62,7 +62,7 @@ class BookedTripFragment : Fragment() ,OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (args.upcomingTrip==false)
+        if (!args.upcomingTrip)
             binding.actionsLayout.visibility=View.GONE
 
         mapFragment = childFragmentManager

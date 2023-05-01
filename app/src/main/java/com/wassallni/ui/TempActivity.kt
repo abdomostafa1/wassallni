@@ -33,6 +33,8 @@ import javax.inject.Inject
 import kotlin.math.*
 
 
+// This Activity is only for Testing
+
 private const val TAG = "TempActivity"
 
 @AndroidEntryPoint

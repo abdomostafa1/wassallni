@@ -19,7 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.navigation.NavigationView
 import com.wassallni.R
 import com.wassallni.adapter.ItemDecorator
-import com.wassallni.adapter.TripAdapter
+import com.wassallni.adapter.TripsAdapter
 import com.wassallni.data.model.uiState.MainUiState
 import com.wassallni.databinding.FragmentMainBinding
 import com.wassallni.databinding.NavViewHeaderBinding
@@ -35,7 +35,7 @@ import javax.inject.Inject
 class MainFragment : Fragment() , NavigationView.OnNavigationItemSelectedListener {
     private val TAG = "MainFragment"
     lateinit var binding: FragmentMainBinding
-    lateinit var adapter: TripAdapter
+    lateinit var adapter: TripsAdapter
     private val mainViewModel: MainViewModel by viewModels()
     @Inject
     lateinit var sharedPreferences: SharedPreferences
@@ -45,7 +45,7 @@ class MainFragment : Fragment() , NavigationView.OnNavigationItemSelectedListene
     ): View? {
 
         binding = FragmentMainBinding.inflate(layoutInflater)
-        adapter = TripAdapter()
+        adapter = TripsAdapter()
         binding.recyclerView.adapter = adapter
 
         return binding.root
