@@ -86,5 +86,9 @@
     <string name="call">Call</string>
     <string name="cancel_success">Trip is Cancelled Successfully</string>
     <string name="cancel_failed">Failed to cancel reservation</string>
-    <string name="type_here">Type here ...</string>
+    <string name="type_here">Type here …</string>
+    <string name="rate">Rate</string>
+    <string name="driver_rate">driver rate</string>
+    <string name="skip">skip</string>
+    <string name="write_comment">Write your comment here …</string>
 </resources>

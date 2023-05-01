@@ -49,5 +49,9 @@
     <string name="cancel_trip">إلغاء الرحلة</string>
     <string name="to_station">إلى المحطة</string>
     <string name="call">اتصال</string>
-    <string name="type_here">إكتب هنا ...</string>
+    <string name="type_here">إكتب هنا …</string>
+    <string name="rate">قَيّم</string>
+    <string name="driver_rate">تقييم السائق</string>
+    <string name="skip">تخطي</string>
+    <string name="write_comment">إكتب تعليقك هنا …</string>
 </resources>

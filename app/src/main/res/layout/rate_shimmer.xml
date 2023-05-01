@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <View
+        android:id="@+id/imageView5"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="#dddddd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/textView10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:foreground="#dddddd"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/ratingBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_32sdp"
+        android:background="#dddddd"
+        android:layout_marginTop="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginRight="64dp"
+        android:progressTint="#FE9741"
+        android:rating="3"
+        android:stepSize="0.5" />
+
+    <View
+        android:id="@+id/comment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_margin="32dp"
+        android:background="#dddddd"
+
+        />
+
+    <View
+        android:id="@+id/button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="192dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_48sdp"
+        android:layout_margin="32dp"
+        android:background="#dddddd"
+
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

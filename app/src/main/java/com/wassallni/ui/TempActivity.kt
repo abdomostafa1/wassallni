@@ -1,38 +1,26 @@
 package com.wassallni.ui
 
-import android.content.Intent
-import android.graphics.Color
-import android.net.Uri
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
-import com.wassallni.R
-import com.wassallni.data.model.FullTrip
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.RemoteMessage
 import com.wassallni.data.model.LoggedInUser
-import com.wassallni.data.model.uiState.CancelTripUiState
 import com.wassallni.data.model.uiState.SupportUiState
 import com.wassallni.databinding.ActivityTempBinding
 import com.wassallni.databinding.ChatMessageBinding
-import com.wassallni.ui.viewmodel.BookedTripVM
 import com.wassallni.ui.viewmodel.SupportVM
 import com.wassallni.utils.DateUseCase
 import com.wassallni.utils.Permissions
@@ -51,13 +39,14 @@ private const val TAG = "TempActivity"
 class TempActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityTempBinding
-    private lateinit var mapFragment: SupportMapFragment
 
     @Inject
     lateinit var permission: Permissions
 
     @Inject
     lateinit var loggedInUser: LoggedInUser
+    @Inject
+    lateinit var preferences: SharedPreferences
     private val viewModel: SupportVM by viewModels()
     var latestView:ChatMessageBinding?=null
     lateinit var map: GoogleMap
@@ -76,8 +65,33 @@ class TempActivity : AppCompatActivity() {
         binding = ActivityTempBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {task ->
+            if (task.isSuccessful) {
+
+                val fcmToken = task.result
+                val preferencesToken=preferences.getString("fcmToken","")
+                if(preferencesToken!=""){
+                    if (preferencesToken != null) {
+                        Log.e("preferences Token:", preferencesToken)
+                    }
+                }
+                else {
+                    Toast.makeText(this, "fcmToken:$fcmToken", Toast.LENGTH_SHORT).show()
+                    val editor = preferences.edit()
+                    editor.putString("fcmToken", fcmToken)
+                    editor.apply()
+                }
+            }
+        }
         binding.sendMessage.setOnClickListener {
-            sendMessage()
+
+            val builder=RemoteMessage.Builder("token:dMFTbg-pRfy2mjYSee6Xgx:APA91bGX4XxvOfstLmid80ekNph34kcaGYcu71Z-inK4GJYbhMtx5bgZPzKoN83-tl0yO2o9wH6hni8wFG0GHmyieLOpnmGQUhdcwiQ7UZZLuRFZRKExmgHbLSDY1zf_ZfMHEYaTMNG-")
+            builder.addData("body","hello my friend abdo , i miss you")
+                .messageId="jsjoisiosjij"
+            val remoteMessage=builder.build()
+
+            FirebaseMessaging.getInstance().send(remoteMessage)
+
         }
 
         lifecycleScope.launch {

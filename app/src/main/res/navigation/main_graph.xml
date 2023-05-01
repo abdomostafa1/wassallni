@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_mainFragment_to_supportFragment"
             app:destination="@id/supportFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_rateDriverFragment"
+            app:destination="@id/rateDriverFragment" />
     </fragment>
    <include app:graph="@navigation/trip_graph"/>
     <fragment
@@ -67,4 +70,20 @@
         android:name="com.wassallni.ui.fragment.main_graph.SupportFragment"
         android:label="fragment_support"
         tools:layout="@layout/fragment_support" />
+    <fragment
+        android:id="@+id/rateDriverFragment"
+        android:name="com.wassallni.ui.fragment.main_graph.RateDriverFragment"
+        android:label="fragment_rate_driver"
+        tools:layout="@layout/fragment_rate_driver" >
+        <argument
+            android:name="tripId"
+            app:argType="string"
+            android:defaultValue=''
+            />
+        <argument
+            android:name="driverId"
+            app:argType="string"
+            android:defaultValue=''
+            />
+    </fragment>
 </navigation>

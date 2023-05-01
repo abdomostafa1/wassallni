@@ -1,3 +1,3 @@
 package com.wassallni.utils
 
-const val Domain="https://a7cb-41-68-183-115.eu.ngrok.io/"
+const val Domain="https://26fc-41-69-116-226.eu.ngrok.io/"
