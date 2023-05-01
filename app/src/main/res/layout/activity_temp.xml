@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="Support"
+            app:titleCentered="true"
+            app:titleTextColor="@color/black" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        >
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#FAFAFA"
+            app:layout_constraintBottom_toTopOf="@id/rect1"
+            app:layout_constraintTop_toBottomOf="@id/rect2">
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="#FAFAFA"
+                android:layout_marginRight="@dimen/_16sdp"
+                android:layout_marginLeft="@dimen/_48sdp"
+                android:layout_gravity="right"
+                >
+                <androidx.legacy.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_16sdp"
+                    />
+            </LinearLayout>
+        </ScrollView>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/chatEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/_48sdp"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:background="@drawable/chat_edittext"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_64sdp"
+            android:hint="@string/type_here"
+            android:textSize="@dimen/_14ssp"
+            android:maxLines="3"
+            android:layout_marginBottom="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <Button
+            style="@style/Widget.Material3.Button.IconButton"
+            android:id="@+id/sendMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_send"
+            android:layout_marginEnd="@dimen/_8sdp"
+            app:iconTint="@null"
+            app:layout_constraintBottom_toBottomOf="@+id/chatEditText"
+            app:layout_constraintEnd_toEndOf="@+id/chatEditText"
+            app:layout_constraintTop_toTopOf="@+id/chatEditText"
+            />
+
+        <ProgressBar
+            android:id="@+id/loader"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/sendMessage"
+            app:layout_constraintRight_toRightOf="@+id/sendMessage"
+            app:layout_constraintTop_toTopOf="@+id/sendMessage"
+            android:visibility="gone"
+            />
+        <View
+            android:id="@+id/rect1"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_16sdp"
+            android:background="@drawable/rect1"
+            app:layout_constraintBottom_toTopOf="@+id/chatEditText" />
+
+        <View
+            android:id="@+id/rect2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_16sdp"
+            android:background="@drawable/rect2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,6 +1,22 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Wassallni" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Wassallni" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <!-- Secondary brand color. -->
+        <!-- Status bar color. -->
+        <item name="colorOnSurface">@color/green</item>
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorAccent">@color/red</item>
+
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="loginTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:statusBarColor">#FEA9A7</item>
+
+    </style>
+
+    <style name="Material3" parent="Theme.Material3.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -11,8 +27,54 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <item name="android:windowLightStatusBar">true</item>
 
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.Wassallni.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Wassallni.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="temp_activity_theme" parent="Theme.Material3.Light.NoActionBar" />
+
+    <style name="mainActivityTheme" parent="Theme.Material3.Light.NoActionBar">
+
+    </style>
+
+    <style name="MaterialAlertDialog.MaterialComponents" parent="AlertDialog.AppCompat">
+        <item name="android:layout">@layout/mtrl_alert_dialog</item>
+        <item name="listItemLayout">@layout/mtrl_alert_select_dialog_item</item>
+        <item name="multiChoiceItemLayout">@layout/mtrl_alert_select_dialog_multichoice</item>
+        <item name="singleChoiceItemLayout">@layout/mtrl_alert_select_dialog_singlechoice</item>
+
+        <item name="android:background">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
+
+        <item name="backgroundInsetStart">@dimen/mtrl_alert_dialog_background_inset_start</item>
+        <item name="backgroundInsetTop">@dimen/mtrl_alert_dialog_background_inset_top</item>
+        <item name="backgroundInsetEnd">@dimen/mtrl_alert_dialog_background_inset_end</item>
+        <item name="backgroundInsetBottom">@dimen/mtrl_alert_dialog_background_inset_bottom</item>
+        <item name="shapeAppearance">?attr/shapeAppearanceMediumComponent</item>
+    </style>
+
+    <style name="navigation_view_style" parent="Widget.Material3.NavigationView">
+        <item name="itemTextAppearance">@style/AppNavigationViewItemTextAppearance</item>
+
+    </style>
+    <style name="AppNavigationViewItemTextAppearance" parent="@style/TextAppearance.MaterialComponents.Subtitle2">
+        <item name="android:textSize">@dimen/_18ssp</item>
+    </style>
+
+    <style name="bookedTripFragmentTheme" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:statusBarColor">@color/black</item>
+    </style>
+
+    <style name="myIconButtonStyle" parent="Widget.Material3.Button.IconButton">
+        <item name="android:tint">@null</item>
+
+    </style>
+
+    <style name="navigationViewStyle" parent="Widget.Design.NavigationView">
+        <item name="android:tint">@null</item>
     </style>
 </resources>

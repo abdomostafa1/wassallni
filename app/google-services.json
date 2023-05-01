@@ -7,6 +7,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:1027407636214:android:65fe074982d661416caed7",
+        "android_client_info": {
+          "package_name": "com.example.wassalni"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1027407636214-t737h4a83mbrdv9ahe6uukkeojh00keu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOtInrna_uOw2_muuguERr7nQQcS6xeFg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1027407636214-f5brc80f8tdfu5rlijuiguhqf3cj4n3m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:1027407636214:android:3e0c8e0db97d38da6caed7",
         "android_client_info": {
           "package_name": "com.wassallni"
@@ -14,11 +43,19 @@
       },
       "oauth_client": [
         {
-          "client_id": "1027407636214-18nf7jfnre1c7qpmfh9t51i4mj73bmrl.apps.googleusercontent.com",
+          "client_id": "1027407636214-0d35tpsuu66ih17pk18su52kqqg2vhjq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.wassallni",
-            "certificate_hash": "7404fb64b147f51ef5403a9293efb6fd27bf1de7"
+            "certificate_hash": "b7d1a9ba57eea5f1dcc3083d760b134f72a07c44"
+          }
+        },
+        {
+          "client_id": "1027407636214-2slokp5jf61g25utt3veqcvoh9ondmk3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.wassallni",
+            "certificate_hash": "5ab8a8d3e294f5f0b19d5b2e7d6a95b7c13404ea"
           }
         },
         {

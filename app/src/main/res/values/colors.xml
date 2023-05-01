@@ -8,6 +8,24 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#D50000</color>
-    <color name="gray_200">#E7E7E7</color>
+    <color name="gray_200">#4DE7E7E7</color>
+    <color name="gray_100">#F6F7F9</color>
+    <color name="gray_300">#D5D4DB</color>
+    <color name="gray_400">#D8D8D8</color>
+    <color name="gray_500">#bbbbbb</color>
+    <color name="purple_100">#6D77FB</color>
+    <color name="gray700">#757575</color>
+    <color name="dark_gray">#56546E</color>
+    <color name="toolbar_color">#F0EDDD</color>
+    <color name="route_color">#E98D58</color>
+    <color name="blue">#162762</color>
+    <color name="green">#66F9B0</color>
+    <color name="green_500">#7FCE79</color>
+    <color name="dark_green">#2B360F</color>
+    <color name="dot_marker_color">#4285F4</color>
+    <color name="start_circle">#F35737</color>
+    <color name="end_circle">#565451</color>
+    <color name="divider_color">#F2F2F2</color>
+
 
 </resources>

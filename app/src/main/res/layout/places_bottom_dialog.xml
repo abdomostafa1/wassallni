@@ -1,0 +1,242 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+<FrameLayout
+    android:id="@+id/standard_bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/place_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:id="@+id/img_location1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic__location_on"
+                android:layout_marginLeft="32dp"
+                android:padding="8dp"
+                android:background="@drawable/circular_background"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_1" />
+
+            <TextView
+                android:id="@+id/tv_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Al Wasta"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:layout_marginLeft="32dp"
+                app:layout_constraintLeft_toRightOf="@id/img_location1"
+                app:layout_constraintTop_toTopOf="parent"
+
+                />
+
+            <TextView
+                android:id="@+id/tv_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Madinet Al Wasta, ElWasta city"
+                android:textColor="@color/black"
+                android:layout_marginLeft="32dp"
+                app:layout_constraintStart_toEndOf="@+id/img_location1"
+                app:layout_constraintTop_toBottomOf="@id/tv_1"
+                />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="#DBE3E6"
+                app:layout_constraintTop_toBottomOf="@id/tv_2"
+                app:layout_constraintLeft_toLeftOf="@id/tv_2"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="32dp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/place_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:id="@+id/img_location2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic__location_on"
+                android:layout_marginLeft="32dp"
+                android:padding="8dp"
+                android:background="@drawable/circular_background"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_3" />
+
+            <TextView
+                android:id="@+id/tv_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Al Wasta"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:layout_marginLeft="32dp"
+                app:layout_constraintLeft_toRightOf="@id/img_location2"
+                app:layout_constraintTop_toTopOf="parent"
+
+                />
+
+            <TextView
+                android:id="@+id/tv_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Madinet Al Wasta, ElWasta city"
+                android:textColor="@color/black"
+                android:layout_marginLeft="32dp"
+                app:layout_constraintStart_toEndOf="@+id/img_location2"
+                app:layout_constraintTop_toBottomOf="@id/tv_3"
+                />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="#DBE3E6"
+                app:layout_constraintTop_toBottomOf="@id/tv_4"
+                app:layout_constraintLeft_toLeftOf="@id/tv_4"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="32dp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/place_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:id="@+id/img_location3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic__location_on"
+                android:layout_marginLeft="32dp"
+                android:padding="8dp"
+                android:background="@drawable/circular_background"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_5" />
+
+            <TextView
+                android:id="@+id/tv_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Al Wasta"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:layout_marginLeft="32dp"
+                app:layout_constraintLeft_toRightOf="@id/img_location3"
+                app:layout_constraintTop_toTopOf="parent"
+
+                />
+
+            <TextView
+                android:id="@+id/tv_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Madinet Al Wasta, ElWasta city"
+                android:textColor="@color/black"
+                android:layout_marginLeft="32dp"
+                app:layout_constraintStart_toEndOf="@+id/img_location3"
+                app:layout_constraintTop_toBottomOf="@id/tv_5"
+                />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="#DBE3E6"
+                app:layout_constraintTop_toBottomOf="@id/tv_6"
+                app:layout_constraintLeft_toLeftOf="@id/tv_6"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="32dp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/place_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:id="@+id/img_location4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic__location_on"
+                android:layout_marginLeft="32dp"
+                android:padding="8dp"
+                android:background="@drawable/circular_background"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_7" />
+
+            <TextView
+                android:id="@+id/tv_7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Al Wasta"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:layout_marginLeft="32dp"
+                app:layout_constraintLeft_toRightOf="@id/img_location4"
+                app:layout_constraintTop_toTopOf="parent"
+
+                />
+
+            <TextView
+                android:id="@+id/tv_8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Madinet Al Wasta, ElWasta city"
+                android:textColor="@color/black"
+                android:layout_marginLeft="32dp"
+                app:layout_constraintStart_toEndOf="@+id/img_location4"
+                app:layout_constraintTop_toBottomOf="@id/tv_7"
+                />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:background="#DBE3E6"
+                app:layout_constraintTop_toBottomOf="@id/tv_8"
+                app:layout_constraintLeft_toLeftOf="@id/tv_8"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="32dp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+    </FrameLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>

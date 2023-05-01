@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    >
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -18,32 +22,30 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/phone_fragment_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:rippleColor="@color/gray_200"
-        android:elevation="0dp"
-        app:elevation="0dp"
-        android:layout_margin="8dp"
-        android:backgroundTint="@color/white"
-        android:src="@drawable/ic_arrow_back"
-        android:tint="@color/black"
-        app:borderWidth="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ImageView
         android:id="@+id/new_message"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:src="@drawable/ic_new_message"
         app:layout_constraintBottom_toTopOf="@id/guideline1"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline2"
 
         />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/navigate_up"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:src="@drawable/ic_arrow_back"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
+        android:elevation="0dp"
+        app:elevation="0dp"
+        app:borderWidth="0dp"
+        android:layout_margin="@dimen/_8sdp"
+        android:foregroundGravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/tv_guide"
         android:layout_width="wrap_content"
@@ -51,10 +53,10 @@
         android:gravity="center"
         android:text=""
         android:textColor="@color/black"
-        android:textSize="18sp"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:textSize="@dimen/_18ssp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginLeft="@dimen/_8sdp"
+        android:layout_marginRight="@dimen/_8sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/new_message" />
@@ -64,9 +66,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
-        android:textSize="18sp"
+        android:textSize="@dimen/_20ssp"
         android:gravity="center"
-        android:layout_marginEnd="16dp"
+        android:padding="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_16sdp"
         app:layout_constraintBottom_toTopOf="@+id/verifyCodeEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_guide"
@@ -77,30 +81,32 @@
         android:id="@+id/tv_resend_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="resend code"
+        android:text="@string/resend_code"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/verifyCodeEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_guide"
         android:visibility="invisible"
-        android:textSize="16sp"
+        android:textSize="@dimen/_16ssp"
         />
 
     <com.jakode.verifycodeedittext.VerifyCodeEditText
         android:id="@+id/verifyCodeEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_48sdp"
         android:layoutDirection="ltr"
-        android:paddingBottom="12dp"
+        android:paddingBottom="@dimen/_12sdp"
         app:BottomErrorIcon="@drawable/bottom_error_icon"
-        app:BottomIconHeight="2dp"
-        app:BottomIconWidth="20dp"
+        app:BottomIconHeight="@dimen/_2sdp"
+        app:BottomIconWidth="@dimen/_20sdp"
         app:BottomSelectedIcon="@drawable/bottom_selected_icon"
         app:BottomUnSelectedIcon="@drawable/bottom_unselected_icon"
-        app:ItemSpaceSize="10dp"
+        app:ItemSpaceSize="@dimen/_10sdp"
         app:TextColor="@color/black"
-        app:TextSize="14sp"
+        android:layout_marginEnd="@dimen/_32sdp"
+        android:layout_marginStart="@dimen/_32sdp"
+        app:TextSize="@dimen/_14ssp"
         app:ViewCount="Six"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,11 +118,12 @@
         android:id="@+id/verifyBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="64dp"
-        android:layout_marginRight="64dp"
-        android:layout_marginTop="32dp"
-        app:cornerRadius="100dp"
-        android:text="verify"
+        android:layout_marginLeft="@dimen/_64sdp"
+        android:layout_marginRight="@dimen/_64sdp"
+        android:layout_marginTop="@dimen/_32sdp"
+        android:textSize="@dimen/_16ssp"
+        app:cornerRadius="@dimen/_8sdp"
+        android:text="@string/verify"
         android:textAllCaps="false"
         app:layout_constraintTop_toBottomOf="@+id/verifyCodeEditText"
         android:enabled="false"
@@ -127,8 +134,16 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".40"
+        app:layout_constraintGuide_percent=".35"
         />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent=".05"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

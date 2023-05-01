@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_navi"
+    app:startDestination="@id/register">
+
+    <fragment
+        android:id="@+id/register"
+        android:name="com.wassallni.ui.fragment.login_graph.RegisterFragment"
+        android:label="Sign in"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_register_to_verificationFragment"
+            app:destination="@id/verificationFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/verificationFragment"
+        android:name="com.wassallni.ui.fragment.login_graph.VerificationFragment"
+        android:label="otp" >
+        <action
+            android:id="@+id/action_verificationFragment_to_successfulLoginFragment"
+            app:destination="@id/successfulLoginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/successfulLoginFragment"
+        android:name="com.wassallni.ui.fragment.login_graph.SuccessfulLoginFragment"
+        android:label="Success"
+        tools:layout="@layout/fragment_successful_login" />
+</navigation>

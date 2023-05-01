@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/mainFragment">
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.wassallni.ui.fragment.main_graph.MainFragment"
+        android:label="Trips"
+        >
+        <action
+            android:id="@+id/action_main_to_trip_graph"
+            app:destination="@id/trip_graph" >
+            <argument
+                android:name="id"
+                android:defaultValue=""
+                app:argType="string"
+                />
+        </action>
+        <action
+            android:id="@+id/action_mainFragment_to_myTripsFragment"
+            app:destination="@id/myTripsFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_supportFragment"
+            app:destination="@id/supportFragment" />
+    </fragment>
+   <include app:graph="@navigation/trip_graph"/>
+    <fragment
+        android:id="@+id/myTripsFragment"
+        android:name="com.wassallni.ui.fragment.main_graph.MyTripsFragment"
+        android:label="fragment_my_trips"
+        tools:layout="@layout/fragment_my_trips" >
+        <action
+            android:id="@+id/action_myTripsFragment_to_bookedTripFragment"
+            app:destination="@id/BookedTripFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/BookedTripFragment"
+        android:name="com.wassallni.ui.fragment.main_graph.BookedTripFragment"
+        android:label="BookedTripFragment"
+
+        >
+        <argument
+            android:name="id"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="tripId"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="point"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="numOfSeat"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="upcomingTrip"
+            app:argType="boolean"
+            android:defaultValue="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/supportFragment"
+        android:name="com.wassallni.ui.fragment.main_graph.SupportFragment"
+        android:label="fragment_support"
+        tools:layout="@layout/fragment_support" />
+</navigation>

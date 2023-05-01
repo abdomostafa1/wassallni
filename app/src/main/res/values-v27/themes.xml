@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="loginTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:statusBarColor">#FEA9A7</item>
+        <item name="android:navigationBarColor">#FCF0F2</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+</resources>
