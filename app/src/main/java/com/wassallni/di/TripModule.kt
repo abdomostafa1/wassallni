@@ -5,8 +5,6 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.wassallni.data.datasource.DirectionApiService
 import com.wassallni.data.datasource.DistanceApiService
 import com.wassallni.data.datasource.GeocodingApiService
-import com.wassallni.data.model.TripService
-import com.wassallni.utils.Domain
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

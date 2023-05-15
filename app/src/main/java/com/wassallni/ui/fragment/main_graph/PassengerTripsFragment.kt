@@ -37,7 +37,7 @@ class PassengerTripsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMyTripsBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
         return binding.root
@@ -80,14 +80,13 @@ class PassengerTripsFragment : Fragment() {
                         is MyTripsUiState.EmptyState -> {
                             showEmptyState()
                         }
-                        else -> Unit
 
                     }
                 }
             }
         }
 
-        binding.toggleButton.addOnButtonCheckedListener { group, checkedId, isChecked ->
+        binding.toggleButton.addOnButtonCheckedListener { _, checkedId, isChecked ->
 
             if (checkedId == binding.upcoming.id && isChecked) {
                 viewModel.fetchUpcomingTrips()
@@ -107,7 +106,7 @@ class PassengerTripsFragment : Fragment() {
         val savedStateHandle = findNavController().currentBackStackEntry?.savedStateHandle
         savedStateHandle?.getLiveData<Boolean>("IS_CANCELLED")
             ?.observe(viewLifecycleOwner) { isCancelled ->
-                Log.e("TAG", "setBackStackEntryObserver:$isCancelled ", )
+                Log.e("TAG", "setBackStackEntryObserver:$isCancelled " )
                 if (isCancelled)
                     viewModel.getReservedTrips()
             }

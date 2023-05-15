@@ -1,13 +1,13 @@
 package com.wassallni.data.repository
 
-import com.wassallni.data.datasource.MyTripsDataSource
+import com.wassallni.data.datasource.PassengerTripsDataSource
 import com.wassallni.data.model.BookedTrip
 import javax.inject.Inject
 
-class PassengerTripsRepository @Inject constructor(private val myTripsDataSource: MyTripsDataSource){
+class PassengerTripsRepository @Inject constructor(private val passengerTripsDataSource: PassengerTripsDataSource){
 
     fun  getReservedTrips(): List<BookedTrip> {
 
-        return myTripsDataSource.getReservedTrips()
+        return passengerTripsDataSource.getReservedTrips()
     }
 }

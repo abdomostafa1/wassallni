@@ -8,7 +8,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.wassallni.R
 import com.wassallni.data.model.FullTrip
 import com.wassallni.data.model.uiState.CancelTripUiState
-import com.wassallni.data.repository.PassengerTripRepo
+import com.wassallni.data.repository.PassengerTripDetailsRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -18,8 +18,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PassengerTripVM @Inject constructor(
-    private val passengerTripRepo: PassengerTripRepo,
+class PassengerTripDetailsVM @Inject constructor(
+    private val passengerTripDetailsRepo: PassengerTripDetailsRepo,
     @ApplicationContext val context: Context
 ) : ViewModel() {
 
@@ -34,7 +34,7 @@ class PassengerTripVM @Inject constructor(
 
     fun getTripDetails(id: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            _fullTrip.value = passengerTripRepo.getTripDetails(id)
+            _fullTrip.value = passengerTripDetailsRepo.getTripDetails(id)
 
             getPolyLine1()
         }
@@ -42,7 +42,7 @@ class PassengerTripVM @Inject constructor(
 
     private fun getPolyLine1() {
         viewModelScope.launch(Dispatchers.IO) {
-            _polyline1.value = passengerTripRepo.getPolyLine1(fullTrip.value?.stations!!)
+            _polyline1.value = passengerTripDetailsRepo.getPolyLine1(fullTrip.value?.stations!!)
         }
     }
 
@@ -51,8 +51,8 @@ class PassengerTripVM @Inject constructor(
             try {
                 _cancelRequest.value = CancelTripUiState.Loading
                 val startTime=fullTrip.value?.startTime!!
-                Log.e("TAG", "startTime=$startTime ", )
-                val isSuccessful = passengerTripRepo.cancelTrip(id,startTime)
+                Log.e("TAG", "startTime=$startTime " )
+                val isSuccessful = passengerTripDetailsRepo.cancelTrip(id,startTime)
                 if (isSuccessful)
                     _cancelRequest.value = CancelTripUiState.Success
                 else

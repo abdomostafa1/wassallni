@@ -17,12 +17,13 @@ import com.wassallni.utils.Permissions
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+private const val TAG = "MainActivity"
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val TAG = "MainActivity"
     private lateinit var binding: ActivityMainBinding
-    lateinit var navController: NavController
+    private lateinit var navController: NavController
 
     @Inject
     lateinit var loggedInUser: LoggedInUser
@@ -36,15 +37,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val navHostFragment=supportFragmentManager.findFragmentById(R.id.mainFragmentContainerView) as NavHostFragment
-        navController=navHostFragment.navController
-        val intent=intent
-        if (intent.getBooleanExtra("rateDriverIntent",false)){
-            Log.e(TAG, "onCreate: yeas new intent", )
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.mainFragmentContainerView) as NavHostFragment
+        navController = navHostFragment.navController
+        val intent = intent
+        if (intent.getBooleanExtra("rateDriverIntent", false)) {
+            Log.e(TAG, "onCreate: rateDriverIntent")
             openRateDriverScreen(intent)
         }
-        else
-            Log.e(TAG, "onCreate: no Old intent", )
 
         val fcmToken = preferences.getString("fcmToken", "")
         if (fcmToken == "")
@@ -74,19 +74,22 @@ class MainActivity : AppCompatActivity() {
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        val rateDriverIntent=intent?.getBooleanExtra("rateDriverIntent",false)
-        Log.e(TAG, "onNewIntent: $rateDriverIntent", )
-        openRateDriverScreen(intent!!)
+        val rateDriverIntent = intent?.getBooleanExtra("rateDriverIntent", false)
+        if (rateDriverIntent == true) {
+            Log.e(TAG, "onNewIntent: $rateDriverIntent")
+            openRateDriverScreen(intent)
+        }
     }
 
-    private fun openRateDriverScreen(intent: Intent){
-        val tripId=intent.getStringExtra("tripId")
-        val driverId=intent.getStringExtra("driverId")
+    private fun openRateDriverScreen(intent: Intent) {
+        val tripId = intent.getStringExtra("tripId")
+        val driverId = intent.getStringExtra("driverId")
 
-        Log.e(TAG, "onNewIntent: $tripId", )
-        Log.e(TAG, "onNewIntent: $driverId", )
+        Log.e(TAG, "onNewIntent: $tripId")
+        Log.e(TAG, "onNewIntent: $driverId")
 
-        val action=MainFragmentDirections.actionMainFragmentToRateDriverFragment(tripId!!,driverId!!)
+        val action =
+            MainFragmentDirections.actionMainFragmentToRateDriverFragment(tripId!!, driverId!!)
         navController.navigate(action)
     }
 }

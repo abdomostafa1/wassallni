@@ -5,9 +5,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceManager
 import com.google.firebase.auth.FirebaseAuth
-import com.wassallni.data.model.LoggedInUser
 import com.wassallni.databinding.ActivitySplashScreenBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -15,12 +13,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class SplashScreenActivity : AppCompatActivity() {
 
-    private val TAG = "SplashScreenActivity"
     private lateinit var binding: ActivitySplashScreenBinding
 
     @Inject
     lateinit var sharedPreferences: SharedPreferences
-    val auth = FirebaseAuth.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +34,6 @@ class SplashScreenActivity : AppCompatActivity() {
 
     private fun checkAuthentication() {
         val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
-        val token=sharedPreferences.getString("token","")
-
 
         if (!isLoggedIn)
             openLoginActivity()

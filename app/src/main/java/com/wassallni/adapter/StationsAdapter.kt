@@ -29,7 +29,7 @@ class StationsAdapter : RecyclerView.Adapter<StationsAdapter.ViewHolder>() , Vie
         val station = stations[position]
 
         holder.binding.name.text=station.name
-        val arrivalTime=DateUseCase.fromMillisToString1(station.time)
+        val arrivalTime=DateUseCase.convertDateToHhMma(station.time)
         holder.binding.arrivalTime.text=arrivalTime
 
     }

@@ -43,20 +43,20 @@ class BookedTripsAdapter @Inject constructor(@ApplicationContext val context: Co
         holder.binding.trip.tripView.tvPrice.text = trip.price.toString()
 
 
-        holder.binding.trip.tripView.date.text = DateUseCase.fromMillisToString3(trip.endTime)
+        holder.binding.trip.tripView.date.text = DateUseCase.convertDateToYyMmDd(trip.endTime)
         holder.binding.trip.tripView.startTime.text =
-            DateUseCase.fromMillisToString1(trip.startTime)
-        holder.binding.trip.tripView.endTime.text = DateUseCase.fromMillisToString1(trip.endTime)
+            DateUseCase.convertDateToHhMma(trip.startTime)
+        holder.binding.trip.tripView.endTime.text = DateUseCase.convertDateToHhMma(trip.endTime)
 
-        if (trip.state == -1)
-            holder.binding.state.text = context.getString(R.string.cancelled)
-        else if (trip.state == -2) {
-            holder.binding.state.text = context.getString(R.string.missed)
-            holder.binding.state.setTextColor(Color.RED)
-        } else
-            holder.binding.state.text = ""
+        when (trip.state) {
+            -1 -> holder.binding.state.text = context.getString(R.string.cancelled)
+            -2 -> {
+                holder.binding.state.text = context.getString(R.string.missed)
+                holder.binding.state.setTextColor(Color.RED)
+            }
+            else -> holder.binding.state.text = ""
+        }
 
-        val id = trip.tripId
         holder.binding.trip.cardView.setOnClickListener {
 
             val action = PassengerTripsFragmentDirections.actionMyTripsFragmentToBookedTripFragment(
@@ -76,9 +76,7 @@ class BookedTripsAdapter @Inject constructor(@ApplicationContext val context: Co
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(binding: ReservedTripItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        val binding = binding
-    }
+    inner class ViewHolder(val binding: ReservedTripItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
 }

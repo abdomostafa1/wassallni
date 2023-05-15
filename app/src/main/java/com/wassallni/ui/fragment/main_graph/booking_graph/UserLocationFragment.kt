@@ -52,7 +52,7 @@ class UserLocationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding=FragmentUserLocationBinding.inflate(inflater)
         return binding.root
     }
@@ -62,7 +62,7 @@ class UserLocationFragment : Fragment() {
 
         val countryCode=getUserCountryCode()
         if (!Places.isInitialized()) {
-            Places.initialize(requireActivity().applicationContext, BuildConfig.MAPS_API_KEY, Locale.getDefault());
+            Places.initialize(requireActivity().applicationContext, BuildConfig.MAPS_API_KEY, Locale.getDefault())
         }
 
         val autocompleteFragment =

@@ -22,10 +22,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
+private const val TAG = "RegisterFragment"
+
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
 
-    private val TAG = "RegisterFragment"
 
     lateinit var binding: FragmentRegisterBinding
     private val loginViewModel: LoginViewModel by activityViewModels()
@@ -72,7 +73,6 @@ class RegisterFragment : Fragment() {
 
                     when (it) {
                         is LoginUiState.Loading -> {
-                            Log.e(TAG, "hygine State ")
                             showLoading()
                         }
                         is LoginUiState.CodeSent -> {
@@ -98,22 +98,20 @@ class RegisterFragment : Fragment() {
             val phoneNumber = "+${binding.ccp.selectedCountryCode}${number}"
             Log.e(TAG, "$phoneNumber ")
             lifecycleScope.launch(Dispatchers.IO) {
-                loginViewModel.verifyPhoneNumber(name, phoneNumber,requireActivity())
+                loginViewModel.verifyPhoneNumber(name, phoneNumber, requireActivity())
             }
         }
     }
 
     private fun showLoading() {
-        binding.loader.visibility=View.VISIBLE
+        binding.loader.visibility = View.VISIBLE
 
     }
 
     private fun hideLoading() {
-        binding.loader.visibility=View.GONE
+        binding.loader.visibility = View.GONE
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
+
 
 }

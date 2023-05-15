@@ -22,12 +22,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+private const val TAG = "ReservationVM"
+
 @HiltViewModel
 class BookVM @Inject constructor(
     private val bookTripRepository: BookTripRepository,
     @ApplicationContext val appContext: Context
 ) : ViewModel() {
-    private val TAG = "ReservationVM"
 
     private var fullTrip: FullTrip? = null
 
@@ -43,7 +44,7 @@ class BookVM @Inject constructor(
     private val _polyline2 = MutableStateFlow<List<LatLng>?>(null)
     val polyline2 = _polyline2.asStateFlow()
 
-    var counter: Int = 1
+    private var counter: Int = 1
 
     private val _nearestStations = MutableStateFlow<List<NearestStation>?>(null)
     val nearestStations = _nearestStations.asStateFlow()
@@ -52,7 +53,7 @@ class BookVM @Inject constructor(
         MutableStateFlow<ReservationUiState>(ReservationUiState.InitialState)
     val reservationUiState = _reservationUiState.asStateFlow()
 
-    private val _address = MutableStateFlow<String>("")
+    private val _address = MutableStateFlow("")
     val address = _address.asStateFlow()
 
     private val _message = MutableLiveData<String>()
@@ -69,7 +70,7 @@ class BookVM @Inject constructor(
             fullTrip = bookTripRepository.getTripDetails(id)
             val driverName = fullTrip?.driverName!!
             val price = fullTrip?.price!!
-            val date = DateUseCase.fromMillisToString2(fullTrip?.startTime!!)
+            val date = DateUseCase.convertDateToYyMmDdHh(fullTrip?.startTime!!)
 
             _tripUiState.value = TripUiState(driverName, price, counter, date)
             _stations.value = fullTrip?.stations
@@ -100,10 +101,10 @@ class BookVM @Inject constructor(
     }
 
     private fun calculateMovementMode(): String {
-        if (userLocation.placeId != null)
-            return "driving"
+        return if (userLocation.placeId != null)
+            "driving"
         else
-            return bookTripRepository.chooseMovementMode(
+            bookTripRepository.chooseMovementMode(
                 userLocation.coordinates!!,
                 stations.value!!
             )
@@ -115,7 +116,7 @@ class BookVM @Inject constructor(
             try {
                 _polyline1.value = bookTripRepository.getPolyLine1(fullTrip?.stations!!)
             } catch (ex: Exception) {
-                _message.postValue( ex.message)
+                _message.postValue(ex.message)
             }
         }
     }
@@ -128,7 +129,7 @@ class BookVM @Inject constructor(
             if (counter == 2)
                 _message.postValue(appContext.getString(R.string.maximum_seats_num) + " 2")
             else
-                _message.postValue( appContext.getString(R.string.num_available_seats) + " 1")
+                _message.postValue(appContext.getString(R.string.num_available_seats) + " 1")
         }
     }
 
@@ -156,7 +157,7 @@ class BookVM @Inject constructor(
             try {
                 _polyline2.value = bookTripRepository.getPolyLine2(userLocation, destination)
             } catch (ex: Exception) {
-                _message.postValue( ex.message)
+                _message.postValue(ex.message)
             }
         }
     }
@@ -166,9 +167,9 @@ class BookVM @Inject constructor(
             try {
                 _reservationUiState.value = ReservationUiState.Loading
 
-                val point= nearestStations.value?.get(selectedStation)?.index!!
-                val numOfSeat=counter
-                val bookingTrip = bookTripRepository.bookTrip(fullTrip!!, point,numOfSeat)
+                val point = nearestStations.value?.get(selectedStation)?.index!!
+                val numOfSeat = counter
+                val bookingTrip = bookTripRepository.bookTrip(fullTrip!!, point, numOfSeat)
                 if (bookingTrip)
                     _reservationUiState.value = ReservationUiState.Success
             } catch (ex: Exception) {
@@ -191,7 +192,7 @@ class BookVM @Inject constructor(
             try {
                 _address.value = bookTripRepository.callGeocodeApi(latLng)
             } catch (ex: Exception) {
-                _message.postValue( ex.message)
+                _message.postValue(ex.message)
             }
 
         }

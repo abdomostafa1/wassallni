@@ -36,12 +36,12 @@
         tools:layout="@layout/fragment_my_trips" >
         <action
             android:id="@+id/action_myTripsFragment_to_bookedTripFragment"
-            app:destination="@id/PassengerTripFragment" />
+            app:destination="@id/PassengerTripDetailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/PassengerTripFragment"
-        android:name="com.wassallni.ui.fragment.main_graph.PassengerTripFragment"
-        android:label="BookedTripFragment"
+        android:id="@+id/PassengerTripDetailsFragment"
+        android:name="com.wassallni.ui.fragment.main_graph.PassengerTripDetailsFragment"
+        android:label="PassengerTripDetailsFragment"
 
         >
         <argument

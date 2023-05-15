@@ -13,7 +13,7 @@ import java.util.*
 import javax.inject.Inject
 
 private const val TAG = "ReservationDataSource"
-class ReservationDataSource @Inject constructor(
+class BookTripDataSource @Inject constructor(
     private val tripService: TripService,
     private val distanceApiService: DistanceApiService,
     private val geocodeApiService:GeocodingApiService
@@ -34,15 +34,15 @@ class ReservationDataSource @Inject constructor(
             throw Exception(task.errorBody()?.string())
     }
 
-    suspend fun bookTrip(token: String, body: Map<String, Any>): Boolean {
-        Log.e(TAG, "token:$token ", )
-        Log.e(TAG, "body:$body ", )
+     fun bookTrip(token: String, body: Map<String, Any>): Boolean {
+        Log.e(TAG, "token:$token " )
+        Log.e(TAG, "body:$body " )
         val task=tripService.bookTrip(token,body).execute()
         if (task.isSuccessful)
             return true
         else {
             val error=task.errorBody()?.string()
-            Log.e(TAG, "bookTrip error:$error ", )
+            Log.e(TAG, "bookTrip error:$error " )
             throw Exception(error)
         }
     }

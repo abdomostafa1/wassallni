@@ -6,7 +6,7 @@ import com.wassallni.data.model.BookedTrip
 import com.wassallni.data.model.TripService
 import javax.inject.Inject
 
-class MyTripsDataSource @Inject constructor(
+class PassengerTripsDataSource @Inject constructor(
     private val tripsService: TripService,
     private val sharedPreferences: SharedPreferences
 ) {

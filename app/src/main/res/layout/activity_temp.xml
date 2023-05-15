@@ -1,107 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".ui.fragment.main_graph.RateDriverFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/white"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            app:title="Support"
-            app:titleCentered="true"
-            app:titleTextColor="@color/black" />
+            android:layout_height="match_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
-    </com.google.android.material.appbar.AppBarLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        >
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:src="@drawable/bus2"
+                app:layout_constraintBottom_toBottomOf="@id/guideline1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
 
-        <ScrollView
-            android:id="@+id/scrollView2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="#FAFAFA"
-            app:layout_constraintBottom_toTopOf="@id/rect1"
-            app:layout_constraintTop_toBottomOf="@id/rect2">
-            <LinearLayout
-                android:id="@+id/linearLayout"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/backButton"
+                style="?attr/materialIconButtonFilledTonalStyle"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:background="#FAFAFA"
-                android:layout_marginRight="@dimen/_16sdp"
-                android:layout_marginLeft="@dimen/_48sdp"
-                android:layout_gravity="right"
-                >
-                <androidx.legacy.widget.Space
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_16sdp"
-                    />
-            </LinearLayout>
-        </ScrollView>
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_8sdp"
+                android:backgroundTint="@color/white"
+                android:elevation="@dimen/_8sdp"
+                app:elevation="@dimen/_8sdp"
+                app:icon="@drawable/ic_arrow_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/chatEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/_48sdp"
-            android:layout_marginLeft="@dimen/_16sdp"
-            android:layout_marginRight="@dimen/_16sdp"
-            android:background="@drawable/chat_edittext"
-            android:paddingStart="@dimen/_16sdp"
-            android:paddingEnd="@dimen/_64sdp"
-            android:hint="@string/type_here"
-            android:textSize="@dimen/_14ssp"
-            android:maxLines="3"
-            android:layout_marginBottom="@dimen/_8sdp"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            <ImageView
+                android:id="@+id/driverImg"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:background="@drawable/circle_background2"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="@id/guideline1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guideline1"
+                tools:src="@tools:sample/avatars" />
 
-        <Button
-            style="@style/Widget.Material3.Button.IconButton"
-            android:id="@+id/sendMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_send"
-            android:layout_marginEnd="@dimen/_8sdp"
-            app:iconTint="@null"
-            app:layout_constraintBottom_toBottomOf="@+id/chatEditText"
-            app:layout_constraintEnd_toEndOf="@+id/chatEditText"
-            app:layout_constraintTop_toTopOf="@+id/chatEditText"
-            />
+            <TextView
+                android:id="@+id/yourOpinion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_24sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_24sdp"
+                android:text="@string/what_is_your_opinion_on"
+                android:textSize="@dimen/_14ssp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/driverImg" />
 
-        <ProgressBar
-            android:id="@+id/loader"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginEnd="@dimen/_8sdp"
-            app:layout_constraintBottom_toBottomOf="@+id/sendMessage"
-            app:layout_constraintRight_toRightOf="@+id/sendMessage"
-            app:layout_constraintTop_toTopOf="@+id/sendMessage"
-            android:visibility="gone"
-            />
+            <TextView
+                android:id="@+id/giveRatingsTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_24sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginRight="@dimen/_24sdp"
+                android:text="@string/give_your_ratings_according_to_service"
+                android:textColor="@color/gray_500"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/yourOpinion" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:background="@drawable/stars_rating_background"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/giveRatingsTv">
+
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_8sdp"
+                    android:progressTint="#FE9741"
+                    android:stepSize="0.5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/rateTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_16sdp"
+                    android:textColor="@color/gray700"
+                    android:textSize="@dimen/_16ssp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ratingBar" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <EditText
+                android:id="@+id/comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_24sdp"
+                android:layout_marginRight="@dimen/_24sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:backgroundTint="#f2f2f2"
+                android:ems="10"
+                android:gravity="top"
+                android:hint="@string/write_comment"
+                android:inputType="textPersonName"
+                android:maxLines="3"
+                android:minHeight="@dimen/_40sdp"
+                android:padding="@dimen/_8sdp"
+                app:layout_constraintBottom_toTopOf="@+id/rateBtn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/rateBtn"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_48sdp"
+                android:layout_margin="@dimen/_24sdp"
+                android:backgroundTint="#FF3F40"
+                android:text="@string/rate"
+                android:textSize="18sp"
+                app:cornerRadius="@dimen/_8sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="192dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.30" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circular_background"
+                android:backgroundTint="@color/white"
+                android:elevation="@dimen/_8sdp"
+                android:visibility="gone"
+                android:padding="@dimen/_4sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline1"
+                tools:layout_editor_absoluteX="100dp"
+                tools:layout_editor_absoluteY="10dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <View
-            android:id="@+id/rect1"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_16sdp"
-            android:background="@drawable/rect1"
-            app:layout_constraintBottom_toTopOf="@+id/chatEditText" />
+            android:layout_height="100dp"
+            app:layout_constraintTop_toBottomOf="@id/rateBtn" />
 
-        <View
-            android:id="@+id/rect2"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_16sdp"
-            android:background="@drawable/rect2"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

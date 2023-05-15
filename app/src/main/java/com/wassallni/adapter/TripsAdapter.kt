@@ -37,9 +37,9 @@ class TripsAdapter : RecyclerView.Adapter<TripsAdapter.ViewHolder>() , View.OnCl
         holder.binding.tripView.destination.text=trip.destination
         holder.binding.tripView.tvPrice.text=trip.price.toString()
 
-        holder.binding.tripView.date.text=DateUseCase.fromMillisToString3(trip.startTime)
-        holder.binding.tripView.startTime.text=DateUseCase.fromMillisToString1(trip.startTime)
-        holder.binding.tripView.endTime.text=DateUseCase.fromMillisToString1(trip.endTime)
+        holder.binding.tripView.date.text=DateUseCase.convertDateToYyMmDd(trip.startTime)
+        holder.binding.tripView.startTime.text=DateUseCase.convertDateToHhMma(trip.startTime)
+        holder.binding.tripView.endTime.text=DateUseCase.convertDateToHhMma(trip.endTime)
         val id =trip.id
         holder.itemView.setOnClickListener {
 

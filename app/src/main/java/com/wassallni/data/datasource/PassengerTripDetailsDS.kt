@@ -4,7 +4,7 @@ import com.wassallni.data.model.LoggedInUser
 import com.wassallni.data.model.TripService
 import javax.inject.Inject
 
-class BookedTripDataSource @Inject constructor(private val tripService: TripService) {
+class PassengerTripDetailsDS @Inject constructor(private val tripService: TripService) {
     @Inject
     lateinit var loggedInUser: LoggedInUser
     fun cancelTrip(id: String,startTime:Long): Boolean {

@@ -14,7 +14,7 @@ import com.wassallni.R
 
 class GoogleAuth(private var context: Context) {
 
-    //private lateinit var presenter: LoginPresenter
+    //private late init var presenter: LoginPresenter
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     private lateinit var googleSignInOptions: GoogleSignInOptions

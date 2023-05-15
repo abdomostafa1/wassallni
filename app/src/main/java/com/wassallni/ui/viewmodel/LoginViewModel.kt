@@ -5,19 +5,14 @@ import android.app.Activity
 import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.*
-import androidx.lifecycle.viewmodel.CreationExtras
 import com.wassallni.R
-import com.wassallni.data.datasource.LoginDataSource
 import com.wassallni.data.repository.LoginRepository
-import com.wassallni.firebase.authentication.PhoneAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,19 +23,19 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
     var phoneNumber: String? = null
     var name: String? = null
 
-    private val _usernameError = MutableStateFlow<Int>(0)
+    private val _usernameError = MutableStateFlow(0)
     val usernameError = _usernameError.asStateFlow()
 
-    private val _phoneNumberError = MutableStateFlow<Int>(0)
+    private val _phoneNumberError = MutableStateFlow(0)
     val phoneNumberError = _phoneNumberError.asStateFlow()
 
     val loginUiState = loginRepository.loginUiState
 
     // Verification Fragment LiveData
-    private val _counter = MutableStateFlow<String>("")
+    private val _counter = MutableStateFlow("")
     val counter = _counter.asStateFlow()
 
-    private val _timeOut = MutableStateFlow<Boolean>(false)
+    private val _timeOut = MutableStateFlow(false)
     val timeOut = _timeOut.asStateFlow()
 
     suspend fun verifyPhoneNumber(name: String, phone: String, activity: Activity) {

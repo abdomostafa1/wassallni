@@ -25,8 +25,6 @@ class PassengerTripsVM @Inject constructor(private val myTripsRepo: PassengerTri
 
     private var pastTrips: List<BookedTrip>? = null
 
-    val UPCOMING_TRIPS = 1
-    val PAST_TRIPS = -1
     fun getReservedTrips() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
@@ -35,10 +33,10 @@ class PassengerTripsVM @Inject constructor(private val myTripsRepo: PassengerTri
                 val trips = myTripsRepo.getReservedTrips()
 
                 for (i in trips){
-                    Log.e(TAG, "trip:$i", )
+                    Log.e(TAG, "trip:$i" )
                 }
           //      Log.e(TAG, "ReservedTrips===$trips ", )
-                Log.e(TAG, "current time===$time ", )
+                Log.e(TAG, "current time===$time " )
                 upcomingTrips = trips.filter {
                     (it.endTime > time && it.state==0)
                 }

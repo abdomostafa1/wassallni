@@ -30,7 +30,7 @@ import com.wassallni.R
 import com.wassallni.data.model.FullTrip
 import com.wassallni.data.model.uiState.CancelTripUiState
 import com.wassallni.databinding.FragmentBookedTripBinding
-import com.wassallni.ui.viewmodel.PassengerTripVM
+import com.wassallni.ui.viewmodel.PassengerTripDetailsVM
 import com.wassallni.utils.DateUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -38,22 +38,19 @@ import kotlinx.coroutines.launch
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-private const val TAG = "BookedTripFragment"
 @AndroidEntryPoint
-class PassengerTripFragment : Fragment() ,OnMapReadyCallback {
+class PassengerTripDetailsFragment : Fragment() ,OnMapReadyCallback {
 
-    companion object{
-        var IS_CANCELLED=false
-    }
+
     lateinit var binding: FragmentBookedTripBinding
-    private val args:PassengerTripFragmentArgs by navArgs()
-    private val viewModel:PassengerTripVM by viewModels()
-    lateinit var mapFragment: SupportMapFragment
+    private val args:PassengerTripDetailsFragmentArgs by navArgs()
+    private val viewModel:PassengerTripDetailsVM by viewModels()
+    private lateinit var mapFragment: SupportMapFragment
     lateinit var map: GoogleMap
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding=FragmentBookedTripBinding.inflate(layoutInflater)
         return binding.root
@@ -89,7 +86,7 @@ class PassengerTripFragment : Fragment() ,OnMapReadyCallback {
                 viewModel.polyline1.collect { points ->
                     if (points != null) {
                         Log.e("TAG", "new polyline1: ")
-                        val polyline1 = PolylineOptions().addAll(points!!)
+                        val polyline1 = PolylineOptions().addAll(points)
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                             polyline1.color(requireActivity().getColor(R.color.blue))
@@ -129,16 +126,17 @@ class PassengerTripFragment : Fragment() ,OnMapReadyCallback {
     }
 
     private fun showUiState(it: FullTrip) {
+
         binding.loadingState.visibility=View.GONE
         binding.tripView.tvPrice.visibility=View.INVISIBLE
         binding.tripView.start.text=it.start
         binding.tripView.destination.text=it.destination
-        binding.tripView.startTime.text=DateUseCase.fromMillisToString1(it.startTime)
-        binding.tripView.endTime.text=DateUseCase.fromMillisToString1(it.endTime)
-        binding.tripView.date.text=DateUseCase.fromMillisToString3(it.endTime)
+        binding.tripView.startTime.text=DateUseCase.convertDateToHhMma(it.startTime)
+        binding.tripView.endTime.text=DateUseCase.convertDateToHhMma(it.endTime)
+        binding.tripView.date.text=DateUseCase.convertDateToYyMmDd(it.endTime)
 
         binding.rideStation.text= it.stations[args.point].name
-        binding.rideTime.text= DateUseCase.fromMillisToString1(it.stations[args.point].time)
+        binding.rideTime.text= DateUseCase.convertDateToHhMma(it.stations[args.point].time)
         binding.seatsNum.text="${args.numOfSeat}"
         binding.price.text="${it.price}"
         binding.totalPrice.text="${args.numOfSeat*it.price}"
@@ -195,7 +193,6 @@ class PassengerTripFragment : Fragment() ,OnMapReadyCallback {
     }
 
     private fun openGoogleMapDirections(location: LatLng) {
-        val latitude = location.latitude.toString()
         // Create a Uri from an intent string. Use the result to create an Intent.
         val gmmIntentUri =
             Uri.parse("google.navigation:q=${location.latitude},${location.longitude}")

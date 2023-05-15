@@ -5,9 +5,11 @@ import com.wassallni.data.model.Trip
 import com.wassallni.data.model.TripService
 import javax.inject.Inject
 
+
+private const val TAG = "MainDataSource"
+
 class MainDataSource @Inject constructor(private val tripService: TripService) {
 
-    private val TAG = "MainDataSource"
 
     fun getTrips(): List<Trip> {
         val task = tripService.getAllTrips().execute()

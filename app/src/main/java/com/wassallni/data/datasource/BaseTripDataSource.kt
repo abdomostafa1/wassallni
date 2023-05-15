@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 private const val TAG = "TripDataSource"
 
-class TripDataSource @Inject constructor(
+class BaseTripDataSource @Inject constructor(
     private val tripService: TripService,
     private val directionApiService: DirectionApiService,
 ) {
@@ -22,9 +22,9 @@ class TripDataSource @Inject constructor(
     fun getTripDetails(id: String): FullTrip {
         val task = tripService.getTripDetails(id).execute()
         if (task.isSuccessful) {
-            val fulldetails = task.body()!!
-            Log.e(TAG, "getTripDetails: $fulldetails")
-            return fulldetails
+            val fullDetails = task.body()!!
+            Log.e(TAG, "getTripDetails: $fullDetails")
+            return fullDetails
         } else
             throw Exception(task.errorBody()?.string())
 
@@ -53,14 +53,14 @@ class TripDataSource @Inject constructor(
 
     private fun handlePolyLineResponse(response: String): List<LatLng> {
         val root = JSONObject(response)
-        var points = emptyList<LatLng>()
+
         val route = root.getJSONArray("routes").getJSONObject(0)
         //val leg=route.getJSONArray("legs").getJSONObject(0)
         val overviewPolyline = route.getJSONObject("overview_polyline")
         val encodesPath = overviewPolyline.getString("points")
 
-        points = PolyUtil.decode(encodesPath)
-        Log.e(TAG, "points ${points.toString()}: ")
+        val points = PolyUtil.decode(encodesPath)
+        Log.e(TAG, "points $points: ")
         Log.e(TAG, "encodesPath:$encodesPath")
 
         return points
