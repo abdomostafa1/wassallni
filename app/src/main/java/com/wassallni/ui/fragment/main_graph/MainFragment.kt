@@ -36,7 +36,7 @@ private const val TAG = "MainFragment"
 @AndroidEntryPoint
 class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var binding: FragmentMainBinding
-    private
+
     lateinit var adapter: TripsAdapter
     private val mainViewModel: MainViewModel by viewModels()
 

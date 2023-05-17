@@ -46,7 +46,9 @@ class MainActivity : AppCompatActivity() {
             openRateDriverScreen(intent)
         }
 
+
         val fcmToken = preferences.getString("fcmToken", "")
+
         if (fcmToken == "")
             cacheFcmToken()
 
@@ -75,8 +77,8 @@ class MainActivity : AppCompatActivity() {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         val rateDriverIntent = intent?.getBooleanExtra("rateDriverIntent", false)
+        Log.e(TAG, "rateDriverIntent: $rateDriverIntent")
         if (rateDriverIntent == true) {
-            Log.e(TAG, "onNewIntent: $rateDriverIntent")
             openRateDriverScreen(intent)
         }
     }
@@ -85,12 +87,18 @@ class MainActivity : AppCompatActivity() {
         val tripId = intent.getStringExtra("tripId")
         val driverId = intent.getStringExtra("driverId")
 
-        Log.e(TAG, "onNewIntent: $tripId")
-        Log.e(TAG, "onNewIntent: $driverId")
+        Log.e(TAG, "tripId: $tripId")
+        Log.e(TAG, "driverId: $driverId")
 
         val action =
             MainFragmentDirections.actionMainFragmentToRateDriverFragment(tripId!!, driverId!!)
         navController.navigate(action)
     }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+    }
+
 }
+
 

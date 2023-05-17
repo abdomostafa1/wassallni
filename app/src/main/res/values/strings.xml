@@ -102,4 +102,7 @@
     <string name="rating_below_average">Below Average</string>
     <string name="rating_poor">Poor</string>
     <string name="rating_bad">Bad</string>
+    <string name="dear_customer">Dear valued customer</string>
+    <string name="driver_arrived_station">The driver arrived at the station.</string>
+
 </resources>

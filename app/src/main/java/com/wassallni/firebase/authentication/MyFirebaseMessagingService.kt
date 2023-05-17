@@ -43,22 +43,44 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val data = message.data
         val type = data["type"] as String
         if (type == "rateDriver") {
-            val intent = createIntent(data)
+            val intent = createRateIntent(data)
             val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
                 PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
             else
                 PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-            val notification = createRateNotification(pendingIntent)
+            val title = getString(R.string.Thank_you_for_using_app)
+            val contentText = getString(R.string.rate_trip_driver)
+            val notification = createRateNotification(pendingIntent, title, contentText)
             val notificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            val notificationId=12345
+            val notificationId = 12345
             notificationManager.notify(notificationId, notification)
 
+        } else if (type == "driverArrival") {
+            createDriverArrivalNotification()
         } else
             return
     }
 
-    private fun createIntent(data: MutableMap<String, String>): Intent {
+    private fun createDriverArrivalNotification() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("rateDriverIntent",false)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        else
+            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val title = getString(R.string.dear_customer)
+        val contentText = getString(R.string.driver_arrived_station)
+        val notification = createRateNotification(pendingIntent, title, contentText)
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationId = 1234567
+        notificationManager.notify(notificationId, notification)
+
+    }
+
+    private fun createRateIntent(data: MutableMap<String, String>): Intent {
         val tripId = data["tripId"] as String
         val driverId = data["driverId"] as String
         val intent = Intent(this, MainActivity::class.java)
@@ -69,7 +91,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         return intent
     }
 
-    private fun createRateNotification(pendingIntent: PendingIntent): Notification {
+    private fun createRateNotification(
+        pendingIntent: PendingIntent,
+        title: String,
+        contentText: String
+    ): Notification {
 
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
@@ -80,10 +106,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setStyle(
                 NotificationCompat.BigTextStyle()
-                    .bigText(getString(R.string.rate_trip_driver))
+                    .bigText(contentText)
             )
-            .setContentText(getString(R.string.rate_trip_driver))
-        notificationBuilder.setContentTitle(getString(R.string.Thank_you_for_using_app))
+            .setContentText(contentText)
+        notificationBuilder.setContentTitle(title)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             notificationBuilder.setLargeIcon(

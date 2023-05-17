@@ -62,7 +62,11 @@
     <string name="rating_excellent">ممتاز</string>
     <string name="rating_good">جيد</string>
     <string name="rating_average">متوسط</string>
+
     <string name="rating_below_average">أقل من المتوسط</string>
     <string name="rating_poor">سيء</string>
     <string name="rating_bad">سيء جداً</string>
+    <string name="dear_customer"> عميلنا العزيز ادخل برجلك اليمين 😂</string>
+    <string name="driver_arrived_station">يلا يباشا السواق وصل المحطة</string>
+
 </resources>
