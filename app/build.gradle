@@ -24,11 +24,16 @@ android {
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        Properties properties=new Properties()
+        properties.load(project.rootProject.file("local.properties").newDataInputStream())
+        buildConfigField "string", "PAYMOB_API_KEY", "\"${properties.getProperty("PAYMOB_API_KEY")}\""
+        buildConfigField "Int","integrationId","\"${properties.getProperty("integrationId")}\""
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -119,6 +124,12 @@ dependencies {
 
     // Shimmer layout
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    // Paymob Payment
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    implementation 'morxander.editcard:EditCard:1.0.1'
+
+    implementation 'com.android.volley:volley:1.2.0'
 
 }
 

@@ -14,7 +14,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.wassallni.R
+import com.wassallni.data.model.DriverInfo
 import com.wassallni.data.model.uiState.MainUiState
 import com.wassallni.data.model.uiState.RateDriverUiState
 import com.wassallni.databinding.FragmentRateDriverBinding
@@ -25,12 +27,13 @@ import kotlinx.coroutines.launch
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val TAG = "RateDriverFragment"
+
 @AndroidEntryPoint
 class RateDriverFragment : Fragment() {
 
     lateinit var binding: FragmentRateDriverBinding
-    private val rateDriverVM:RateDriverVM by viewModels()
-    private val args:RateDriverFragmentArgs by navArgs()
+    private val rateDriverVM: RateDriverVM by viewModels()
+    private val args: RateDriverFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,15 +44,16 @@ class RateDriverFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        rateDriverVM.getDriverInfo()
         binding.ratingBar.onRatingBarChangeListener =
             OnRatingBarChangeListener { _, rating, fromUser ->
                 changeRatingText(rating)
             }
         binding.rateBtn.setOnClickListener {
-            val message=binding.comment.text.toString()
-            val stars=binding.ratingBar.rating
-            Log.e(TAG, "stars=$stars " )
-            rateDriverVM.rateDriver(stars,message,args.tripId,args.driverId)
+            val message = binding.comment.text.toString()
+            val stars = binding.ratingBar.rating
+            Log.e(TAG, "stars=$stars ")
+            rateDriverVM.rateDriver(stars, message, args.tripId, args.driverId)
         }
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()
@@ -57,18 +61,29 @@ class RateDriverFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                rateDriverVM.driverInfo.collect {
+                    if (it != null) {
+                        updateUi(it)
+                    }
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 rateDriverVM.rateUiState.collect { state ->
                     when (state) {
                         is RateDriverUiState.Loading -> {
-                            binding.progressBar.visibility=View.VISIBLE
+                            binding.progressBar.visibility = View.VISIBLE
                         }
                         is RateDriverUiState.Success -> {
-                            binding.progressBar.visibility=View.GONE
+                            binding.progressBar.visibility = View.GONE
                             findNavController().navigateUp()
                         }
                         is RateDriverUiState.Error -> {
-                            binding.progressBar.visibility=View.GONE
-                            Toast.makeText(requireActivity(),state.errorMsg,Toast.LENGTH_LONG).show()
+                            binding.progressBar.visibility = View.GONE
+                            Toast.makeText(requireActivity(), state.errorMsg, Toast.LENGTH_LONG)
+                                .show()
                             Log.e(TAG, "error:${state.errorMsg} ")
                         }
 
@@ -77,8 +92,6 @@ class RateDriverFragment : Fragment() {
                 }
             }
         }
-
-
     }
 
     private fun changeRatingText(rating: Float) {
@@ -92,6 +105,10 @@ class RateDriverFragment : Fragment() {
             binding.rateTv.text = requireActivity().getString(R.string.rating_poor)
         else
             binding.rateTv.text = requireActivity().getString(R.string.rating_bad)
+    }
+    private fun updateUi(it: DriverInfo) {
+        Glide.with(this).load(it.imgUrl).circleCrop().into(binding.driverImg)
+        binding.yourOpinion.append(" ${it.driverName}")
     }
 
 }

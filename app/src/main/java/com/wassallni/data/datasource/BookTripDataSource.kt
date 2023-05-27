@@ -3,23 +3,29 @@ package com.wassallni.data.datasource
 import android.util.Log
 import com.google.android.gms.maps.model.LatLng
 import com.wassallni.BuildConfig.MAPS_API_KEY
-import com.wassallni.data.model.DistanceAPIResponse
-import com.wassallni.data.model.DistanceItem
-import com.wassallni.data.model.TripService
+import com.wassallni.data.model.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.Map
+import kotlin.collections.HashMap
 
 private const val TAG = "ReservationDataSource"
+
 class BookTripDataSource @Inject constructor(
     private val tripService: TripService,
     private val distanceApiService: DistanceApiService,
-    private val geocodeApiService:GeocodingApiService
-)  {
+    private val geocodeApiService: GeocodingApiService,
+    private val paymentService: PaymentService
+) {
 
-    fun callDistanceMatrixApi(origin: String, destination: String,mode:String): List<DistanceItem> {
+    fun callDistanceMatrixApi(
+        origin: String,
+        destination: String,
+        mode: String
+    ): List<DistanceItem> {
         val key = MAPS_API_KEY
         val language = Locale.getDefault().language
         val task =
@@ -34,26 +40,50 @@ class BookTripDataSource @Inject constructor(
             throw Exception(task.errorBody()?.string())
     }
 
-     fun bookTrip(token: String, body: Map<String, Any>): Boolean {
-        Log.e(TAG, "token:$token " )
-        Log.e(TAG, "body:$body " )
-        val task=tripService.bookTrip(token,body).execute()
+    fun bookTrip(token: String, body: Map<String, Any>): Boolean {
+        Log.e(TAG, "token:$token ")
+        Log.e(TAG, "body:$body ")
+        val task = tripService.bookTrip(token, body).execute()
         if (task.isSuccessful)
             return true
         else {
-            val error=task.errorBody()?.string()
-            Log.e(TAG, "bookTrip error:$error " )
+            val error = task.errorBody()?.string()
+            Log.e(TAG, "bookTrip error:$error ")
             throw Exception(error)
         }
     }
 
-    fun callGeocodeApi(latLng: String) :String{
+    fun callGeocodeApi(latLng: String): String {
         val key = MAPS_API_KEY
-        val task=geocodeApiService.getAddress(latLng,key).execute()
+        val task = geocodeApiService.getAddress(latLng, key).execute()
         if (task.isSuccessful)
             return task.body()!!
         else
             throw Exception(task.errorBody()?.string())
+    }
+
+    fun payOnline() {
+
+    }
+
+    fun stepOne(body: Map<String, Any>):Map <Any,Any>{
+        val task = paymentService.authenticateRequest("application/json",body).execute()
+        if(task.isSuccessful) {
+            return task.body()!!
+        }
+        else
+            Log.e(TAG, "stepOne: ${task.errorBody()?.string()}", )
+        return kotlin.collections.HashMap<Any,Any>()
+    }
+    fun stepTwo(body: HashMap<String, Any>): Map<Any, Any> {
+        val task=paymentService.orderRegistrationApi("application/json",body).execute()
+        return task.body()!!
+    }
+
+    fun stepThree(body: PaymentRequest) :Map<Any, Any>{
+        val task=paymentService.requestPaymentKey("application/json",body).execute()
+        return task.body()!!
+
     }
 }
 

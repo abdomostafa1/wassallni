@@ -44,7 +44,7 @@ class BookVM @Inject constructor(
     private val _polyline2 = MutableStateFlow<List<LatLng>?>(null)
     val polyline2 = _polyline2.asStateFlow()
 
-    private var counter: Int = 1
+    private var seatsCounter: Int = 1
 
     private val _nearestStations = MutableStateFlow<List<NearestStation>?>(null)
     val nearestStations = _nearestStations.asStateFlow()
@@ -72,7 +72,7 @@ class BookVM @Inject constructor(
             val price = fullTrip?.price!!
             val date = DateUseCase.convertDateToYyMmDdHh(fullTrip?.startTime!!)
 
-            _tripUiState.value = TripUiState(driverName, price, counter, date)
+            _tripUiState.value = TripUiState(driverName, price, seatsCounter, date)
             _stations.value = fullTrip?.stations
             getPolyLine1()
         }
@@ -122,11 +122,11 @@ class BookVM @Inject constructor(
     }
 
     fun incrementCounter() {
-        if (counter == 1 && fullTrip!!.availableSeats >= 2) {
-            ++counter
+        if (seatsCounter == 1 && fullTrip!!.availableSeats >= 2) {
+            ++seatsCounter
             updateTripUiState()
         } else {
-            if (counter == 2)
+            if (seatsCounter == 2)
                 _message.postValue(appContext.getString(R.string.maximum_seats_num) + " 2")
             else
                 _message.postValue(appContext.getString(R.string.num_available_seats) + " 1")
@@ -134,17 +134,17 @@ class BookVM @Inject constructor(
     }
 
     fun decrementCounter() {
-        if (counter == 1)
+        if (seatsCounter == 1)
             return
         else {
-            --counter
+            --seatsCounter
             updateTripUiState()
         }
     }
 
     private fun updateTripUiState() {
         _tripUiState.update {
-            it?.copy(counter = counter, price = fullTrip!!.price * counter)
+            it?.copy(counter = seatsCounter, price = fullTrip!!.price * seatsCounter)
         }
     }
 
@@ -168,7 +168,7 @@ class BookVM @Inject constructor(
                 _reservationUiState.value = ReservationUiState.Loading
 
                 val point = nearestStations.value?.get(selectedStation)?.index!!
-                val numOfSeat = counter
+                val numOfSeat = seatsCounter
                 val bookingTrip = bookTripRepository.bookTrip(fullTrip!!, point, numOfSeat)
                 if (bookingTrip)
                     _reservationUiState.value = ReservationUiState.Success
@@ -196,6 +196,16 @@ class BookVM @Inject constructor(
             }
 
         }
+    }
+
+    fun payOnline() {
+        bookTripRepository.payOnline()
+    }
+
+    suspend fun getPaymentKey(apiKey:String): String {
+
+
+        return bookTripRepository.getPaymentKey(apiKey,100)
     }
 
 }

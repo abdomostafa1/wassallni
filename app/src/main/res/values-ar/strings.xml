@@ -68,5 +68,11 @@
     <string name="rating_bad">سيء جداً</string>
     <string name="dear_customer"> عميلنا العزيز ادخل برجلك اليمين 😂</string>
     <string name="driver_arrived_station">يلا يباشا السواق وصل المحطة</string>
+    <string name="user_canceled">تم إلغاء العملية</string>
+    <string name="TRANSACTION_ERROR">خطأ في العملية</string>
+    <string name="TRANSACTION_REJECTED">تم رفض العملية</string>
+    <string name="TRANSACTION_SUCCESSFUL">تمت العملية بنجاح</string>
+
+
 
 </resources>

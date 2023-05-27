@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import android.util.Log
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.PolyUtil
+import com.wassallni.BuildConfig
 import com.wassallni.data.datasource.BookTripDataSource
 import com.wassallni.data.model.*
 import com.wassallni.utils.LatLngUseCase
@@ -176,6 +177,65 @@ class BookTripRepository @Inject constructor(private val bookTripDataSource: Boo
         val rad = 6371.0
         val c = 2 * asin(sqrt(a))
         return rad * c * 1000
+    }
+
+    fun payOnline() {
+        bookTripDataSource.payOnline()
+    }
+
+    suspend fun getPaymentKey(apiKey: String, price: Long): String {
+
+        val response1 = stepOne(apiKey)
+        val token = response1["token"] as String
+
+        Log.e(TAG, "token: $token")
+        val response2 = stepTwo(token, price)
+
+        val orderId = response2["id"] as Double
+        val id = orderId.toInt()
+        Log.e(TAG, "id==$id ")
+        val response3 = stepThree(token, id, price)
+
+        val paymentKey = response3["token"] as String
+        return paymentKey
+    }
+
+    private fun stepOne(apiKey: String): Map<Any, Any> {
+        val body = HashMap<String, String>()
+        body["api_key"] = apiKey
+        return bookTripDataSource.stepOne(body)
+    }
+
+    private fun stepTwo(token: String, price: Long): Map<Any, Any> {
+        val body = HashMap<String, Any>()
+        body["auth_token"] = token
+        body["delivery_needed"] = "false"
+        body["amount_cents"] = "$price"
+        body["currency"] = "EGP"
+        body["items"] = emptyList<String>()
+
+        return bookTripDataSource.stepTwo(body)
+
+    }
+
+    private fun stepThree(token: String, orderId: Int, price: Long): Map<Any, Any> {
+        val integrationId = BuildConfig.integrationId
+        val billingData = BillingData(
+            email = "abdomostafa19999@gmail.com", phoneNumber = "01005730436",
+            firstName = "ahmed", lastName = "nabil"
+        )
+
+        val body = PaymentRequest(
+            token,
+            "$price",
+            3600,
+            "$orderId",
+            billingData,
+            integrationID = integrationId.toLong()
+        )
+
+        return bookTripDataSource.stepThree(body)
+
     }
 
 }

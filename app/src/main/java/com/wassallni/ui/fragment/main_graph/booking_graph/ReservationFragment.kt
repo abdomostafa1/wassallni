@@ -2,6 +2,7 @@ package com.wassallni.ui.fragment.main_graph.booking_graph
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -41,7 +43,12 @@ class ReservationFragment : Fragment(), OnMapReadyCallback {
     private var stationMarker :Marker?=null
 
     private var polyline: Polyline? = null
-    val viewModel: BookVM by navGraphViewModels(R.id.trip_graph) { defaultViewModelProviderFactory }
+    private val viewModel: BookVM by navGraphViewModels(R.id.trip_graph) { defaultViewModelProviderFactory }
+
+    val getContent = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { it
+        // Handle the returned Uri
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
