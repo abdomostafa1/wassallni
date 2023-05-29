@@ -4,7 +4,7 @@ import com.wassallni.data.model.LoggedInUser
 import com.wassallni.data.model.TripService
 import javax.inject.Inject
 
-class SupportDataSource @Inject constructor(val tripService: TripService,val loggedInUser: LoggedInUser) {
+class SupportDataSource @Inject constructor(val tripService: TripService, private val loggedInUser: LoggedInUser) {
 
     fun sendFeedback(message:String):Boolean{
         val token=loggedInUser.getToken()

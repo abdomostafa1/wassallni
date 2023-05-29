@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import com.wassallni.R
 import com.wassallni.data.model.uiState.SupportUiState
 import com.wassallni.databinding.ChatMessageBinding
-import com.wassallni.databinding.FragmentBookedTripBinding
 import com.wassallni.databinding.FragmentSupportBinding
 import com.wassallni.ui.viewmodel.SupportVM
 import com.wassallni.utils.DateUseCase
@@ -27,13 +26,13 @@ import kotlinx.coroutines.launch
 class SupportFragment : Fragment() {
 
     private val viewModel: SupportVM by viewModels()
-    var latestView: ChatMessageBinding? = null
+    private var latestView: ChatMessageBinding? = null
     lateinit var binding: FragmentSupportBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSupportBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -79,7 +78,7 @@ class SupportFragment : Fragment() {
             return
 
         val timeStamp = System.currentTimeMillis() / 1000
-        val currentTime = DateUseCase.fromMillisToString1(timeStamp)
+        val currentTime = DateUseCase.convertDateToHhMma(timeStamp)
         val chatView = ChatMessageBinding.inflate(layoutInflater)
         chatView.message.text = message
         chatView.time.text = currentTime

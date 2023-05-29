@@ -33,7 +33,7 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.wassallni.BuildConfig
 import com.wassallni.R
 import com.wassallni.databinding.FragmentUserLocationBinding
-import com.wassallni.ui.viewmodel.ReservationVM
+import com.wassallni.ui.viewmodel.BookVM
 import com.wassallni.utils.Permissions
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -44,7 +44,7 @@ private const val TAG = "UserLocationFragment"
 class UserLocationFragment : Fragment() {
 
     lateinit var binding:FragmentUserLocationBinding
-    val viewModel :ReservationVM by navGraphViewModels(R.id.trip_graph)
+    val viewModel :BookVM by navGraphViewModels(R.id.trip_graph)
     @Inject
     lateinit var permission: Permissions
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -52,7 +52,7 @@ class UserLocationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding=FragmentUserLocationBinding.inflate(inflater)
         return binding.root
     }
@@ -62,7 +62,7 @@ class UserLocationFragment : Fragment() {
 
         val countryCode=getUserCountryCode()
         if (!Places.isInitialized()) {
-            Places.initialize(requireActivity().applicationContext, BuildConfig.MAPS_API_KEY, Locale.getDefault());
+            Places.initialize(requireActivity().applicationContext, BuildConfig.MAPS_API_KEY, Locale.getDefault())
         }
 
         val autocompleteFragment =

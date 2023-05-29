@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class MainRepository @Inject constructor(private val mainDataSource: MainDataSource){
 
-    suspend fun getTrips():List<Trip>{
+    fun getTrips():List<Trip>{
        return mainDataSource.getTrips()
     }
 }

@@ -10,7 +10,7 @@
             android:label="StationsFragment" />
         <fragment
             android:id="@+id/tripFragment"
-            android:name="com.wassallni.ui.fragment.main_graph.booking_graph.TripFragment"
+            android:name="com.wassallni.ui.fragment.main_graph.booking_graph.TripDetailsFragment"
             android:label="@string/trip_details"
             tools:layout="@layout/fragment_trip">
             <argument

@@ -91,4 +91,22 @@
     <string name="driver_rate">driver rate</string>
     <string name="skip">skip</string>
     <string name="write_comment">Write your comment here …</string>
+    <string name="rate_trip_on_wassallni">Rate your trip on Wassallni</string>
+    <string name="rate_trip_driver">Rate your recent trip driver</string>
+    <string name="Thank_you_for_using_app">Thank you for using our app!</string>
+    <string name="what_is_your_opinion_on">What is your opinion on</string>
+    <string name="give_your_ratings_according_to_service">Give your ratings according to service</string>
+    <string name="rating_excellent">Excellent</string>
+    <string name="rating_good">Good</string>
+    <string name="rating_average">Average</string>
+    <string name="rating_below_average">Below Average</string>
+    <string name="rating_poor">Poor</string>
+    <string name="rating_bad">Bad</string>
+    <string name="driver_arrived_station">The driver arrived at the station.</string>
+    <string name="dear_customer">Dear valued customer</string>
+    <string name="user_canceled">The transaction has been canceled.</string>
+    <string name="TRANSACTION_ERROR">TRANSACTION_ERROR</string>
+    <string name="TRANSACTION_REJECTED">TRANSACTION_REJECTED</string>
+    <string name="TRANSACTION_SUCCESSFUL">TRANSACTION_SUCCESSFUL</string>
+
 </resources>

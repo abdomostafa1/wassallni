@@ -20,7 +20,7 @@
         </action>
         <action
             android:id="@+id/action_mainFragment_to_myTripsFragment"
-            app:destination="@id/myTripsFragment" />
+            app:destination="@id/PassengerTripsFragment" />
         <action
             android:id="@+id/action_mainFragment_to_supportFragment"
             app:destination="@id/supportFragment" />
@@ -30,18 +30,18 @@
     </fragment>
    <include app:graph="@navigation/trip_graph"/>
     <fragment
-        android:id="@+id/myTripsFragment"
-        android:name="com.wassallni.ui.fragment.main_graph.MyTripsFragment"
+        android:id="@+id/PassengerTripsFragment"
+        android:name="com.wassallni.ui.fragment.main_graph.PassengerTripsFragment"
         android:label="fragment_my_trips"
         tools:layout="@layout/fragment_my_trips" >
         <action
             android:id="@+id/action_myTripsFragment_to_bookedTripFragment"
-            app:destination="@id/BookedTripFragment" />
+            app:destination="@id/PassengerTripDetailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/BookedTripFragment"
-        android:name="com.wassallni.ui.fragment.main_graph.BookedTripFragment"
-        android:label="BookedTripFragment"
+        android:id="@+id/PassengerTripDetailsFragment"
+        android:name="com.wassallni.ui.fragment.main_graph.PassengerTripDetailsFragment"
+        android:label="PassengerTripDetailsFragment"
 
         >
         <argument

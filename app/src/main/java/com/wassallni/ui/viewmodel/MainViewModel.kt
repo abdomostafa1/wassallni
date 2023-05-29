@@ -21,7 +21,7 @@ class MainViewModel @Inject constructor(private val mainRepository: MainReposito
     fun getTrips() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                Log.e("TAG", "getTrips: again!!!!!", )
+                Log.e("TAG", "getTrips: again!!!!!" )
                 _state.emit(MainUiState.Loading)
                 val trips = mainRepository.getTrips()
                 if (trips.isNotEmpty())

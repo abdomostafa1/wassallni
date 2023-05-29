@@ -54,4 +54,25 @@
     <string name="driver_rate">تقييم السائق</string>
     <string name="skip">تخطي</string>
     <string name="write_comment">إكتب تعليقك هنا …</string>
+    <string name="rate_trip_on_wassallni">قيم رحلتك في وصلني</string>
+    <string name="rate_trip_driver">قييم سائق الرحلة الذي قمت بها مؤخرًا</string>
+    <string name="Thank_you_for_using_app">شكرًا لاستخدامك تطبيقنا! </string>
+    <string name="what_is_your_opinion_on">ما رأيك في</string>
+    <string name="give_your_ratings_according_to_service">قدم تقييمك بناءً على الخدمة</string>
+    <string name="rating_excellent">ممتاز</string>
+    <string name="rating_good">جيد</string>
+    <string name="rating_average">متوسط</string>
+
+    <string name="rating_below_average">أقل من المتوسط</string>
+    <string name="rating_poor">سيء</string>
+    <string name="rating_bad">سيء جداً</string>
+    <string name="dear_customer"> عميلنا العزيز ادخل برجلك اليمين 😂</string>
+    <string name="driver_arrived_station">يلا يباشا السواق وصل المحطة</string>
+    <string name="user_canceled">تم إلغاء العملية</string>
+    <string name="TRANSACTION_ERROR">خطأ في العملية</string>
+    <string name="TRANSACTION_REJECTED">تم رفض العملية</string>
+    <string name="TRANSACTION_SUCCESSFUL">تمت العملية بنجاح</string>
+
+
+
 </resources>

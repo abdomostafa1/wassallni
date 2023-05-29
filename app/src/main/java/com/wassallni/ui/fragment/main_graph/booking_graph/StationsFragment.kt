@@ -1,13 +1,12 @@
 package com.wassallni.ui.fragment.main_graph.booking_graph
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -16,12 +15,9 @@ import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.divider.MaterialDividerItemDecoration
 import com.wassallni.R
-import com.wassallni.adapter.StationAdapter
-import com.wassallni.adapter.TripAdapter
-import com.wassallni.databinding.FragmentMainBinding
+import com.wassallni.adapter.StationsAdapter
 import com.wassallni.databinding.FragmentStationsBinding
-import com.wassallni.ui.viewmodel.MainViewModel
-import com.wassallni.ui.viewmodel.ReservationVM
+import com.wassallni.ui.viewmodel.BookVM
 import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,8 +33,8 @@ private const val ARG_PARAM2 = "param2"
 class StationsFragment : Fragment() {
 
     lateinit var binding: FragmentStationsBinding
-    lateinit var adapter: StationAdapter
-    val viewModel :ReservationVM by navGraphViewModels(R.id.trip_graph){ defaultViewModelProviderFactory  }
+    lateinit var adapter: StationsAdapter
+    val viewModel :BookVM by navGraphViewModels(R.id.trip_graph){ defaultViewModelProviderFactory  }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,11 +47,13 @@ class StationsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = StationAdapter()
+        adapter = StationsAdapter()
         binding.recyclerView.adapter = adapter
 
         val divider = MaterialDividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL /*or LinearLayoutManager.HORIZONTAL*/)
-        divider.dividerColor=requireActivity().getColor(R.color.divider_color)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            divider.dividerColor=requireActivity().getColor(R.color.divider_color)
+        }
         binding.recyclerView.addItemDecoration(divider)
 
         binding.topAppBar.setNavigationOnClickListener {

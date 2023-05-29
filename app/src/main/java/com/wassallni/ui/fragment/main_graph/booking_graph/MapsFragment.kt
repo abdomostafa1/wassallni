@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -20,10 +19,9 @@ import com.google.android.gms.maps.model.LatLng
 import android.Manifest
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.wassallni.R
 import com.wassallni.databinding.FragmentMapsBinding
-import com.wassallni.ui.viewmodel.ReservationVM
+import com.wassallni.ui.viewmodel.BookVM
 import kotlinx.coroutines.launch
 
 
@@ -32,7 +30,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     lateinit var binding: FragmentMapsBinding
     private lateinit var mapFragment: SupportMapFragment
     lateinit var map: GoogleMap
-    private val viewModel: ReservationVM by navGraphViewModels(R.id.trip_graph) { defaultViewModelProviderFactory }
+    private val viewModel: BookVM by navGraphViewModels(R.id.trip_graph) { defaultViewModelProviderFactory }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

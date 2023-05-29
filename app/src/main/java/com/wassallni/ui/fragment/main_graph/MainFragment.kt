@@ -19,7 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.navigation.NavigationView
 import com.wassallni.R
 import com.wassallni.adapter.ItemDecorator
-import com.wassallni.adapter.TripAdapter
+import com.wassallni.adapter.TripsAdapter
 import com.wassallni.data.model.uiState.MainUiState
 import com.wassallni.databinding.FragmentMainBinding
 import com.wassallni.databinding.NavViewHeaderBinding
@@ -31,21 +31,24 @@ import javax.inject.Inject
 /**
  * A fragment representing a list of Items.
  */
+private const val TAG = "MainFragment"
+
 @AndroidEntryPoint
-class MainFragment : Fragment() , NavigationView.OnNavigationItemSelectedListener {
-    private val TAG = "MainFragment"
+class MainFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var binding: FragmentMainBinding
-    lateinit var adapter: TripAdapter
+
+    lateinit var adapter: TripsAdapter
     private val mainViewModel: MainViewModel by viewModels()
+
     @Inject
     lateinit var sharedPreferences: SharedPreferences
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = FragmentMainBinding.inflate(layoutInflater)
-        adapter = TripAdapter()
+        adapter = TripsAdapter()
         binding.recyclerView.adapter = adapter
 
         return binding.root
@@ -60,17 +63,17 @@ class MainFragment : Fragment() , NavigationView.OnNavigationItemSelectedListene
             binding.drawerLayout.open()
         }
 
-        val pixelsSize=resources.getDimensionPixelSize(R.dimen._16sdp)
+        val pixelsSize = resources.getDimensionPixelSize(R.dimen._16sdp)
         binding.recyclerView.addItemDecoration(ItemDecorator(pixelsSize))
 
-        val headerBinding=NavViewHeaderBinding.inflate(layoutInflater)
+        val headerBinding = NavViewHeaderBinding.inflate(layoutInflater)
         binding.navView.addHeaderView(headerBinding.root)
-        binding.navView.itemIconTintList=null
-        val name=sharedPreferences.getString("name","")
-        headerBinding.userName.text=name
+        binding.navView.itemIconTintList = null
+        val name = sharedPreferences.getString("name", "")
+        headerBinding.userName.text = name
 
         mainViewModel.getTrips()
-        Log.e(TAG, "onViewCreated: again", )
+        Log.e(TAG, "onViewCreated: again")
         binding.errorState.retry.setOnClickListener {
             mainViewModel.getTrips()
         }
@@ -91,12 +94,11 @@ class MainFragment : Fragment() , NavigationView.OnNavigationItemSelectedListene
                         }
                         is MainUiState.Error -> {
                             showErrorState()
-                            Log.e(TAG, "error:${state.errorMsg} ", )
+                            Log.e(TAG, "error:${state.errorMsg} ")
                         }
                         is MainUiState.Empty -> {
                             showEmptyState()
                         }
-                        else -> Unit
                     }
                 }
             }
@@ -105,18 +107,18 @@ class MainFragment : Fragment() , NavigationView.OnNavigationItemSelectedListene
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        Log.e(TAG, "onNavigationItemSelected: ", )
-        when(item.itemId){
-            R.id.nav_myTrips ->{
+        Log.e(TAG, "onNavigationItemSelected: ")
+        when (item.itemId) {
+            R.id.nav_myTrips -> {
                 findNavController().navigate(R.id.action_mainFragment_to_myTripsFragment)
             }
-            R.id.nav_balance ->{
-                Toast.makeText(requireActivity(),R.string.balance,Toast.LENGTH_LONG).show()
+            R.id.nav_balance -> {
+                Toast.makeText(requireActivity(), R.string.balance, Toast.LENGTH_LONG).show()
             }
-            R.id.nav_complain ->{
+            R.id.nav_complain -> {
                 findNavController().navigate(R.id.action_mainFragment_to_supportFragment)
             }
-            R.id.nav_logout ->{
+            R.id.nav_logout -> {
                 signOut()
             }
         }
@@ -126,40 +128,41 @@ class MainFragment : Fragment() , NavigationView.OnNavigationItemSelectedListene
     }
 
     private fun signOut() {
-        val editor=sharedPreferences.edit()
-        editor.putBoolean("isLoggedIn",false)
-        editor.putString("token","")
-        editor.putString("name","")
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("isLoggedIn", false)
+        editor.putString("token", "")
+        editor.putString("name", "")
         editor.apply()
         requireActivity().setResult(Activity.RESULT_OK)
         requireActivity().finish()
     }
 
-    private fun showLoadingState(){
-        binding.errorState.root.visibility=View.GONE
-        binding.emptyState.root.visibility=View.GONE
-        binding.loadingState.visibility=View.VISIBLE
+    private fun showLoadingState() {
+        binding.errorState.root.visibility = View.GONE
+        binding.emptyState.root.visibility = View.GONE
+        binding.loadingState.visibility = View.VISIBLE
 
     }
 
-    private fun showSuccessState(){
-        binding.loadingState.visibility=View.GONE
-        binding.errorState.root.visibility=View.GONE
-        binding.emptyState.root.visibility=View.GONE
-        binding.recyclerView.visibility=View.VISIBLE
+    private fun showSuccessState() {
+        binding.loadingState.visibility = View.GONE
+        binding.errorState.root.visibility = View.GONE
+        binding.emptyState.root.visibility = View.GONE
+        binding.recyclerView.visibility = View.VISIBLE
 
     }
-    private fun showErrorState(){
-        binding.loadingState.visibility=View.GONE
-        binding.emptyState.root.visibility=View.GONE
-        binding.recyclerView.visibility=View.GONE
-        binding.errorState.root.visibility=View.VISIBLE
+
+    private fun showErrorState() {
+        binding.loadingState.visibility = View.GONE
+        binding.emptyState.root.visibility = View.GONE
+        binding.recyclerView.visibility = View.GONE
+        binding.errorState.root.visibility = View.VISIBLE
     }
 
-    private fun showEmptyState(){
-        binding.loadingState.visibility=View.GONE
-        binding.errorState.root.visibility=View.GONE
-        binding.recyclerView.visibility=View.GONE
-        binding.emptyState.root.visibility=View.VISIBLE
+    private fun showEmptyState() {
+        binding.loadingState.visibility = View.GONE
+        binding.errorState.root.visibility = View.GONE
+        binding.recyclerView.visibility = View.GONE
+        binding.emptyState.root.visibility = View.VISIBLE
     }
 }

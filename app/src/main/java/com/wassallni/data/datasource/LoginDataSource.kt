@@ -1,17 +1,10 @@
 package com.wassallni.data.datasource
 
 import android.app.Activity
-import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.preference.PreferenceManager
-import com.wassallni.R
-import com.wassallni.data.model.LoggedInUser
 import com.wassallni.data.repository.VerificationCallbacks
 import com.wassallni.firebase.authentication.PhoneAuth
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.runBlocking
@@ -22,14 +15,13 @@ import retrofit2.http.POST
 import javax.inject.Inject
 
 
+private  const val TAG = "LoginDataSource"
 class LoginDataSource @Inject constructor(
-    private val phoneAuth: PhoneAuth,
-    @ApplicationContext private val context: Context
-) :
+    private val phoneAuth: PhoneAuth) :
     VerificationCallbacks {
 
 
-    private val TAG = "LoginDataSource"
+
 
     @Inject
     lateinit var loginService: LoginService
@@ -121,13 +113,6 @@ class LoginDataSource @Inject constructor(
             Log.e(TAG, "Fail: $body")
         }
 
-        private suspend fun handleExceptionError(ex: Exception) {
-            val errorMsg=if(ex.message!=null) ex.message else context.getString(R.string.error_occurred)
-
-            Log.e(TAG, "catch: ${ex.message}")
-            _loginUiState.emit(LoginUiState.Error(errorMsg!!))
-        }
-
         fun resetUiState() {
             _loginUiState.value = LoginUiState.InitialState
 
@@ -136,7 +121,7 @@ class LoginDataSource @Inject constructor(
 
     }
 
-    sealed class LoginUiState() {
+    sealed class LoginUiState {
         object InitialState : LoginUiState()
         object Loading : LoginUiState()
         object CodeSent : LoginUiState()

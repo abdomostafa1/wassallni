@@ -12,10 +12,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
+private const val TAG = "PhoneAuth"
 
-class PhoneAuth @Inject constructor(@ApplicationContext private  val context: Context) {
+class PhoneAuth @Inject constructor(@ApplicationContext private val context: Context) {
 
-    private val TAG = "PhoneAuth"
     private var notifier: VerificationCallbacks? = null
     private var storedVerificationCode: String? = null
     private var token: PhoneAuthProvider.ForceResendingToken? = null
@@ -26,7 +26,7 @@ class PhoneAuth @Inject constructor(@ApplicationContext private  val context: Co
     }
 
     fun sendVerificationCode(
-        phoneNumber: String,activity:Activity
+        phoneNumber: String, activity: Activity
     ) {
         val optionsBuilder = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(phoneNumber)       // Phone number to verify
@@ -46,9 +46,8 @@ class PhoneAuth @Inject constructor(@ApplicationContext private  val context: Co
         }
 
         override fun onVerificationFailed(p0: FirebaseException) {
-            var error = ""
 
-            error = if (p0 is FirebaseTooManyRequestsException)
+            val error: String = if (p0 is FirebaseTooManyRequestsException)
                 context.getString(R.string.sign_in_not_available_today)
             else
                 p0.message ?: context.getString(R.string.error_occurred)
@@ -72,9 +71,9 @@ class PhoneAuth @Inject constructor(@ApplicationContext private  val context: Co
 
     }
 
-    fun verifyWithFirebase(credential: PhoneAuthCredential,activity: Activity) {
+    fun verifyWithFirebase(credential: PhoneAuthCredential, activity: Activity) {
 
-         auth.signInWithCredential(credential).addOnCompleteListener(activity) { task ->
+        auth.signInWithCredential(credential).addOnCompleteListener(activity) { task ->
             if (task.isSuccessful) {
                 // Sign in success, update UI with the signed-in user's information
                 Log.e(TAG, "signInWithCredential:success")
@@ -82,8 +81,7 @@ class PhoneAuth @Inject constructor(@ApplicationContext private  val context: Co
             } else {
                 Log.e(TAG, "signInWithCredential:failure", task.exception)
 
-                var error = ""
-                error = if (task.exception is FirebaseAuthInvalidCredentialsException)
+                val error: String = if (task.exception is FirebaseAuthInvalidCredentialsException)
                     context.getString(R.string.verification_code_invalid)
                 else
                     task.exception?.message ?: context.getString(R.string.error_occurred)
