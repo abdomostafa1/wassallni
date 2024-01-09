@@ -72,7 +72,7 @@
     <string name="TRANSACTION_ERROR">خطأ في العملية</string>
     <string name="TRANSACTION_REJECTED">تم رفض العملية</string>
     <string name="TRANSACTION_SUCCESSFUL">تمت العملية بنجاح</string>
-
+    <string name="location_error">خطأ في الحصول علي الموقع</string>
 
 
 </resources>

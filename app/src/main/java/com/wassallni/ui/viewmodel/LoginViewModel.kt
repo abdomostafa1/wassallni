@@ -87,7 +87,7 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
     suspend fun makeLoginRequest() {
         Log.e("TAG", "name:$name ")
         Log.e("TAG", "phone:$phoneNumber ")
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             loginRepository.makeLoginRequest(name!!, phoneNumber!!)
         }
 

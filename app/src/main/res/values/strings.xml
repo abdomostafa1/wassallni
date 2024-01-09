@@ -108,5 +108,6 @@
     <string name="TRANSACTION_ERROR">TRANSACTION_ERROR</string>
     <string name="TRANSACTION_REJECTED">TRANSACTION_REJECTED</string>
     <string name="TRANSACTION_SUCCESSFUL">TRANSACTION_SUCCESSFUL</string>
+    <string name="location_error">Location error</string>
 
 </resources>

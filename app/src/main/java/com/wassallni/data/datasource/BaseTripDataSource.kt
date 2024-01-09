@@ -1,4 +1,4 @@
-package com.wassallni.data.datasource
+ package com.wassallni.data.datasource
 
 import android.util.Log
 import com.google.android.gms.maps.model.LatLng
@@ -34,7 +34,7 @@ class BaseTripDataSource @Inject constructor(
         val key = BuildConfig.MAPS_API_KEY
         val task = directionApiService.getPolyLine1(origin, destination, waypoints, key).execute()
         if (task.isSuccessful) {
-            Log.e(TAG, "getPolyLine: ${task.body()}")
+            //Log.e(TAG, "getPolyLine: ${task.body()}")
             return handlePolyLineResponse(task.body()!!)
         } else
             throw Exception(task.errorBody()?.string())
@@ -44,7 +44,7 @@ class BaseTripDataSource @Inject constructor(
         val key = BuildConfig.MAPS_API_KEY
         val task = directionApiService.getPolyLine2(origin, destination, key).execute()
         return if (task.isSuccessful) {
-            Log.e(TAG, "getPolyLine: ${task.body()}")
+            //Log.e(TAG, "getPolyLine: ${task.body()}")
             handlePolyLineResponse(task.body()!!)
         } else
             throw Exception(task.errorBody()?.string())
@@ -60,8 +60,8 @@ class BaseTripDataSource @Inject constructor(
         val encodesPath = overviewPolyline.getString("points")
 
         val points = PolyUtil.decode(encodesPath)
-        Log.e(TAG, "points $points: ")
-        Log.e(TAG, "encodesPath:$encodesPath")
+//        Log.e(TAG, "points $points: ")
+//        Log.e(TAG, "encodesPath:$encodesPath")
 
         return points
         //val leg=route.getJSONArray("legs").getJSONObject(0)

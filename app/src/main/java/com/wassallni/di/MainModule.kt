@@ -9,8 +9,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -18,10 +20,11 @@ object MainModule {
 
     @Provides
     @ViewModelScoped
-    fun provideTripService(): TripService {
+    fun provideTripService(okHttpClient: OkHttpClient): TripService {
         val baseUrl=Domain+"api/v1/"
         val retrofit=Retrofit.Builder()
             .baseUrl(baseUrl)
+            .client(okHttpClient)
             .addConverterFactory(
                 MoshiConverterFactory.create(
                 Moshi.Builder()
@@ -31,5 +34,7 @@ object MainModule {
             .build()
         return retrofit.create(TripService::class.java)
     }
+
+
 
 }

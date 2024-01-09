@@ -8,7 +8,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -28,4 +32,23 @@ object AppModule {
         val token=sharedPreferences.getString("token","")
         return LoggedInUser(token!!, name!!)
     }
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient {
+        val builder= OkHttpClient.Builder()
+        return builder
+            .connectTimeout(2, TimeUnit.MINUTES)
+            .readTimeout(2, TimeUnit.MINUTES)
+            .addInterceptor(interceptor)
+            .build()
+    }
+    @Provides
+    @Singleton
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+        val httpLoggingInterceptor=HttpLoggingInterceptor()
+        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        return httpLoggingInterceptor
+    }
+
 }

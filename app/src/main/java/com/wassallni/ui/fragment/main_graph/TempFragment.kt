@@ -50,13 +50,13 @@ class TempFragment : Fragment() {
 
         binding.pay.setOnClickListener {
             runBlocking {
-                val task = async(Dispatchers.IO) {
-                    val apiKey = BuildConfig.PAYMOB_API_KEY
-                    bookVM.getPaymentKey(apiKey)
-                }
-                val paymentKey = task.await()
-
-                openPaymentActivity(paymentKey)
+//                val task = async(Dispatchers.IO) {
+//                    val apiKey = BuildConfig.PAYMOB_API_KEY
+//                    bookVM.getPaymentKey(apiKey)
+//                }
+//                val paymentKey = task.await()
+//
+//                openPaymentActivity(paymentKey)
 
             }
 

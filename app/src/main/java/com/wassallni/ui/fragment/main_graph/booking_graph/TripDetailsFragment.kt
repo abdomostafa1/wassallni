@@ -42,7 +42,7 @@ class TripDetailsFragment : Fragment(), OnMapReadyCallback {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentTripBinding.inflate(inflater)
         return binding.root
     }
@@ -98,7 +98,7 @@ class TripDetailsFragment : Fragment(), OnMapReadyCallback {
 
         viewModel.message.observe(viewLifecycleOwner) {
             if (it != null)
-                Toast.makeText(requireActivity(), it, Toast.LENGTH_LONG).show()
+                Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -106,7 +106,7 @@ class TripDetailsFragment : Fragment(), OnMapReadyCallback {
     private fun showUiState(it: TripUiState) {
         binding.tripCard.driver.text = it.driver
         binding.tripCard.date.text = it.fullDate
-        binding.tripCard.price.text = it.price.toString()
+        binding.tripCard.price.text = "${it.price*it.counter}"
         binding.tripCard.counter.text = it.counter.toString()
         binding.shimmerLayout.visibility = View.GONE
         binding.childLayout.visibility = View.VISIBLE
