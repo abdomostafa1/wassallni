@@ -129,15 +129,29 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
 
-        />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/loader"
+        android:layout_width="@dimen/_88sdp"
+        android:layout_height="@dimen/_96sdp"
+        android:padding="8dp"
+        app:cardCornerRadius="@dimen/_8sdp"
+        app:cardElevation="@dimen/_32sdp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="@dimen/_56sdp"
+            android:layout_height="@dimen/_64sdp"
+            android:src="@drawable/dual_ball"
+            android:layout_gravity="center"
+            />
+    </androidx.cardview.widget.CardView>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

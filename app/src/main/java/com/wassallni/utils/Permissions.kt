@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @ActivityScoped
 class Permissions @Inject constructor(@ActivityContext val context: Context) {
-    private val dialog = MaterialAlertDialogBuilder(context)
+
     var action: () -> Unit? = {}
     fun isLocationPermissionEnabled(): Boolean {
 
@@ -46,64 +46,5 @@ class Permissions @Inject constructor(@ActivityContext val context: Context) {
         return false
 
     }
-
-    fun openGps(action: () -> Unit, cancelable: Boolean) {
-        this.action = action
-        showDialog(cancelable)
-    }
-
-    private fun showDialog(cancelable: Boolean) {
-        dialog.setIcon(R.drawable.ic_marker)
-        dialog.setTitle(context.getString(R.string.turn_device_location))
-        dialog.setMessage(context.getString(R.string.gps_message))
-        dialog.setPositiveButton(
-            context.getString(R.string.settings)
-        ) { dialog, _ ->
-            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-            gpsSettingActivity.launch(intent)
-            dialog.dismiss()
-
-        }
-            .setCancelable(cancelable)
-
-        dialog.show()
-    }
-
-    private val gpsSettingActivity = (context as AppCompatActivity).registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {
-        action.invoke()
-    }
-
-    fun requestLocationPermission(action: () -> Unit) {
-        this.action = action
-        locationPermissionRequest.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-        )
-    }
-
-    private val locationPermissionRequest =
-        (context as AppCompatActivity).registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ) { permissions ->
-            if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true) {
-                // Precise location access granted.
-                action.invoke()
-            }
-            if (permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true) {
-                // Only approximate location access granted.
-                action.invoke()
-            } else {
-                Toast.makeText(
-                    context,
-                    context.getString(R.string.location_permission_failure),
-                    Toast.LENGTH_SHORT
-                ).show()
-                // No location access granted.
-            }
-        }
 
 }

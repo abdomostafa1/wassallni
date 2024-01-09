@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
 import com.wassallni.R
+import com.wassallni.SingleLiveEvent
 import com.wassallni.data.model.*
 import com.wassallni.data.model.uiState.ReservationUiState
 import com.wassallni.data.model.uiState.TripUiState
@@ -56,9 +57,8 @@ class BookVM @Inject constructor(
     private val _address = MutableStateFlow("")
     val address = _address.asStateFlow()
 
-    private val _message = MutableLiveData<String>()
-    val message: LiveData<String>
-        get() = _message
+    val message = SingleLiveEvent<String>()
+
 
     private var distances: List<DistanceItem>? = null
     var userLocation: Origin = Origin()
@@ -95,7 +95,7 @@ class BookVM @Inject constructor(
                 val destination = LatLng(lat!!, lng!!)
                 _polyline2.value = bookTripRepository.getPolyLine2(userLocation, destination)
             } catch (ex: Exception) {
-                _message.postValue(ex.message)
+                message.postValue(ex.message)
             }
         }
     }
@@ -116,7 +116,7 @@ class BookVM @Inject constructor(
             try {
                 _polyline1.value = bookTripRepository.getPolyLine1(fullTrip?.stations!!)
             } catch (ex: Exception) {
-                _message.postValue(ex.message)
+                message.postValue(ex.message)
             }
         }
     }
@@ -127,9 +127,9 @@ class BookVM @Inject constructor(
             updateTripUiState()
         } else {
             if (seatsCounter == 2)
-                _message.postValue(appContext.getString(R.string.maximum_seats_num) + " 2")
+                message.postValue(appContext.getString(R.string.maximum_seats_num) + " 2")
             else
-                _message.postValue(appContext.getString(R.string.num_available_seats) + " 1")
+                message.postValue(appContext.getString(R.string.num_available_seats) + " 1")
         }
     }
 
@@ -144,7 +144,7 @@ class BookVM @Inject constructor(
 
     private fun updateTripUiState() {
         _tripUiState.update {
-            it?.copy(counter = seatsCounter, price = fullTrip!!.price * seatsCounter)
+            it?.copy(counter = seatsCounter)
         }
     }
 
@@ -157,7 +157,7 @@ class BookVM @Inject constructor(
             try {
                 _polyline2.value = bookTripRepository.getPolyLine2(userLocation, destination)
             } catch (ex: Exception) {
-                _message.postValue(ex.message)
+                message.postValue(ex.message)
             }
         }
     }
@@ -192,20 +192,20 @@ class BookVM @Inject constructor(
             try {
                 _address.value = bookTripRepository.callGeocodeApi(latLng)
             } catch (ex: Exception) {
-                _message.postValue(ex.message)
+                message.postValue(ex.message)
             }
 
         }
     }
 
-    fun payOnline() {
-        bookTripRepository.payOnline()
-    }
-
-    suspend fun getPaymentKey(apiKey:String): String {
-
-
-        return bookTripRepository.getPaymentKey(apiKey,100)
-    }
+//    fun payOnline() {
+//        bookTripRepository.payOnline()
+//    }
+//
+//    suspend fun getPaymentKey(apiKey:String): String {
+//
+//
+//        return bookTripRepository.getPaymentKey(apiKey,100)
+//    }
 
 }

@@ -13,7 +13,7 @@ plugins {
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdk 33
+    compileSdk 34
     buildToolsVersion '33.0.2'
 
     defaultConfig {
@@ -25,10 +25,10 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        Properties properties=new Properties()
-        properties.load(project.rootProject.file("local.properties").newDataInputStream())
-        buildConfigField "string", "PAYMOB_API_KEY", "\"${properties.getProperty("PAYMOB_API_KEY")}\""
-        buildConfigField "Int","integrationId","\"${properties.getProperty("integrationId")}\""
+//        Properties properties=new Properties()
+//        properties.load(project.rootProject.file("local.properties").newDataInputStream())
+//        buildConfigField "string", "PAYMOB_API_KEY", "\"${properties.getProperty("PAYMOB_API_KEY")}\""
+//        buildConfigField "Int","integrationId","\"${properties.getProperty("integrationId")}\""
     }
 
     buildTypes {
@@ -36,13 +36,17 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        Test {
+
+        }
     }
     compileOptions {
         sourceCompatibility sourceCompatibility
-        targetCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
     buildFeatures {
         viewBinding = true
@@ -106,7 +110,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-scalars:2.9.0'
     implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
     kapt("com.squareup.moshi:moshi-kotlin-codegen:1.14.0")
-    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11'
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'

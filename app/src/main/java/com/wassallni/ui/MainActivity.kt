@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.firebase.messaging.FirebaseMessaging
@@ -15,6 +16,7 @@ import com.wassallni.databinding.ActivityMainBinding
 import com.wassallni.ui.fragment.main_graph.MainFragmentDirections
 import com.wassallni.utils.Permissions
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 private const val TAG = "MainActivity"
@@ -45,7 +47,6 @@ class MainActivity : AppCompatActivity() {
             Log.e(TAG, "onCreate: rateDriverIntent")
             openRateDriverScreen(intent)
         }
-
 
         val fcmToken = preferences.getString("fcmToken", "")
 
