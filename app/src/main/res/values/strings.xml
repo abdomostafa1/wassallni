@@ -109,5 +109,7 @@
     <string name="TRANSACTION_REJECTED">TRANSACTION_REJECTED</string>
     <string name="TRANSACTION_SUCCESSFUL">TRANSACTION_SUCCESSFUL</string>
     <string name="location_error">Location error</string>
+    <string name="trip_booked_successfully">Trip is booked successfully</string>
+    <string name="ticket">ticket number</string>
 
 </resources>

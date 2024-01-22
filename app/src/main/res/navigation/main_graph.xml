@@ -57,6 +57,10 @@
             app:argType="integer"
             android:defaultValue="0" />
         <argument
+            android:name="ticket"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
             android:name="numOfSeat"
             app:argType="integer"
             android:defaultValue="0" />

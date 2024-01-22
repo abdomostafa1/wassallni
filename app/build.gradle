@@ -14,12 +14,12 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdk 34
-    buildToolsVersion '33.0.2'
+    buildToolsVersion= "33.0.2"
 
     defaultConfig {
         applicationId "com.wassallni"
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdk 33
         versionCode 1
         versionName "1.0"
         multiDexEnabled true

@@ -135,6 +135,7 @@ class PassengerTripDetailsFragment : Fragment() ,OnMapReadyCallback {
         binding.tripView.endTime.text=DateUseCase.convertDateToHhMma(it.endTime)
         binding.tripView.date.text=DateUseCase.convertDateToYyMmDd(it.endTime)
 
+        binding.ticket.text="${args.ticket}"
         binding.rideStation.text= it.stations[args.point].name
         binding.rideTime.text= DateUseCase.convertDateToHhMma(it.stations[args.point].time)
         binding.seatsNum.text="${args.numOfSeat}"
