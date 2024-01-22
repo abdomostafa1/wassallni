@@ -32,6 +32,7 @@ class BookedTripsAdapter @Inject constructor(@ApplicationContext val context: Co
         )
 
     }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val trip = trips[position]
 
@@ -54,13 +55,14 @@ class BookedTripsAdapter @Inject constructor(@ApplicationContext val context: Co
                 holder.binding.state.text = context.getString(R.string.missed)
                 holder.binding.state.setTextColor(Color.RED)
             }
+
             else -> holder.binding.state.text = ""
         }
 
         holder.binding.trip.cardView.setOnClickListener {
 
             val action = PassengerTripsFragmentDirections.actionMyTripsFragmentToBookedTripFragment(
-                trip._id, trip.tripId, trip.point, trip.numOfSeat, UPCOMING_TRIP
+                trip._id, trip.tripId, trip.point, trip.ticket, trip.numOfSeat, UPCOMING_TRIP
             )
             it.findNavController().navigate(action)
         }

@@ -10,5 +10,6 @@ data class BookedTrip(
     val destination: String,
     val startTime: Long,
     val endTime: Long,
-    val price:Double=11.0
+    val price:Double=11.0,
+    val ticket:Int=0
 )

@@ -118,14 +118,14 @@ class ReservationFragment : Fragment(), OnMapReadyCallback {
                         }
                         is ReservationUiState.Error -> {
                             showErrorState()
-                            Log.e("TAG", "it.errorMsg:${it.errorMsg}" )
-                            Toast.makeText(requireActivity(), it.errorMsg, Toast.LENGTH_LONG).show()
+                            Log.e("TAG", "it.errorMsg:${it.error}" )
+                            Toast.makeText(requireActivity(), it.error.msg, Toast.LENGTH_LONG).show()
                         }
                         is ReservationUiState.Success -> {
                             showSuccessState()
                             Snackbar.make(
                                 requireActivity().findViewById(android.R.id.content),
-                                "تم حجز الرحلة بنجاح", Snackbar.LENGTH_LONG
+                                getString(R.string.trip_booked_successfully), Snackbar.LENGTH_LONG
                             ).show();
 
                             findNavController().navigate(R.id.action_reservationFragment_to_mainFragment)

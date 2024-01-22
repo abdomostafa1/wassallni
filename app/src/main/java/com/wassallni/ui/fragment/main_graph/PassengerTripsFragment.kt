@@ -23,7 +23,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class PassengerTripsFragment : Fragment() {
+class
+PassengerTripsFragment : Fragment() {
 
     companion object {
         var UPCOMING_TRIP: Boolean = true

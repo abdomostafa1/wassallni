@@ -7,9 +7,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.wassallni.R
 import com.wassallni.SingleLiveEvent
 import com.wassallni.data.model.*
+import com.wassallni.data.model.uiState.ReservationError
 import com.wassallni.data.model.uiState.ReservationUiState
 import com.wassallni.data.model.uiState.TripUiState
 import com.wassallni.data.repository.BookTripRepository
@@ -174,7 +178,13 @@ class BookVM @Inject constructor(
                     _reservationUiState.value = ReservationUiState.Success
             } catch (ex: Exception) {
                 ex.message?.let {
-                    _reservationUiState.value = ReservationUiState.Error(it)
+                    val moshi: Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+                    val jsonAdapter: JsonAdapter<ReservationError> =
+                        moshi.adapter(ReservationError::class.java)
+
+                    val reservationError = jsonAdapter.fromJson(ex.message)
+                    println(reservationError)
+                    _reservationUiState.value = ReservationUiState.Error(reservationError!!)
                 }
             }
         }
