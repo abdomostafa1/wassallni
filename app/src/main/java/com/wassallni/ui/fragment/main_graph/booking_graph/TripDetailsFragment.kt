@@ -16,12 +16,14 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.navGraphViewModels
+import com.bumptech.glide.Glide
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.wassallni.R
+import com.wassallni.data.model.Driver
 import com.wassallni.data.model.uiState.TripUiState
 import com.wassallni.databinding.FragmentTripBinding
 import com.wassallni.ui.viewmodel.BookVM
@@ -83,10 +85,18 @@ class TripDetailsFragment : Fragment(), OnMapReadyCallback {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.driverInfo.collect { driver ->
+                    if (driver != null)
+                        showDriverData(driver)
+                }
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.polyline1.collect { points ->
                     if (points != null) {
                         Log.e("TAG", "new polyline1: ")
-                        val polyline1 = PolylineOptions().addAll(points!!)
+                        val polyline1 = PolylineOptions().addAll(points)
                         polyline1.color(requireActivity().getColor(R.color.blue))
                         polyline1.width(7f)
                         map.addPolyline(polyline1)
@@ -97,20 +107,22 @@ class TripDetailsFragment : Fragment(), OnMapReadyCallback {
         }
 
         viewModel.message.observe(viewLifecycleOwner) {
-            if (it != null)
-                Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
         }
 
     }
 
     private fun showUiState(it: TripUiState) {
-        binding.tripCard.driver.text = it.driver
-        binding.tripCard.date.text = it.fullDate
-        binding.tripCard.price.text = "${it.price*it.counter}"
+        binding.tripCard.price.text = "${it.price * it.counter}"
         binding.tripCard.counter.text = it.counter.toString()
         binding.shimmerLayout.visibility = View.GONE
         binding.childLayout.visibility = View.VISIBLE
         setOnClickListener()
+    }
+
+    private fun showDriverData(driver: Driver) {
+        binding.tripCard.driverName.text = driver.name
+        Glide.with(this).load(driver.image).centerCrop().into(binding.tripCard.driverImg)
     }
 
     fun setOnClickListener() {

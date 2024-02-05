@@ -2,7 +2,7 @@ package com.wassallni.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wassallni.data.model.DriverInfo
+import com.wassallni.data.model.Driver
 import com.wassallni.data.model.uiState.RateDriverUiState
 import com.wassallni.data.repository.RateDriverRepo
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RateDriverVM @Inject constructor(private val rateDriverRepo: RateDriverRepo): ViewModel(){
 
-    private val _driverInfo= MutableStateFlow<DriverInfo?>(null)
+    private val _driverInfo= MutableStateFlow<Driver?>(null)
     val driverInfo=_driverInfo.asStateFlow()
     private val _rateUiState = MutableStateFlow<RateDriverUiState>(RateDriverUiState.InitialState)
     val rateUiState = _rateUiState.asStateFlow()

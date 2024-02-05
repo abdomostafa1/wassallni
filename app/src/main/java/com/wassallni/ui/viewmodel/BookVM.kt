@@ -63,6 +63,8 @@ class BookVM @Inject constructor(
 
     val message = SingleLiveEvent<String>()
 
+    private val _driverInfo = MutableStateFlow<Driver?>(null)
+    val driverInfo = _driverInfo.asStateFlow()
 
     private var distances: List<DistanceItem>? = null
     var userLocation: Origin = Origin()
@@ -79,6 +81,19 @@ class BookVM @Inject constructor(
             _tripUiState.value = TripUiState(driverName, price, seatsCounter, date)
             _stations.value = fullTrip?.stations
             getPolyLine1()
+            fullTrip?.driverId?.let { retrieveDriverData(it) }
+        }
+    }
+
+    private fun retrieveDriverData(id: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val driver = bookTripRepository.retrieveDriverData(id)
+                _driverInfo.emit(driver)
+            } catch (error: Throwable) {
+                val errorMsg: String = if (error.message != null) error.message!! else "error"
+                message.postValue(errorMsg)
+            }
         }
     }
 

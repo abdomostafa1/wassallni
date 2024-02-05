@@ -31,5 +31,7 @@ interface TripService {
     @POST("support")
     fun sendFeedback(@Header("token") token: String, @Body body: Map<String, Any>): Call<Any>
 
+    @GET("driver/{id}")
+    fun getDriver(@Path("id") id:String):Driver
 }
 

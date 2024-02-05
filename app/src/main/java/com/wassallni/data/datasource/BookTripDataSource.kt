@@ -62,26 +62,30 @@ class BookTripDataSource @Inject constructor(
             throw Exception(task.errorBody()?.string())
     }
 
+    suspend fun retrieveDriverData(id: String): Driver {
+        return tripService.getDriver(id)
+    }
+
     fun payOnline() {
 
     }
 
-    fun stepOne(body: Map<String, Any>):Map <Any,Any>{
-        val task = paymentService.authenticateRequest("application/json",body).execute()
-        if(task.isSuccessful) {
+    fun stepOne(body: Map<String, Any>): Map<Any, Any> {
+        val task = paymentService.authenticateRequest("application/json", body).execute()
+        if (task.isSuccessful) {
             return task.body()!!
-        }
-        else
-            Log.e(TAG, "stepOne: ${task.errorBody()?.string()}", )
-        return kotlin.collections.HashMap<Any,Any>()
+        } else
+            Log.e(TAG, "stepOne: ${task.errorBody()?.string()}")
+        return kotlin.collections.HashMap<Any, Any>()
     }
+
     fun stepTwo(body: HashMap<String, Any>): Map<Any, Any> {
-        val task=paymentService.orderRegistrationApi("application/json",body).execute()
+        val task = paymentService.orderRegistrationApi("application/json", body).execute()
         return task.body()!!
     }
 
-    fun stepThree(body: PaymentRequest) :Map<Any, Any>{
-        val task=paymentService.requestPaymentKey("application/json",body).execute()
+    fun stepThree(body: PaymentRequest): Map<Any, Any> {
+        val task = paymentService.requestPaymentKey("application/json", body).execute()
         return task.body()!!
 
     }

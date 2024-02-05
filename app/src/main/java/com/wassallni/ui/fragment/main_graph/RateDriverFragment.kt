@@ -2,12 +2,12 @@ package com.wassallni.ui.fragment.main_graph
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RatingBar.OnRatingBarChangeListener
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -16,8 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.wassallni.R
-import com.wassallni.data.model.DriverInfo
-import com.wassallni.data.model.uiState.MainUiState
+import com.wassallni.data.model.Driver
 import com.wassallni.data.model.uiState.RateDriverUiState
 import com.wassallni.databinding.FragmentRateDriverBinding
 import com.wassallni.ui.viewmodel.RateDriverVM
@@ -106,9 +105,9 @@ class RateDriverFragment : Fragment() {
         else
             binding.rateTv.text = requireActivity().getString(R.string.rating_bad)
     }
-    private fun updateUi(it: DriverInfo) {
-        Glide.with(this).load(it.imgUrl).circleCrop().into(binding.driverImg)
-        binding.yourOpinion.append(" ${it.driverName}")
+    private fun updateUi(it: Driver) {
+        Glide.with(this).load(it.image).circleCrop().into(binding.driverImg)
+        binding.yourOpinion.append(" ${it.name}")
     }
 
 }

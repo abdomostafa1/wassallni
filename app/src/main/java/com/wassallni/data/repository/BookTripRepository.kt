@@ -179,6 +179,10 @@ class BookTripRepository @Inject constructor(private val bookTripDataSource: Boo
         return rad * c * 1000
     }
 
+    suspend fun retrieveDriverData(id: String): Driver {
+        return bookTripDataSource.retrieveDriverData(id)
+    }
+
 //    fun payOnline() {
 //        bookTripDataSource.payOnline()
 //    }
