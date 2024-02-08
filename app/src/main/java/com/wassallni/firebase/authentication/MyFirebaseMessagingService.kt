@@ -1,4 +1,4 @@
-package com.wassallni.firebase.authentication
+ package com.wassallni.firebase.authentication
 
 import android.app.Notification
 import android.app.NotificationManager
@@ -42,24 +42,27 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private fun sendNotification(message: RemoteMessage) {
         val data = message.data
         val type = data["type"] as String
-        if (type == "rateDriver") {
-            val intent = createRateIntent(data)
-            val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-            else
-                PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-            val title = getString(R.string.Thank_you_for_using_app)
-            val contentText = getString(R.string.rate_trip_driver)
-            val notification = createRateNotification(pendingIntent, title, contentText)
-            val notificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            val notificationId = 12345
-            notificationManager.notify(notificationId, notification)
+        when (type) {
+            "rateDriver" -> {
+                val intent = createRateIntent(data)
+                val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+                else
+                    PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                val title = getString(R.string.Thank_you_for_using_app)
+                val contentText = getString(R.string.rate_trip_driver)
+                val notification = createRateNotification(pendingIntent, title, contentText)
+                val notificationManager =
+                    getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                val notificationId = 12345
+                notificationManager.notify(notificationId, notification)
 
-        } else if (type == "driverArrival") {
-            createDriverArrivalNotification()
-        } else
-            return
+            }
+            "driverArrival" -> {
+                createDriverArrivalNotification()
+            }
+            else -> return
+        }
     }
 
     private fun createDriverArrivalNotification() {
@@ -67,9 +70,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         intent.putExtra("rateDriverIntent",false)
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
         val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+            PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_IMMUTABLE)
         else
-            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val title = getString(R.string.dear_customer)
         val contentText = getString(R.string.driver_arrived_station)
         val notification = createRateNotification(pendingIntent, title, contentText)

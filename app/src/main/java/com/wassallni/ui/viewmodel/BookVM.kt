@@ -86,12 +86,14 @@ class BookVM @Inject constructor(
     }
 
     private fun retrieveDriverData(id: String) {
+        Log.e(TAG, "inside retrieveDriverData() fun & id=$id " )
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val driver = bookTripRepository.retrieveDriverData(id)
                 _driverInfo.emit(driver)
             } catch (error: Throwable) {
                 val errorMsg: String = if (error.message != null) error.message!! else "error"
+                Log.e(TAG, "retrieveDriverData: errorMsg=$errorMsg" )
                 message.postValue(errorMsg)
             }
         }

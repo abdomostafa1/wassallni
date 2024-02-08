@@ -114,6 +114,8 @@ class BookTripRepository @Inject constructor(private val bookTripDataSource: Boo
             map["endTime"] = it.endTime
             map["price"] = it.price
             val name: String = sharedPreferences.getString("name", "")!!
+            val fcmToken = sharedPreferences.getString("fcmToken", "")
+            map["fcmToken"] = fcmToken!!
             map["name"] = name
         }
 

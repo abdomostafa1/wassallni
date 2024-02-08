@@ -63,7 +63,12 @@ class BookTripDataSource @Inject constructor(
     }
 
     suspend fun retrieveDriverData(id: String): Driver {
-        return tripService.getDriver(id)
+        val response=tripService.getDriver(id).execute()
+        if (response.isSuccessful)
+            return response.body()!!
+        else
+            throw Exception( response.errorBody()?.string())
+
     }
 
     fun payOnline() {

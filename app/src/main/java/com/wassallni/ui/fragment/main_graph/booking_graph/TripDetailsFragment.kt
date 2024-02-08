@@ -99,8 +99,10 @@ class TripDetailsFragment : Fragment(), OnMapReadyCallback {
                         val polyline1 = PolylineOptions().addAll(points)
                         polyline1.color(requireActivity().getColor(R.color.blue))
                         polyline1.width(7f)
-                        map.addPolyline(polyline1)
-                        drawMarker(points[0], points[points.size - 1])
+                        map?.let {
+                            map.addPolyline(polyline1)
+                            drawMarker(points[0], points[points.size - 1])
+                        }
                     }
                 }
             }
@@ -122,7 +124,7 @@ class TripDetailsFragment : Fragment(), OnMapReadyCallback {
 
     private fun showDriverData(driver: Driver) {
         binding.tripCard.driverName.text = driver.name
-        Glide.with(this).load(driver.image).centerCrop().into(binding.tripCard.driverImg)
+        Glide.with(this).load(driver.image).circleCrop().into(binding.tripCard.driverImg)
     }
 
     fun setOnClickListener() {
