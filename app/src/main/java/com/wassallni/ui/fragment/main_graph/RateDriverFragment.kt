@@ -15,8 +15,10 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.wassallni.R
 import com.wassallni.data.model.Driver
+import com.wassallni.data.model.Rating
 import com.wassallni.data.model.uiState.RateDriverUiState
 import com.wassallni.databinding.FragmentRateDriverBinding
 import com.wassallni.ui.viewmodel.RateDriverVM
@@ -43,16 +45,15 @@ class RateDriverFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        rateDriverVM.getDriverInfo()
+        rateDriverVM.getDriverInfo(args.driverId)
         binding.ratingBar.onRatingBarChangeListener =
             OnRatingBarChangeListener { _, rating, fromUser ->
                 changeRatingText(rating)
             }
         binding.rateBtn.setOnClickListener {
             val message = binding.comment.text.toString()
-            val stars = binding.ratingBar.rating
-            Log.e(TAG, "stars=$stars ")
-            rateDriverVM.rateDriver(stars, message, args.tripId, args.driverId)
+            val ratingAverage = binding.ratingBar.rating
+            rateDriverVM.rateDriver(Rating(args.driverId, message, ratingAverage))
         }
         binding.backButton.setOnClickListener {
             findNavController().navigateUp()
@@ -75,10 +76,17 @@ class RateDriverFragment : Fragment() {
                         is RateDriverUiState.Loading -> {
                             binding.progressBar.visibility = View.VISIBLE
                         }
+
                         is RateDriverUiState.Success -> {
                             binding.progressBar.visibility = View.GONE
+                            Snackbar.make(
+                                requireActivity().findViewById(android.R.id.content),
+                                getString(R.string.thank_you_for_your_feedback),
+                                Snackbar.LENGTH_LONG
+                            ).show()
                             findNavController().navigateUp()
                         }
+
                         is RateDriverUiState.Error -> {
                             binding.progressBar.visibility = View.GONE
                             Toast.makeText(requireActivity(), state.errorMsg, Toast.LENGTH_LONG)
@@ -105,6 +113,7 @@ class RateDriverFragment : Fragment() {
         else
             binding.rateTv.text = requireActivity().getString(R.string.rating_bad)
     }
+
     private fun updateUi(it: Driver) {
         Glide.with(this).load(it.image).circleCrop().into(binding.driverImg)
         binding.yourOpinion.append(" ${it.name}")

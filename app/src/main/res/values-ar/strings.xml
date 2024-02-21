@@ -74,7 +74,10 @@
     <string name="TRANSACTION_SUCCESSFUL">تمت العملية بنجاح</string>
     <string name="location_error">خطأ في الحصول علي الموقع</string>
     <string name="trip_booked_successfully">تم حجز الرحلة بنجاح</string>
+    <string name="thank_you_for_your_feedback">شكرا لك علي تقيمك</string>
     <string name="ticket">رقم التذكرة</string>
+    <string name="submit">تاكيد</string>
+    <string name="change_station">تغيير المحطة</string>
 
 
 </resources>

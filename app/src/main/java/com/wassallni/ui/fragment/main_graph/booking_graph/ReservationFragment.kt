@@ -80,8 +80,10 @@ class ReservationFragment : Fragment(), OnMapReadyCallback {
                 viewModel.nearestStations.collect { it ->
                     if (it != null) {
                         binding.calculatingLayout.visibility = View.GONE
-                        binding.responseLayout.visibility = View.VISIBLE
-                        binding.changeStation.visibility = View.VISIBLE
+                        binding.nearestStationLayout.visibility = View.VISIBLE
+                        binding.submit.isEnabled=true
+                        binding.changeStation.isEnabled=true
+
                         if (viewModel.movementMode=="driving")
                             binding.icDriving.visibility = View.VISIBLE
                         else

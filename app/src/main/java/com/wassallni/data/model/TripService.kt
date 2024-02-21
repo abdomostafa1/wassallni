@@ -3,6 +3,8 @@ package com.wassallni.data.model
 import com.wassallni.data.datasource.AllTripsResponse
 import com.wassallni.data.datasource.CancelTripResponse
 import com.wassallni.data.datasource.ReservedTripsApiResponse
+import okhttp3.Response
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -32,6 +34,12 @@ interface TripService {
     fun sendFeedback(@Header("token") token: String, @Body body: Map<String, Any>): Call<Any>
 
     @GET("driver/{id}")
-    fun getDriver(@Path("id") id:String):Call<Driver>
+    fun getDriver(@Path("id") id: String): Call<Driver>
+
+    @POST("review")
+    fun rateDriver(
+        @Header("token") token: String,
+        @Body rating: Rating
+    ): Call<Rating>
 }
 

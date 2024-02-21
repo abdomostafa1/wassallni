@@ -38,6 +38,7 @@
     <style name="temp_activity_theme" parent="Theme.Material3.Light.NoActionBar" />
 
     <style name="mainActivityTheme" parent="Theme.Material3.Light.NoActionBar">
+            <item name="android:navigationBarColor">@color/white</item>
 
     </style>
 

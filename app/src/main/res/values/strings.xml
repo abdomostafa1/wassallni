@@ -110,6 +110,9 @@
     <string name="TRANSACTION_SUCCESSFUL">TRANSACTION_SUCCESSFUL</string>
     <string name="location_error">Location error</string>
     <string name="trip_booked_successfully">Trip is booked successfully</string>
+    <string name="thank_you_for_your_feedback">Thank You for Your Feedback</string>
     <string name="ticket">ticket number</string>
+    <string name="submit">Submit</string>
+    <string name="change_station">Change Station</string>
 
 </resources>
