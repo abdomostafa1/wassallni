@@ -89,9 +89,15 @@ class RateDriverFragment : Fragment() {
 
                         is RateDriverUiState.Error -> {
                             binding.progressBar.visibility = View.GONE
-                            Toast.makeText(requireActivity(), state.errorMsg, Toast.LENGTH_LONG)
-                                .show()
-                            Log.e(TAG, "error:${state.errorMsg} ")
+                            Snackbar.make(
+                                requireActivity().findViewById(android.R.id.content),
+                                getString(R.string.thank_you_for_your_feedback),
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                            findNavController().navigateUp()
+//                            Toast.makeText(requireActivity(), state.errorMsg, Toast.LENGTH_LONG)
+//                                .show()
+//                            Log.e(TAG, "error:${state.errorMsg} ")
                         }
 
                         else -> {}
